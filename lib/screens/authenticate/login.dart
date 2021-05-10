@@ -21,7 +21,7 @@ class _LoginState extends State<Login> {
         actions: <Widget>[
           FlatButton.icon(
             icon: Icon(Icons.person),
-            label: Text("hello"),
+            label: Text("Sign In CHAD IS HERE"),
             onPressed: () {
               widget.toggle();
             },
