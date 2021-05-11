@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:pb_blueprotocal/pallete.dart';
+import 'package:pb_blueprotocal/shared/constants.dart';
 import 'package:pb_blueprotocal/Widgets/SignBackImg.dart';
 
 class Register extends StatefulWidget {
@@ -59,11 +59,35 @@ class _RegisterState extends State<Register> {
                   ),
                 ),
               )
+
             ],
           ),
         ),
+        Padding(
+        padding: const EdgeInsets.symmetric(vertical: 12),
+    child: Container(
+    decoration: BoxDecoration(
+    color: Colors.grey[600].withOpacity(0.5),
+    borderRadius: BorderRadius.circular(16),
+
+    ),
+    child: TextFormField(
+    decoration: InputDecoration(
+    contentPadding: const EdgeInsets.symmetric(vertical: 20),
+    border: InputBorder.none,
+    ),
+
+    ),
+    ),
+        ),
+            ],
+            ),
+            ],
+            ),
+            ),
+        ),
       ],
-    ),],),),),],);
+    );
 
   }
 }
