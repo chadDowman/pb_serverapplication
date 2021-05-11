@@ -5,7 +5,7 @@ import 'package:pb_blueprotocal/Widgets/backGroundImg.dart';
 
 class Login extends StatefulWidget {
   final Function toggle;
-  final _formKey = GlobalKey<FormState>();
+
 
   Login({this.toggle});
 
@@ -14,6 +14,8 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+
+  final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Stack(
