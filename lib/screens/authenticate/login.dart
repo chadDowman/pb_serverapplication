@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pb_blueprotocal/screens/authenticate/forgotPass.dart';
+import 'package:pb_blueprotocal/screens/authenticate/register.dart';
 import 'package:pb_blueprotocal/screens/home/home.dart';
 import 'package:pb_blueprotocal/services/auth.dart';
 import 'package:pb_blueprotocal/shared/constants.dart';
@@ -8,9 +9,6 @@ import 'package:pb_blueprotocal/Widgets/backGroundImg.dart';
 import 'package:pb_blueprotocal/shared/loading.dart';
 
 class Login extends StatefulWidget {
-  final Function toggle;
-
-  Login({this.toggle});
 
   @override
   _LoginState createState() => _LoginState();
@@ -19,6 +17,7 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   final AuthService _auth = AuthService(); // Instance of auth service class
   final _formKey = GlobalKey<FormState>();
+
 
   //Text Field States
   String email = "";
@@ -54,7 +53,7 @@ class _LoginState extends State<Login> {
                                   Container(
                                     child: FlatButton(
                                       onPressed: () {
-                                        widget.toggle();
+                                        Navigator.push(context, MaterialPageRoute(builder: (context) => Login()));
                                       },
                                       child: Padding(
                                         padding: const EdgeInsets.symmetric(
@@ -69,7 +68,7 @@ class _LoginState extends State<Login> {
                                   Container(
                                     child: FlatButton(
                                       onPressed: () {
-                                        widget.toggle();
+                                        Navigator.push(context, MaterialPageRoute(builder: (context) => Register()));
                                       },
                                       child: Padding(
                                         padding: const EdgeInsets.symmetric(
@@ -185,13 +184,19 @@ class _LoginState extends State<Login> {
                                             setState(() {
                                               loading = true;
                                             });
-                                            dynamic result = await _auth
-                                                .loginUser(email, password);
+                                            dynamic result = await _auth.loginUser(email, password);
                                             if (result == null) {
                                               setState(() {
                                                 error = "Invalid Credentials";
                                                 loading = false;
                                               });
+                                            }else{
+                                              loading = false;
+                                              if(_auth.emailVerified){
+                                                Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
+                                              }else{
+                                                Navigator.push(context, MaterialPageRoute(builder: (context) => Login()));
+                                              }
                                             }
                                           }
                                         },

@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:pb_blueprotocal/screens/authenticate/login.dart';
 import 'package:pb_blueprotocal/services/auth.dart';
 import 'package:pb_blueprotocal/shared/constants.dart';
 import 'package:pb_blueprotocal/Widgets/SignBackImg.dart';
 import 'package:pb_blueprotocal/shared/loading.dart';
 
 class Register extends StatefulWidget {
-  final Function toggle;
-
-  Register({this.toggle});
 
   @override
   _RegisterState createState() => _RegisterState();
@@ -54,7 +52,7 @@ class _RegisterState extends State<Register> {
                                   Container(
                                     child: FlatButton(
                                       onPressed: () {
-                                        widget.toggle();
+                                        Navigator.push(context, MaterialPageRoute(builder: (context) => Login()));
                                       },
                                       child: Padding(
                                         padding: const EdgeInsets.symmetric(
@@ -69,7 +67,7 @@ class _RegisterState extends State<Register> {
                                   Container(
                                     child: FlatButton(
                                       onPressed: () {
-                                        widget.toggle();
+                                        Navigator.push(context, MaterialPageRoute(builder: (context) => Register()));
                                       },
                                       child: Padding(
                                         padding: const EdgeInsets.symmetric(
@@ -249,15 +247,16 @@ class _RegisterState extends State<Register> {
                                                 setState(() {
                                                   loading = true;
                                                 });
-                                                dynamic result =
-                                                    await _auth.registerUser(
-                                                        email, password);
+                                                dynamic result = await _auth.registerUser(email, password);
                                                 if (result == null) {
                                                   setState(() {
                                                     error =
                                                         "Please Supply a Valid Email or Password";
                                                     loading = false;
                                                   });
+                                                }else{
+                                                  loading = false;
+                                                  Navigator.push(context, MaterialPageRoute(builder: (context) => Login()));
                                                 }
                                               }
                                             },

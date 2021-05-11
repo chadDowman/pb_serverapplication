@@ -3,7 +3,7 @@ import 'package:pb_blueprotocal/models/user.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-
+  bool emailVerified = false;
   User _userFromFirebaseUser(FirebaseUser user) {
     //If user != null then User(uid: user.uid) will be the return if not true return null
     return user != null
@@ -11,12 +11,30 @@ class AuthService {
         : null; //This basically reads as follows: If the user object is not null do the following....
   }
 
+  //Sends Password Reset Email
+  Future<void> sendPasswordResetEmail(String email) async{
+    await _auth.sendPasswordResetEmail(email: email);
+  }
+
+
   //Login User
   Future loginUser(String email, String password) async {
     try {
       AuthResult result = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
       FirebaseUser user = result.user;
+      if(user.isEmailVerified){
+        print(
+            "------------------------------------------------------------------------");
+        print("USERS EMAIL IS VERIFIED");
+        emailVerified = true;
+      }else{
+        print(
+            "------------------------------------------------------------------------");
+        print("USERS EMAIL IS NOT VERIFIED!!!!!!!!!!!!!!!!");
+        emailVerified = false;
+      }
+      return _userFromFirebaseUser(user);
     } catch (e) {
       print(
           "------------------------------------------------------------------------");
@@ -25,12 +43,14 @@ class AuthService {
     }
   }
 
+
   //register user
   Future registerUser(String email, String password) async {
     try {
       AuthResult result = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
       FirebaseUser user = result.user;
+      await user.sendEmailVerification();
       return _userFromFirebaseUser(user);
     } catch (e) {
       print(

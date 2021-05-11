@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pb_blueprotocal/screens/authenticate/login.dart';
 import 'package:pb_blueprotocal/services/auth.dart';
 
 
@@ -19,6 +20,7 @@ class Home extends StatelessWidget {
             label: Text("Logout"),
             onPressed: () async{
               await _auth.logOut(); // Calls sign out function
+              Navigator.push(context, MaterialPageRoute(builder: (context) => Login()));
             },
           ),
         ],
