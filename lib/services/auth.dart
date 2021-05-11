@@ -25,8 +25,8 @@ class AuthService {
     }
   }
 
-  //LogOut user
-  Future registerUser(String username, String email, String password) async {
+  //register user
+  Future registerUser(String email, String password) async {
     try {
       AuthResult result = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);

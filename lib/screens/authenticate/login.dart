@@ -135,10 +135,10 @@ class _LoginState extends State<Login> {
                                     ),
                                     hintStyle: kbod,
                                   ),
-                                  obscureText: true,
                                   validator: (val) => val.length < 8
                                       ? "Enter a password with 6 or longer"
                                       : null,
+                                  obscureText: true,
                                   onChanged: (val) {
                                     setState(() {
                                       password = val;
