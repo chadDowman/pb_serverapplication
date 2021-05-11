@@ -25,7 +25,7 @@ class _LoginState extends State<Login> {
 
         child: Column(
             children: <Widget>[
-              Image(image: AssetImage('assets/b.png')),
+              Image(image: AssetImage('pics/b.png')),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
