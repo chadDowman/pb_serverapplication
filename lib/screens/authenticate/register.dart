@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:pb_blueprotocal/services/auth.dart';
 import 'package:pb_blueprotocal/shared/constants.dart';
 import 'package:pb_blueprotocal/Widgets/SignBackImg.dart';
+import 'package:pb_blueprotocal/shared/loading.dart';
 
 class Register extends StatefulWidget {
   final Function toggle;
@@ -27,245 +28,272 @@ class _RegisterState extends State<Register> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        SignBackImg(),
-        Scaffold(
-          backgroundColor: Colors.transparent,
-          body: SingleChildScrollView(
-            child: SafeArea(
-              child: Column(
-                children: [
-                  Column(
-                    children: [
-                      SizedBox(height: 0),
-                      Container(
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          color: Colors.blue,
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return loading
+        ? Loading()
+        : Stack(
+            children: [
+              SignBackImg(),
+              Scaffold(
+                backgroundColor: Colors.transparent,
+                body: SingleChildScrollView(
+                  child: SafeArea(
+                    child: Column(
+                      children: [
+                        Column(
                           children: [
+                            SizedBox(height: 0),
                             Container(
-                              child: FlatButton(
-                                onPressed: () {
-                                  widget.toggle();
-                                },
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 16.0),
-                                  child: Text(
-                                    'Sign In',
-                                    style: kbod,
-                                  ),
-                                ),
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                color: Colors.blue,
                               ),
-                            ),
-                            Container(
-                              child: FlatButton(
-                                onPressed: () {
-                                  widget.toggle();
-                                },
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 16.0),
-                                  child: Text(
-                                    'Sign Up',
-                                    style: kbod,
-                                  ),
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        height: 100,
-                      ),
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 40),
-                        child: Form(
-                          key: _formKey,
-                          child: Column(
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.end,
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Container(
-                                    decoration: BoxDecoration(
-                                      color: Colors.grey[600].withOpacity(0.5),
-                                      borderRadius: BorderRadius.circular(16),
-                                    ),
-                                    child: TextFormField(
-                                      decoration: InputDecoration(
-                                        contentPadding:
-                                        const EdgeInsets.symmetric(
-                                            vertical: 20),
-                                        border: InputBorder.none,
-                                        hintText: 'Enter Username',
-                                        prefixIcon: Icon(
-                                          Icons.verified_user,
-                                          color: Colors.white,
-                                        ),
-                                        hintStyle: kbod,
-                                      ),
-                                      validator: (val) =>
-                                      val.isEmpty ? "Enter A Username!" : null,
-                                      onChanged: (val) {
-                                        setState(() {
-                                          username = val;
-                                        });
-                                      },
-                                    ),
-                                  ),
-                                  SizedBox(height: 9,),
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      color: Colors.grey[600].withOpacity(0.5),
-                                      borderRadius: BorderRadius.circular(16),
-                                    ),
-                                    child: TextFormField(
-                                      decoration: InputDecoration(
-                                        contentPadding:
-                                        const EdgeInsets.symmetric(
-                                            vertical: 20),
-                                        border: InputBorder.none,
-                                        hintText: 'Enter Email',
-                                        prefixIcon: Icon(
-                                          Icons.email,
-                                          color: Colors.white,
-                                        ),
-                                        hintStyle: kbod,
-                                      ),
-                                      validator: (val) =>
-                                      val.isEmpty ? "Enter An Email!" : null,
-                                      // return val.isEmpty ? "Enter An Email!" : null;//Return Operator
-                                      onChanged: (val) {
-                                        setState(() {
-                                          email = val;
-                                        });
-                                      },
-                                    ),
-                                  ),
-                                  SizedBox(height: 9,),
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      color: Colors.grey[600].withOpacity(0.5),
-                                      borderRadius: BorderRadius.circular(16),
-                                    ),
-                                    child: TextFormField(
-                                      decoration: InputDecoration(
-                                        contentPadding:
-                                        const EdgeInsets.symmetric(
-                                            vertical: 20),
-                                        border: InputBorder.none,
-                                        hintText: 'Enter Password',
-                                        prefixIcon: Icon(
-                                          Icons.lock,
-                                          color: Colors.white,
-                                        ),
-                                        hintStyle: kbod,
-                                      ),
-                                      validator: (val) =>
-                                      val.length < 8 ? "Enter a password with 8 characters or longer!" : null,
-                                      // return val.isEmpty ? "Enter An Email!" : null;//Return Operator
-                                      obscureText: true,
-                                      onChanged: (val) {
-                                        setState(() {
-                                          password = val;
-                                        });
-                                      },
-                                    ),
-                                  ),
-                                  SizedBox(height: 9,),
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      color: Colors.grey[600].withOpacity(0.5),
-                                      borderRadius: BorderRadius.circular(16),
-                                    ),
-                                    child: TextFormField(
-                                      decoration: InputDecoration(
-                                        contentPadding:
-                                        const EdgeInsets.symmetric(
-                                            vertical: 20),
-                                        border: InputBorder.none,
-                                        hintText: 'Re-Enter Password',
-                                        prefixIcon: Icon(
-                                          Icons.lock,
-                                          color: Colors.white,
-                                        ),
-                                        hintStyle: kbod,
-                                      ),
-                                      validator: (val) =>
-                                      val != password ? "Password MisMatch" : null,
-                                      obscureText: true,
-                                      onChanged: (val) {
-                                        setState(() {
-                                          passwordConfirm = val;
-                                        });
-                                      },
-
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Column(
-                                children: [
-                                  SizedBox(height: 50),
-                                  Container(
-                                    width: double.infinity,
-                                    decoration: BoxDecoration(
-                                        color: Colors.blue,
-                                        borderRadius:
-                                        BorderRadius.circular(16)),
                                     child: FlatButton(
-                                      onPressed: () async{
-                                        if(_formKey.currentState.validate()){
-                                          setState(() {
-                                            loading = true;
-                                          });
-                                          dynamic result = await _auth.registerUser(email, password);
-                                          if(result == null){
-                                            setState(() {
-                                              error = "Please Supply a Valid Email or Password";
-                                              loading = false;
-                                            });
-                                          }
-                                        }
+                                      onPressed: () {
+                                        widget.toggle();
                                       },
                                       child: Padding(
                                         padding: const EdgeInsets.symmetric(
                                             vertical: 16.0),
                                         child: Text(
-                                          'Enter The Guild',
+                                          'Sign In',
                                           style: kbod,
                                         ),
                                       ),
                                     ),
                                   ),
-                                  SizedBox(height: 20),
-                                  Text(
-                                    error,
-                                    style: TextStyle(
-                                      color: Colors.red,
-                                      fontSize: 14,
+                                  Container(
+                                    child: FlatButton(
+                                      onPressed: () {
+                                        widget.toggle();
+                                      },
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 16.0),
+                                        child: Text(
+                                          'Sign Up',
+                                          style: kbod,
+                                        ),
+                                      ),
                                     ),
-                                  ),
+                                  )
                                 ],
-                              )
-                            ],
-                          ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 100,
+                            ),
+                            Container(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 40),
+                              child: Form(
+                                key: _formKey,
+                                child: Column(
+                                  children: [
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.end,
+                                      children: [
+                                        Container(
+                                          decoration: BoxDecoration(
+                                            color: Colors.grey[600]
+                                                .withOpacity(0.5),
+                                            borderRadius:
+                                                BorderRadius.circular(16),
+                                          ),
+                                          child: TextFormField(
+                                            decoration: InputDecoration(
+                                              contentPadding:
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: 20),
+                                              border: InputBorder.none,
+                                              hintText: 'Enter Username',
+                                              prefixIcon: Icon(
+                                                Icons.verified_user,
+                                                color: Colors.white,
+                                              ),
+                                              hintStyle: kbod,
+                                            ),
+                                            validator: (val) => val.isEmpty
+                                                ? "Enter A Username!"
+                                                : null,
+                                            onChanged: (val) {
+                                              setState(() {
+                                                username = val;
+                                              });
+                                            },
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: 9,
+                                        ),
+                                        Container(
+                                          decoration: BoxDecoration(
+                                            color: Colors.grey[600]
+                                                .withOpacity(0.5),
+                                            borderRadius:
+                                                BorderRadius.circular(16),
+                                          ),
+                                          child: TextFormField(
+                                            decoration: InputDecoration(
+                                              contentPadding:
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: 20),
+                                              border: InputBorder.none,
+                                              hintText: 'Enter Email',
+                                              prefixIcon: Icon(
+                                                Icons.email,
+                                                color: Colors.white,
+                                              ),
+                                              hintStyle: kbod,
+                                            ),
+                                            validator: (val) => val.isEmpty
+                                                ? "Enter An Email!"
+                                                : null,
+                                            // return val.isEmpty ? "Enter An Email!" : null;//Return Operator
+                                            onChanged: (val) {
+                                              setState(() {
+                                                email = val;
+                                              });
+                                            },
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: 9,
+                                        ),
+                                        Container(
+                                          decoration: BoxDecoration(
+                                            color: Colors.grey[600]
+                                                .withOpacity(0.5),
+                                            borderRadius:
+                                                BorderRadius.circular(16),
+                                          ),
+                                          child: TextFormField(
+                                            decoration: InputDecoration(
+                                              contentPadding:
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: 20),
+                                              border: InputBorder.none,
+                                              hintText: 'Enter Password',
+                                              prefixIcon: Icon(
+                                                Icons.lock,
+                                                color: Colors.white,
+                                              ),
+                                              hintStyle: kbod,
+                                            ),
+                                            validator: (val) => val.length < 8
+                                                ? "Enter a password with 8 characters or longer!"
+                                                : null,
+                                            // return val.isEmpty ? "Enter An Email!" : null;//Return Operator
+                                            obscureText: true,
+                                            onChanged: (val) {
+                                              setState(() {
+                                                password = val;
+                                              });
+                                            },
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: 9,
+                                        ),
+                                        Container(
+                                          decoration: BoxDecoration(
+                                            color: Colors.grey[600]
+                                                .withOpacity(0.5),
+                                            borderRadius:
+                                                BorderRadius.circular(16),
+                                          ),
+                                          child: TextFormField(
+                                            decoration: InputDecoration(
+                                              contentPadding:
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: 20),
+                                              border: InputBorder.none,
+                                              hintText: 'Re-Enter Password',
+                                              prefixIcon: Icon(
+                                                Icons.lock,
+                                                color: Colors.white,
+                                              ),
+                                              hintStyle: kbod,
+                                            ),
+                                            validator: (val) => val != password
+                                                ? "Password MisMatch"
+                                                : null,
+                                            obscureText: true,
+                                            onChanged: (val) {
+                                              setState(() {
+                                                passwordConfirm = val;
+                                              });
+                                            },
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Column(
+                                      children: [
+                                        SizedBox(height: 50),
+                                        Container(
+                                          width: double.infinity,
+                                          decoration: BoxDecoration(
+                                              color: Colors.blue,
+                                              borderRadius:
+                                                  BorderRadius.circular(16)),
+                                          child: FlatButton(
+                                            onPressed: () async {
+                                              if (_formKey.currentState
+                                                  .validate()) {
+                                                setState(() {
+                                                  loading = true;
+                                                });
+                                                dynamic result =
+                                                    await _auth.registerUser(
+                                                        email, password);
+                                                if (result == null) {
+                                                  setState(() {
+                                                    error =
+                                                        "Please Supply a Valid Email or Password";
+                                                    loading = false;
+                                                  });
+                                                }
+                                              }
+                                            },
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: 16.0),
+                                              child: Text(
+                                                'Enter The Guild',
+                                                style: kbod,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        SizedBox(height: 20),
+                                        Text(
+                                          error,
+                                          style: TextStyle(
+                                            color: Colors.red,
+                                            fontSize: 14,
+                                          ),
+                                        ),
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ],
+                ),
               ),
-            ),
-          ),
-        ),
-      ],
-    );
+            ],
+          );
   }
 }
