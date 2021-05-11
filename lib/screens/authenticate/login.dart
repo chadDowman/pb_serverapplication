@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
-
+import 'package:pb_blueprotocal/pallete.dart';
+import 'package:flutter/widgets.dart';
+import 'package:pb_blueprotocal/Widgets/backGroundImg.dart';
+import 'package:pb_blueprotocal/Widgets/Email.dart';
+import 'package:pb_blueprotocal/Widgets/Password.dart';
 class Login extends StatefulWidget {
   final Function toggle;
 
@@ -12,140 +16,116 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.grey[900],
-      appBar: AppBar(
+    return Stack(
+      children: [
+        BackgroungImg(),
+        Scaffold(
+          backgroundColor: Colors.transparent,
+          body: SafeArea(
+            child: Column(
+              children: [
+                Container(
+                  child: Center(
+                    child:
+                    Text('Login', style: kHead,),
 
-        title: Text('Login'),
-        centerTitle: true,
-        backgroundColor: Colors.black,
-        elevation: 0.0,
-      ),
-      body: Container(
-
-        child: Column(
-            children: <Widget>[
-              Image(image: AssetImage('pics/b.png')),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-
-                  //Sign in button
-                  Container(
-                    padding: EdgeInsets.all(20.0),
-                    height: 70.0,
-                    width: 150.0,
-                    decoration: BoxDecoration(
-                        color: Colors.blue[400],
-                        borderRadius: BorderRadius.circular(20)
-                    ),
-                    child: TextButton(
-                      onPressed: () {
-                        widget.toggle();
-                      },
-                      child: Text('Sign In', style: TextStyle(color: Colors.black),),
-
-
-                    ),
                   ),
+                ),
+                Column(
+                  children: [
+                    SizedBox(height: 50),
+                    Container(
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                          color: Colors.blue,
+                          borderRadius: BorderRadius.circular(16)
 
-                  //Sign up button
-                  Container(
+                      ),
 
-                    height: 70.0,
-                    width: 150.0,
-                    decoration: BoxDecoration(
-                        color: Colors.blue[400],
-                        borderRadius: BorderRadius.circular(20)
-                    ),
-                    child: TextButton(
-                      onPressed: () {
-                        widget.toggle();
-                      },
-                      child: Text('Sign Up', style: TextStyle(color: Colors.black),),
-
-                    ),
-                  ),
-                ],
-              ),
-              //Container for the Username and Password Fields
-              Container(
-                  padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
-                  child:
-
-                  //Username Field
-                  TextFormField(
-                      obscureText: true,
-                      decoration: InputDecoration(
-                          fillColor: Colors.white,
-                          filled: true,
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.white, width: 2.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            child: FlatButton(
+                              onPressed: (){
+                                widget.toggle();
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(vertical: 16.0),
+                                child: Text('Sign In', style: kbod,),
+                              ),
+                            ),
                           ),
-                          contentPadding: EdgeInsets.fromLTRB(10.0, 20.0, 0.0, 0.0),
-                          hintText: "Username",
-                          border:
-                          OutlineInputBorder(borderRadius: BorderRadius.circular(40.0)))
-                      ,
-                      style: TextStyle(
-                        color: Colors.blue,
-                        letterSpacing: 2.0,
-
-                        fontWeight: FontWeight.bold,
-                      ))),
-
-              SizedBox(height: 5.0),
-              Container(
-                padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 50.0),
-                child:
-
-                //Password Field
-                TextFormField(
-
-                  obscureText: true,
-
-                  decoration: InputDecoration(
-                      fillColor: Colors.white,
-                      filled: true,
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white, width: 3.0),
+                          Container(
+                            child: FlatButton(
+                              onPressed: (){
+                                widget.toggle();
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(vertical: 16.0),
+                                child: Text('Sign Up', style: kbod,),
+                              ),
+                            ),
+                          )
+                        ],
                       ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.pink, width: 4.0),
-                      ),
-
-                      contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 0.0),
-                      hintText: "Password",
-                      border:
-                      OutlineInputBorder(borderRadius: BorderRadius.circular(50.0))),
-                ),),
-
-              SizedBox(height: 10.0),
-
-              //Container containing the login button
-              Container(
-                padding: EdgeInsets.all(0.0),
-                child: FloatingActionButton.extended(
-                  onPressed: (){
-                  },
-                  label: Text('Login to the Guild'),
-                  icon: Icon(Icons.login),
+                    ),
+                  ],
                 ),
-              ),
-              SizedBox(height: 5.0),
+                SizedBox(
+                  height: 150,),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 40),
+                  child: Column(
+                    children:[ Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        TextInput(
+                          icon: Icons.email,
+                          hint: 'Username or Email',
+                          inputType: TextInputType.emailAddress,
+                          inputAction: TextInputAction.next,
+                        ),
+                        PasswordInput(
+                          icon: Icons.lock,
+                          hint: 'Password',
+                          inputAction: TextInputAction.done,
+                        ),
+                        Text('ForgetPassword?',
+                          style: kbod,),
+                      ],
+                    ),
+                      Column(
+                        children: [
+                          SizedBox(height: 50),
+                          Container(
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                                color: Colors.blue,
+                                borderRadius: BorderRadius.circular(16)
 
-              //Container that Contaning the Forgot password button
-              Container(
-                padding: EdgeInsets.all(10.0),
-                child: FloatingActionButton.extended(
-                  onPressed: () {
-                    widget.toggle();
-                  },
-                  label: Text('Forget Thee Password?'),
+                            ),
+                            child: FlatButton(
+                              onPressed: (){
+
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(vertical: 16.0),
+                                child: Text('Login', style: kbod,),
+                              ),
+                            ),
+                          ),
+                        ],
+                      )
+                    ],),
                 ),
-              ),
-            ]),
-      ),
+              ],
+            ),
+          )
+          ,
+        ),
+
+      ],
     );
   }
 }
