@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pb_blueprotocal/pallete.dart';
+import 'package:pb_blueprotocal/shared/constants.dart';
 
 
 class TextInput extends StatelessWidget {
