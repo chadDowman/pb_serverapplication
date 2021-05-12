@@ -33,32 +33,29 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                         Column(
                           children: [
                             SizedBox(height: 0),
-                            Container(
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                  color: Colors.blue,
-                                  borderRadius: BorderRadius.circular(16)),
-                              child: Row(
-                                children: [
-                                  Container(
-                                    child: FlatButton(
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                      },
-                                      child: Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 16.0),
-                                        child: Text(
-                                          'Back',
-                                          style: kbod,
+                                Container(
+                                  width: double.infinity,
+                                  decoration: BoxDecoration(
+                                      color: Colors.transparent,
+                                      borderRadius: BorderRadius.circular(16)
+
+                                  ),
+
+                                  child: Row(
+                                    children: [
+                                      Container(
+                                        child: IconButton(
+                                          icon: const Icon(Icons.backspace_sharp),
+                                          color: Colors.black87,
+                                          tooltip: 'Back to Login',
+                                          onPressed: (){Navigator.pop(context);},
+
                                         ),
                                       ),
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
-                          ],
+                                    ],
+                                  ),
+                                ),
+                              ],
                         ),
                         SizedBox(
                           height: 300,
