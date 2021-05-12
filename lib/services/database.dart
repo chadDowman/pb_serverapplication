@@ -1,5 +1,11 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:pb_blueprotocal/models/user.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class DatabaseService {
   final String uid;
@@ -13,12 +19,16 @@ class DatabaseService {
       Firestore.instance.collection("Guild_Members");
 
   //Sets User Data
-  Future updateUserData(String username, String role) async {
+  Future updateUserData(String username, String role, String imgUrl) async {
     return await userInfo.document(uid).setData({
       "username": username,
       "role": role,
+      "imgUrl": imgUrl,
     });
   }
+
+
+
 
 // // Gets User Details Via Stream
 //

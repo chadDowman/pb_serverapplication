@@ -247,7 +247,7 @@ class _RegisterState extends State<Register> {
                                                 setState(() {
                                                   loading = true;
                                                 });
-                                                dynamic result = await _auth.registerUser(email, password, username);
+                                                dynamic result = await _auth.registerUser(email, password, username, "https://static0.cbrimages.com/wordpress/wp-content/uploads/2020/07/Rem-re-zero-promo-Cropped.jpg");
                                                 if (result == null) {
                                                   setState(() {
                                                     error =
