@@ -32,8 +32,9 @@ class Profile extends StatelessWidget {
                                 icon: const Icon(Icons.backspace_sharp),
                                 color: Colors.white,
                                 tooltip: 'Increase volume by 10',
-                                onPressed: (){},
-
+                                onPressed: (){
+                                  Navigator.pop(context);
+                                },
                               ),
                             ),
                           ],
