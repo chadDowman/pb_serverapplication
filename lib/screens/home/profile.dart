@@ -6,7 +6,6 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:pb_blueprotocal/services/auth.dart';
 import 'package:pb_blueprotocal/services/database.dart';
 import 'package:pb_blueprotocal/shared/constants.dart';
 import 'package:permission_handler/permission_handler.dart';
