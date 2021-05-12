@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pb_blueprotocal/screens/authenticate/login.dart';
 import 'package:pb_blueprotocal/services/auth.dart';
 import 'package:pb_blueprotocal/shared/constants.dart';
@@ -137,6 +138,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                                               await _auth
                                                   .sendPasswordResetEmail(
                                                       email);
+                                              Fluttertoast.showToast(msg: "Password Reset Email Sent");
                                               loading = false;
                                               Navigator.push(
                                                   context,
