@@ -81,26 +81,7 @@ class profile extends StatelessWidget {
                             ),
                           ),
                           SizedBox(height: 10),
-                          Text(
-                            'Surname',
-                            style: TextStyle(
-                              color: Colors.grey,
-                              letterSpacing: 2,
-                            ),
-                          ),
-                          SizedBox(height: 10),
-                          TextFormField(
-                            decoration: InputDecoration(
-                              contentPadding: const EdgeInsets.symmetric(vertical: 20),
-                              border: InputBorder.none,
-                              hintText: 'Password',
-                              prefixIcon: Icon(
-                                Icons.lock,
-                                color: Colors.white,
-                              ),
-                              hintStyle: kbod,
-                            ),
-                          ),
+                         
                           SizedBox(height: 30),
                           Row(
                             children: [
