@@ -4,10 +4,10 @@ class User{
   User({this.uid});
 }
 
-class UserAccount{
+class UserAccountData{
   final String uid;
   final String username;
   final String role;
 
-  UserAccount({this.uid, this.username, this.role});
+  UserAccountData({this.uid, this.username, this.role});
 }
