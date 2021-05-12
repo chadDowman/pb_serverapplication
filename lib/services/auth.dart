@@ -5,6 +5,7 @@ import 'package:pb_blueprotocal/services/database.dart';
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   bool emailVerified = false;
+
   User _userFromFirebaseUser(FirebaseUser user) {
     //If user != null then User(uid: user.uid) will be the return if not true return null
     return user != null
@@ -76,7 +77,7 @@ class AuthService {
 
   //Everytime USer signs in or out we will get a response via this event stream
   //Auth Change User Stream
-  Stream<User> get user {
-    return _auth.onAuthStateChanged.map(_userFromFirebaseUser);
-  }
+  // Stream<User> get user {
+  //   return _auth.onAuthStateChanged.map(_userFromFirebaseUser);
+  // }
 }
