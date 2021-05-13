@@ -29,8 +29,10 @@ class _NavState extends State<Nav> {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
-        title: Text("HOME SCREEN"),
-        leading: new Container(),
+        automaticallyImplyLeading: false,
+        //   await _auth.logOut(); // Calls sign out function
+        // Navigator.push(context, MaterialPageRoute(builder: (context) => Login()));
+        title: Center(child: Text("HOME SCREEN")),
         elevation: 0.0,
       ),
       body: _widgetOptions.elementAt(_selectedIndex),

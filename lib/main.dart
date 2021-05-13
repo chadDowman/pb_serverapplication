@@ -14,7 +14,9 @@ class MyApp extends StatelessWidget {
       value: AuthService().user,
       child: MaterialApp(
         home: Login(),
+        debugShowCheckedModeBanner: false,
       ),
+
     );
     // Creates instance of auth service and accesses the user stream on it
   }
