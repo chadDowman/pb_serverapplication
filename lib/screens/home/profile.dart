@@ -58,11 +58,6 @@ class _ProfileState extends State<Profile> {
                     child: SafeArea(
                       child: Column(
                         children: [
-                          Column(
-                            children: [
-                              SizedBox(height: 0),
-                            ],
-                          ),
                           SizedBox(
                             height: 50,
                           ),
@@ -160,6 +155,30 @@ class _ProfileState extends State<Profile> {
                                         ),
                                       ),
                                     ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: 50),
+                          Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 146),
+                            decoration: BoxDecoration(
+                                color: Colors.transparent,
+                                borderRadius: BorderRadius.circular(16)
+
+                            ),
+                            child: Center(
+                              child: Row(
+                                children: [
+                                  Container(
+                                    padding: const EdgeInsets.symmetric(vertical: 20),
+                                    child: ElevatedButton(onPressed: (){},
+                                      child: Icon(Icons.logout),
+
+
+
+                                    ),
                                   ),
                                 ],
                               ),
