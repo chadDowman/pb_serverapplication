@@ -12,9 +12,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return StreamProvider<User>.value(
       value: AuthService().user,
+      initialData: null,
       child: MaterialApp(
-        home: Login(),
         debugShowCheckedModeBanner: false,
+        home: Login(),
       ),
 
     );

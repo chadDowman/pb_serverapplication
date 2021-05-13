@@ -20,7 +20,6 @@ class _NavState extends State<Nav> {
   void _onItemTap(int index) {
     setState(() {
       _selectedIndex = index;
-      print("Life");
     });
   }
 
@@ -30,8 +29,6 @@ class _NavState extends State<Nav> {
       backgroundColor: Colors.black,
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        //   await _auth.logOut(); // Calls sign out function
-        // Navigator.push(context, MaterialPageRoute(builder: (context) => Login()));
         title: Center(child: Text("HOME SCREEN")),
         elevation: 0.0,
       ),

@@ -75,21 +75,19 @@ class AuthService {
     }
   }
 
-  //LogOut
-  Future logOut() async {
-    try {
-      return await _auth.signOut();
-    } catch (e) {
-      print(
-          "------------------------------------------------------------------------");
-      print(e.toString());
-      return null;
-    }
-  }
+  // //LogOut
+  // Future logOut() async {
+  //   try {
+  //     return await _auth.signOut();
+  //   } catch (e) {
+  //     print(
+  //         "------------------------------------------------------------------------");
+  //     print(e.toString());
+  //     return null;
+  //   }
+  // }
 
-  getUserUID() async {
-    final FirebaseUser user = await _auth.currentUser();
-    final uid = user.uid;
-    return uid.toString();
+  Future<void> logOut() async {
+    await FirebaseAuth.instance.signOut();
   }
 }

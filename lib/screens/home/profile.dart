@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pb_blueprotocal/models/user.dart';
+import 'package:pb_blueprotocal/screens/authenticate/login.dart';
+import 'package:pb_blueprotocal/services/auth.dart';
 import 'package:pb_blueprotocal/services/database.dart';
 import 'package:pb_blueprotocal/shared/constants.dart';
 import 'package:pb_blueprotocal/shared/loading.dart';
@@ -21,35 +23,38 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+
   String userUID;
   String username;
   String usernameForField;
   String imageUrlGet;
   String imageUrl;
   UserAccountData outObjectUserAccount;
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  final CollectionReference userInfo =
-      Firestore.instance.collection("Guild_Members");
-
-  final _formKey = GlobalKey<FormState>();
-
 
   // Accesses User Data from the provider
 
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
-    userUID = user.uid;
-    print("------------PROVIDER UID----------------------");
-    print(user.uid);
-    print(userUID);
+    final AuthService _auth = AuthService(); // Instance of auth service class
 
-    return StreamBuilder<UserAccountData>(
+    final _formKey = GlobalKey<FormState>();
+
+    print("------------PROVIDER UID----------------------");
+    return user == null ? Loading() : StreamBuilder<UserAccountData>(
         stream: DatabaseService(uid: user.uid).userData,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
+            if(user.uid != null){
+              print("------------PROVIDER UID----------------------");
+              print("ITS NOT NULL");
+            }else{
+              print("------------PROVIDER UID----------------------");
+              print("ITS NULL");
+            }
             UserAccountData userAccountData = snapshot.data;
             outObjectUserAccount = userAccountData;
+            userUID = user.uid;
             return Stack(
               children: [
                 Scaffold(
@@ -166,7 +171,10 @@ class _ProfileState extends State<Profile> {
                     ),
                   ),
                   floatingActionButton: FloatingActionButton.extended(
-                    onPressed: () {},
+                    onPressed: () async{
+                        await _auth.logOut(); // Calls sign out function
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => Login()));
+                    },
                     label: Text('Logout'),
                     icon: Icon(Icons.logout),
                     backgroundColor: Colors.pink,
@@ -179,6 +187,8 @@ class _ProfileState extends State<Profile> {
           }
         });
   }
+
+
 
   changeUsername() async {
     await DatabaseService(uid: userUID)
