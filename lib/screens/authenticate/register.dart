@@ -49,37 +49,32 @@ class _RegisterState extends State<Register> {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Container(
-                                    child: FlatButton(
-                                      onPressed: () {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) => Login()));
-                                      },
-                                      child: Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 16.0),
-                                        child: Text(
-                                          'Sign In',
-                                          style: kbod,
+                                    decoration: BoxDecoration(
+                                        color: Colors.transparent,
+                                        borderRadius: BorderRadius.circular(16)),
+                                    child: Row(
+                                      children: [
+                                        Container(
+                                          child: IconButton(
+                                            icon: const Icon(Icons.backspace_sharp),
+                                            color: Colors.white,
+                                            tooltip: 'Increase volume by 10',
+                                            onPressed: () {
+                                              Navigator.pop(context);
+                                            },
+                                          ),
                                         ),
-                                      ),
+                                      ],
                                     ),
                                   ),
                                   Container(
                                     child: FlatButton(
-                                      onPressed: () {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    Register()));
-                                      },
+                                      onPressed: () {},
                                       child: Padding(
                                         padding: const EdgeInsets.symmetric(
                                             vertical: 16.0),
                                         child: Text(
-                                          'Sign Up',
+                                          '',
                                           style: kbod,
                                         ),
                                       ),

@@ -9,7 +9,6 @@ import 'package:pb_blueprotocal/Widgets/backGroundImg.dart';
 import 'package:pb_blueprotocal/shared/loading.dart';
 
 class Login extends StatefulWidget {
-
   @override
   _LoginState createState() => _LoginState();
 }
@@ -17,7 +16,6 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   final AuthService _auth = AuthService(); // Instance of auth service class
   final _formKey = GlobalKey<FormState>();
-
 
   //Text Field States
   String email = "";
@@ -47,19 +45,16 @@ class _LoginState extends State<Login> {
                                 color: Colors.blue,
                               ),
                               child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:  MainAxisAlignment.spaceBetween,
                                 children: [
                                   Container(
                                     child: FlatButton(
-                                      onPressed: () {
-                                        Navigator.push(context, MaterialPageRoute(builder: (context) => Login()));
-                                      },
+                                      onPressed: () {},
                                       child: Padding(
                                         padding: const EdgeInsets.symmetric(
                                             vertical: 16.0),
                                         child: Text(
-                                          'Sign In',
+                                          '',
                                           style: kbod,
                                         ),
                                       ),
@@ -68,7 +63,7 @@ class _LoginState extends State<Login> {
                                   Container(
                                     child: FlatButton(
                                       onPressed: () {
-                                        Navigator.push(context, MaterialPageRoute(builder: (context) => Register()));
+                                        Navigator.push(context,MaterialPageRoute(builder: (context) => Register()));
                                       },
                                       child: Padding(
                                         padding: const EdgeInsets.symmetric(
@@ -159,7 +154,11 @@ class _LoginState extends State<Login> {
                                     ),
                                     TextButton(
                                       onPressed: () {
-                                        Navigator.push(context, MaterialPageRoute(builder: (context) => ForgotPassword()));
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    ForgotPassword()));
                                       },
                                       child: Text(
                                         'Forget Password?',
@@ -184,18 +183,27 @@ class _LoginState extends State<Login> {
                                             setState(() {
                                               loading = true;
                                             });
-                                            dynamic result = await _auth.loginUser(email, password);
+                                            dynamic result = await _auth
+                                                .loginUser(email, password);
                                             if (result == null) {
                                               setState(() {
                                                 error = "Invalid Credentials";
                                                 loading = false;
                                               });
-                                            }else{
+                                            } else {
                                               loading = false;
-                                              if(_auth.emailVerified){
-                                                Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
-                                              }else{
-                                                Navigator.push(context, MaterialPageRoute(builder: (context) => Login()));
+                                              if (_auth.emailVerified) {
+                                                Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            Home()));
+                                              } else {
+                                                Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            Login()));
                                               }
                                             }
                                           }
