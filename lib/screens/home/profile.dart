@@ -13,7 +13,7 @@ import 'package:permission_handler/permission_handler.dart';
 final _formKey = GlobalKey<FormState>();
 
 class Profile extends StatefulWidget {
-  const Profile({Key key}) : super(key: key);
+
 
   @override
   _ProfileState createState() => _ProfileState();
@@ -22,11 +22,13 @@ class Profile extends StatefulWidget {
 class _ProfileState extends State<Profile> {
   String userUID;
   String username;
+  String usernameForField;
   String imageUrlGet;
   String imageUrl;
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final CollectionReference userInfo =
       Firestore.instance.collection("Guild_Members");
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -69,6 +71,7 @@ class _ProfileState extends State<Profile> {
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 40),
                     child: Form(
+                      key: _formKey,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
@@ -120,6 +123,14 @@ class _ProfileState extends State<Profile> {
                               ),
                               hintStyle: kbod,
                             ),
+                            validator: (val) => val.isEmpty
+                                ? "Enter A Username!"
+                                : null,
+                            onChanged: (val) {
+                              setState(() {
+                                usernameForField = val;
+                              });
+                            },
                           ),
                           SizedBox(height: 10),
                           Text(
@@ -147,7 +158,11 @@ class _ProfileState extends State<Profile> {
                           Row(
                             children: [
                               ElevatedButton(
-                                onPressed: () {},
+                                onPressed: () async{
+                                   if(_formKey.currentState.validate()){
+                                     await changeUsername();
+                                   }
+                                },
                                 child: Padding(
                                   padding: const EdgeInsets.symmetric(
                                       vertical: 16.0),
@@ -199,6 +214,13 @@ class _ProfileState extends State<Profile> {
     var url = await ref.getDownloadURL();
 
     print(url);
+  }
+
+  changeUsername() async{
+    await getUserUID();
+    await getUsersList();
+    await DatabaseService(uid: userUID).updateUserData(usernameForField, "member", imageUrlGet);
+    Fluttertoast.showToast(msg: "Username Successfully Updated");
   }
 
   uploadImage() async {

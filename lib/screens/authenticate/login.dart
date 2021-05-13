@@ -160,7 +160,7 @@ class _LoginState extends State<Login> {
                                     ),
                                     TextButton(
                                       onPressed: () {
-                                        Navigator.push(context, MaterialPageRoute(builder: (context) => Profile()));
+                                        Navigator.push(context, MaterialPageRoute(builder: (context) => ForgotPassword()));
                                       },
                                       child: Text(
                                         'Forget Password?',

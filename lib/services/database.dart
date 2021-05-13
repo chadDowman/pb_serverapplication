@@ -27,6 +27,14 @@ class DatabaseService {
     });
   }
 
+  Future updateUsernameDataOnly(String username, String role, String imgUrl) async {
+    return await userInfo.document(uid).setData({
+      "username": username,
+    });
+  }
+
+
+
 
 
 
