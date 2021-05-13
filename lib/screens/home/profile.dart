@@ -160,33 +160,16 @@ class _ProfileState extends State<Profile> {
                               ),
                             ),
                           ),
-                          SizedBox(height: 50),
-                          Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 146),
-                            decoration: BoxDecoration(
-                                color: Colors.transparent,
-                                borderRadius: BorderRadius.circular(16)
 
-                            ),
-                            child: Center(
-                              child: Row(
-                                children: [
-                                  Container(
-                                    padding: const EdgeInsets.symmetric(vertical: 20),
-                                    child: ElevatedButton(onPressed: (){},
-                                      child: Icon(Icons.logout),
-
-
-
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
                         ],
                       ),
                     ),
+                  ),
+                  floatingActionButton: FloatingActionButton.extended(
+                    onPressed: () {},
+                    label: Text('Logout'),
+                    icon: Icon(Icons.logout),
+                    backgroundColor: Colors.pink,
                   ),
                 ),
               ],
