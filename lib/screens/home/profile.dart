@@ -249,6 +249,7 @@ class _ProfileState extends State<Profile> {
           var downloadUrl = await snapshot.ref.getDownloadURL();
           imageUrl = downloadUrl;
           await DatabaseService(uid: userUID).updateUserData(username, "member", imageUrl);
+          Navigator.pop(context);
           Navigator.push(context, MaterialPageRoute(builder: (context) => Profile()));
         } else {
           Fluttertoast.showToast(msg: "Image Error");

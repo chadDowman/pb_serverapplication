@@ -7,7 +7,6 @@ import 'package:pb_blueprotocal/Widgets/SignBackImg.dart';
 import 'package:pb_blueprotocal/shared/loading.dart';
 
 class Register extends StatefulWidget {
-
   @override
   _RegisterState createState() => _RegisterState();
 }
@@ -52,7 +51,10 @@ class _RegisterState extends State<Register> {
                                   Container(
                                     child: FlatButton(
                                       onPressed: () {
-                                        Navigator.push(context, MaterialPageRoute(builder: (context) => Login()));
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) => Login()));
                                       },
                                       child: Padding(
                                         padding: const EdgeInsets.symmetric(
@@ -67,7 +69,11 @@ class _RegisterState extends State<Register> {
                                   Container(
                                     child: FlatButton(
                                       onPressed: () {
-                                        Navigator.push(context, MaterialPageRoute(builder: (context) => Register()));
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    Register()));
                                       },
                                       child: Padding(
                                         padding: const EdgeInsets.symmetric(
@@ -247,16 +253,25 @@ class _RegisterState extends State<Register> {
                                                 setState(() {
                                                   loading = true;
                                                 });
-                                                dynamic result = await _auth.registerUser(email, password, username, "https://static0.cbrimages.com/wordpress/wp-content/uploads/2020/07/Rem-re-zero-promo-Cropped.jpg");
+                                                dynamic result =
+                                                    await _auth.registerUser(
+                                                        email,
+                                                        password,
+                                                        username,
+                                                        "https://static0.cbrimages.com/wordpress/wp-content/uploads/2020/07/Rem-re-zero-promo-Cropped.jpg");
                                                 if (result == null) {
                                                   setState(() {
                                                     error =
                                                         "Please Supply a Valid Email or Password";
                                                     loading = false;
                                                   });
-                                                }else{
+                                                } else {
                                                   loading = false;
-                                                  Navigator.push(context, MaterialPageRoute(builder: (context) => Login()));
+                                                  Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              Login()));
                                                 }
                                               }
                                             },
