@@ -30,17 +30,8 @@ class _NavState extends State<Nav> {
       backgroundColor: Colors.black,
       appBar: AppBar(
         title: Text("HOME SCREEN"),
+        leading: new Container(),
         elevation: 0.0,
-        actions: <Widget>[
-          FlatButton.icon(
-            icon: Icon(Icons.person),
-            label: Text("Logout"),
-            onPressed: () async {
-              await _auth.logOut(); // Calls sign out function
-              Navigator.push(context, MaterialPageRoute(builder: (context) => Login()));
-            },
-          ),
-        ],
       ),
       body: _widgetOptions.elementAt(_selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
