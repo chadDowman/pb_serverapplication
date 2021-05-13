@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:pb_blueprotocal/screens/authenticate/forgotPass.dart';
 import 'package:pb_blueprotocal/screens/authenticate/register.dart';
 import 'package:pb_blueprotocal/screens/home/home.dart';
-import 'package:pb_blueprotocal/screens/home/profile.dart';
 import 'package:pb_blueprotocal/services/auth.dart';
 import 'package:pb_blueprotocal/shared/constants.dart';
 import 'package:flutter/widgets.dart';
