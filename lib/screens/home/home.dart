@@ -18,9 +18,9 @@ class Home extends StatelessWidget {
             icon: Icon(Icons.person),
             label: Text("Logout"),
             onPressed: () async {
-              await _auth.logOut(); // Calls sign out function
+              //await _auth.logOut(); // Calls sign out function
               Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => Login()));
+                  context, MaterialPageRoute(builder: (context) => Profile()));
             },
           ),
         ],

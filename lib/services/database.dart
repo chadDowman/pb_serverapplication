@@ -15,8 +15,8 @@ class DatabaseService {
   DatabaseService({this.uid}); // Constructor
 
   //Creates if not created and makes the database reference
-  final CollectionReference userInfo =
-      Firestore.instance.collection("Guild_Members");
+  final CollectionReference userInfo = Firestore.instance.collection("Guild_Members");
+
 
   //Sets User Data
   Future updateUserData(String username, String role, String imgUrl) async {
@@ -27,33 +27,22 @@ class DatabaseService {
     });
   }
 
-  Future updateUsernameDataOnly(String username, String role, String imgUrl) async {
-    return await userInfo.document(uid).setData({
-      "username": username,
-    });
+  //UserAccountData Stream!
+  //-------------------------------------------------------------------------------
+  UserAccountData _userDataFromSnapshot(DocumentSnapshot snapshot){
+    return UserAccountData(
+      uid: uid,
+      username: snapshot.data["username"],
+      role: snapshot.data["role"],
+      imgUrl: snapshot.data["imgUrl"],
+    );
+
+  }
+  Stream<UserAccountData> get userData{
+    return userInfo.document(uid).snapshots().map(_userDataFromSnapshot);
   }
 
+  //-------------------------------------------------------------------------------
 
-
-
-
-
-// // Gets User Details Via Stream
-//
-// UserAccountData _userAccountDataFromSnapShot (DocumentSnapshot snapshot){
-//   return UserAccountData(
-//     uid: uid,
-//     username: snapshot.data["username"],
-//     role: snapshot.data["role"],
-//       imageUrl: snapshot.data["imageUrl"]
-//   );
-// }
-//
-// Stream<UserAccountData> get userData {
-//   return userInfo
-//       .document(uid)
-//       .snapshots()
-//       .map(_userAccountDataFromSnapShot); // UID says which document to get
-// }
 
 }
