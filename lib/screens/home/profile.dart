@@ -65,17 +65,18 @@ class _ProfileState extends State<Profile> {
                                 width: double.infinity,
                                 decoration: BoxDecoration(
                                     color: Colors.transparent,
-                                    borderRadius: BorderRadius.circular(16)),
+                                    borderRadius: BorderRadius.circular(16)
+
+                                ),
                                 child: Row(
                                   children: [
                                     Container(
                                       child: IconButton(
                                         icon: const Icon(Icons.backspace_sharp),
-                                        color: Colors.white,
-                                        tooltip: 'Increase volume by 10',
-                                        onPressed: () {
-                                          Navigator.pop(context);
-                                        },
+                                        color: Colors.black87,
+                                        tooltip: 'Back to Login',
+                                        onPressed: (){Navigator.pop(context);},
+
                                       ),
                                     ),
                                   ],
