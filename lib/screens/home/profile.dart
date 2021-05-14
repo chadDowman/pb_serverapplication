@@ -42,10 +42,10 @@ class _ProfileState extends State<Profile> {
         stream: DatabaseService(uid: user.uid).userData,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            if(user.uid != null){
+            if (user.uid != null) {
               print("------------PROVIDER UID----------------------");
               print("ITS NOT NULL");
-            }else{
+            } else {
               print("------------PROVIDER UID----------------------");
               print("ITS NULL");
             }
@@ -60,111 +60,130 @@ class _ProfileState extends State<Profile> {
                     child: SafeArea(
                       child: Column(
                         children: [
-                          SizedBox(
-                            height: 50,
-                          ),
-                          Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 40),
-                            child: Form(
-                              key: _formKey,
-                              child: Column(
+                        SizedBox(
+                        height: 50,
+                      ),
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 40),
+                        child: Form(
+                            key: _formKey,
+                            child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
-                                  Center(
-                                    child: InkWell(
-                                      onTap: () => uploadImage(),
-                                      child: CircleAvatar(
-                                        backgroundImage:
-                                            NetworkImage(userAccountData.imgUrl),
-                                        radius: 40,
-                                      ),
-                                    ),
-                                  ),
-                                  Divider(
-                                    height: 60,
-                                    color: Colors.grey[800],
-                                  ),
-                                  Text(
-                                    'Name',
-                                    style: TextStyle(
-                                      color: Colors.grey,
-                                      letterSpacing: 2,
-                                    ),
-                                  ),
-                                  SizedBox(height: 10),
-                                  TextFormField(
-                                    decoration: InputDecoration(
-                                      contentPadding:
-                                          const EdgeInsets.symmetric(
-                                              vertical: 20),
-                                      border: InputBorder.none,
-                                      hintText: 'Username',
-                                      prefixIcon: Icon(
-                                        Icons.email,
-                                        color: Colors.white,
-                                      ),
-                                      hintStyle: kbod,
-                                    ),
-                                    validator: (val) => val.isEmpty
-                                        ? "Enter A Username!"
-                                        : null,
-                                    onChanged: (val) {
-                                      setState(() {
-                                        usernameForField = val;
-                                      });
-                                    },
-                                  ),
-                                  SizedBox(height: 30),
-                                  Row(
-                                    children: [
-                                      ElevatedButton(
-                                        onPressed: () async {
-                                          if (_formKey.currentState.validate()) {
-                                            await changeUsername();
-                                          }
-                                        },
-                                        child: Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              vertical: 16.0),
-                                          child: Text(
-                                            'Change',
-                                            style: kbod,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-
-                        ],
+                            Center(
+                            child: InkWell(
+                                onTap: () => uploadImage(),
+                        child: CircleAvatar(
+                          backgroundImage:
+                          NetworkImage(userAccountData.imgUrl),
+                          radius: 40,
+                        ),
                       ),
                     ),
-                  ),
-                  floatingActionButton: FloatingActionButton.extended(
-                    onPressed: () async{
-                        await _auth.logOut(); // Calls sign out function
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => Login()));
-                    },
-                    label: Text('Logout'),
-                    icon: Icon(Icons.logout),
-                    backgroundColor: Colors.pink,
+                    Divider(
+                      height: 60,
+                      color: Colors.grey[800],
+                    ),
+                    Text(
+                      'Name',
+                      style: TextStyle(
+                        color: Colors.grey,
+                        letterSpacing: 2,
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                    TextFormField(
+                      decoration: InputDecoration(
+                        contentPadding:
+                        const EdgeInsets.symmetric(
+                            vertical: 20),
+                        border: InputBorder.none,
+                        hintText: 'Username',
+                        prefixIcon: Icon(
+                          Icons.email,
+                          color: Colors.white,
+                        ),
+                        hintStyle: kbod,
+                      ),
+                      validator: (val) =>
+                      val.isEmpty
+                          ? "Enter A Username!"
+                          : null,
+                      onChanged: (val) {
+                        setState(() {
+                          usernameForField = val;
+                        });
+                      },
+                    ),
+                    SizedBox(height: 30),
+                    Row(
+                      children: [
+                        ElevatedButton(
+                          onPressed: () async {
+                            if (_formKey.currentState.validate()) {
+                              await changeUsername();
+                            }
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 16.0),
+                            child: Text(
+                              'Change',
+                              style: kbod,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Column(
+                      children: [
+                        SizedBox(height: 50),
+                        Container(
+                          height: 60,
+                          width: 88,
+                          decoration: BoxDecoration(
+                              color: Colors.blue,
+                              borderRadius:
+                              BorderRadius.circular(16)),
+                          child: FlatButton(
+                            onPressed: () {},
+                            child: Text(
+                              'Delete account',
+                              style: butt,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
+
               ],
-            );
+            ),
+          ),
+          ),
+          floatingActionButton: FloatingActionButton.extended(
+          onPressed: () async{
+          await _auth.logOut(); // Calls sign out function
+          Navigator.push(context, MaterialPageRoute(builder: (context) => Login()));
+          },
+          label: Text('Logout'),
+          icon: Icon(Icons.logout),
+          backgroundColor: Colors.pink,
+          ),
+          ),
+          ],
+          );
           } else {
-            return Loading();
+          return Loading();
           }
         });
   }
 
 
-
   changeUsername() async {
-    await DatabaseService(uid: userUID).updateUserData(usernameForField, "member", outObjectUserAccount.imgUrl);
+    await DatabaseService(uid: userUID).updateUserData(
+        usernameForField, "member", outObjectUserAccount.imgUrl);
 
     Fluttertoast.showToast(msg: "Username Successfully Updated");
   }
@@ -194,7 +213,8 @@ class _ProfileState extends State<Profile> {
           var downloadUrl = await snapshot.ref.getDownloadURL();
           imageUrl = downloadUrl;
           await DatabaseService(uid: userUID)
-              .updateUserData(outObjectUserAccount.username, "member", imageUrl);
+              .updateUserData(
+              outObjectUserAccount.username, "member", imageUrl);
         } else {
           Fluttertoast.showToast(msg: "Image Error");
         }
@@ -205,8 +225,8 @@ class _ProfileState extends State<Profile> {
       print(
           "--------------------------------------------------------------------------------------------------------------------------");
       print(e);
-      print("--------------------------------------------------------------------------------------------------------------------------");
-
+      print(
+          "--------------------------------------------------------------------------------------------------------------------------");
     }
   }
 }

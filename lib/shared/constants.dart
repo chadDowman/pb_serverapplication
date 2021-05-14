@@ -10,3 +10,8 @@ const TextStyle kbod = TextStyle(
   fontSize: 22,
   color: Colors.white,
 );
+const TextStyle butt = TextStyle(
+  fontSize: 15,
+  fontWeight: FontWeight.bold,
+  color: Colors.white,
+);
