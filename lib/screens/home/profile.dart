@@ -119,8 +119,7 @@ class _ProfileState extends State<Profile> {
                                     children: [
                                       ElevatedButton(
                                         onPressed: () async {
-                                          if (_formKey.currentState
-                                              .validate()) {
+                                          if (_formKey.currentState.validate()) {
                                             await changeUsername();
                                           }
                                         },
@@ -165,8 +164,8 @@ class _ProfileState extends State<Profile> {
 
 
   changeUsername() async {
-    await DatabaseService(uid: userUID)
-        .updateUserData(usernameForField, "member", outObjectUserAccount.imgUrl);
+    await DatabaseService(uid: userUID).updateUserData(usernameForField, "member", outObjectUserAccount.imgUrl);
+
     Fluttertoast.showToast(msg: "Username Successfully Updated");
   }
 
