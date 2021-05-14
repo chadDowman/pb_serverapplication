@@ -12,14 +12,14 @@ class EventTile extends StatelessWidget {
       padding: EdgeInsets.only(top: 8.0),
       child: Card(
         margin: EdgeInsets.fromLTRB(20, 6, 20, 0),
-        child: ListTile(
+        child: ExpansionTile(
           leading: CircleAvatar(
             //The left image thing
+            backgroundImage: AssetImage("pics/PixelatedBrosPic.png"),
             radius: 25,
-            backgroundColor: Colors.brown[200],
           ),
           title: Text(event.eventName),
-          subtitle: Text(event.eventDescription),
+          children: [Text(event.eventDescription)],
         ),
       ),
     );
