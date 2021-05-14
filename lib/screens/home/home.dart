@@ -15,11 +15,19 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    return StreamProvider<List<Event>>.value(
-      value: DatabaseService().eventsList,
-      child: Scaffold(
-        body: EventList(),
-      ),
+    return StreamProvider < List < Event
+    >>.value(
+    value: DatabaseService().eventsList,
+    child: Scaffold(
+      backgroundColor: Colors.transparent,
+
+
+    body: Container(
+    decoration: BoxDecoration(
+    image: DecorationImage(image: AssetImage('pics/wolf.jpg'),),),
+
+    child: EventList()),
+    ),
     );
   }
 }

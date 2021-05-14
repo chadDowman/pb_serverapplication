@@ -37,12 +37,16 @@ class _NavState extends State<Nav> {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
+        backgroundColor: Colors.grey[800],
         automaticallyImplyLeading: false,
         title: Center(child: Text(screenName)),
         elevation: 0.0,
       ),
       body: _widgetOptions.elementAt(_selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.transparent,
+        selectedItemColor: Colors.deepPurple,
+        unselectedItemColor: Colors.red,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
@@ -59,6 +63,7 @@ class _NavState extends State<Nav> {
         ],
         currentIndex: _selectedIndex,
         onTap: _onItemTap,
+
       ),
     );
   }
