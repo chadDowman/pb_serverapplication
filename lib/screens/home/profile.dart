@@ -12,181 +12,212 @@ import 'package:pb_blueprotocal/shared/loading.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 
-final _formKey = GlobalKey<FormState>();
-
 class Profile extends StatefulWidget {
   @override
   _ProfileState createState() => _ProfileState();
 }
 
 class _ProfileState extends State<Profile> {
-
   String userUID;
   String username;
   String usernameForField;
   String imageUrlGet;
   String imageUrl;
+  String email;
+  String password;
   UserAccountData outObjectUserAccount;
+  final _formKey = GlobalKey<FormState>();
+  final AuthService _auth = AuthService(); // Instance of auth service class
 
   // Accesses User Data from the provider
 
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
-    final AuthService _auth = AuthService(); // Instance of auth service class
-
-    final _formKey = GlobalKey<FormState>();
-
-    print("------------PROVIDER UID----------------------");
-    return user == null ? Loading() : StreamBuilder<UserAccountData>(
-        stream: DatabaseService(uid: user.uid).userData,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            if (user.uid != null) {
-              print("------------PROVIDER UID----------------------");
-              print("ITS NOT NULL");
-            } else {
-              print("------------PROVIDER UID----------------------");
-              print("ITS NULL");
-            }
-            UserAccountData userAccountData = snapshot.data;
-            outObjectUserAccount = userAccountData;
-            userUID = user.uid;
-            return Stack(
-              children: [
-                Scaffold(
-                  backgroundColor: Colors.grey[900],
-                  body: SingleChildScrollView(
-                    child: SafeArea(
-                      child: Column(
-                        children: [
-                        SizedBox(
-                        height: 50,
-                      ),
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 40),
-                        child: Form(
-                            key: _formKey,
-                            child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                            Center(
-                            child: InkWell(
-                                onTap: () => uploadImage(),
-                        child: CircleAvatar(
-                          backgroundImage:
-                          NetworkImage(userAccountData.imgUrl),
-                          radius: 40,
-                        ),
-                      ),
-                    ),
-                    Divider(
-                      height: 60,
-                      color: Colors.grey[800],
-                    ),
-                    Text(
-                      'Name',
-                      style: TextStyle(
-                        color: Colors.grey,
-                        letterSpacing: 2,
-                      ),
-                    ),
-                    SizedBox(height: 10),
-                    TextFormField(
-                      decoration: InputDecoration(
-                        contentPadding:
-                        const EdgeInsets.symmetric(
-                            vertical: 20),
-                        border: InputBorder.none,
-                        hintText: 'Username',
-                        prefixIcon: Icon(
-                          Icons.email,
-                          color: Colors.white,
-                        ),
-                        hintStyle: kbod,
-                      ),
-                      validator: (val) =>
-                      val.isEmpty
-                          ? "Enter A Username!"
-                          : null,
-                      onChanged: (val) {
-                        setState(() {
-                          usernameForField = val;
-                        });
-                      },
-                    ),
-                    SizedBox(height: 30),
-                    Row(
-                      children: [
-                        ElevatedButton(
-                          onPressed: () async {
-                            if (_formKey.currentState.validate()) {
-                              await changeUsername();
-                            }
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 16.0),
-                            child: Text(
-                              'Change',
-                              style: kbod,
-                            ),
+    return user == null
+        ? Loading()
+        : StreamBuilder<UserAccountData>(
+            stream: DatabaseService(uid: user.uid).userData,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                UserAccountData userAccountData = snapshot.data;
+                outObjectUserAccount = userAccountData;
+                userUID = user.uid;
+                return Stack(
+                  children: [
+                    Scaffold(
+                      backgroundColor: Colors.grey[900],
+                      body: SingleChildScrollView(
+                        child: SafeArea(
+                          child: Column(
+                            children: [
+                              SizedBox(
+                                height: 50,
+                              ),
+                              Container(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 40),
+                                child: Form(
+                                  key: _formKey,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      Center(
+                                        child: InkWell(
+                                          onTap: () {
+                                            print(
+                                                "---------------------------------------Image Upload Process Has Begun----------------------------------------------");
+                                            dynamic uploadIMG = uploadImage();
+                                            if (uploadIMG) {
+                                              print(
+                                                  "---------------------------------------Image Successfully Uploaded----------------------------------------------");
+                                            } else {
+                                              print(
+                                                  "---------------------------------------An Error Has Occurred During Image Upload----------------------------------------------");
+                                            }
+                                          },
+                                          child: CircleAvatar(
+                                            backgroundImage: NetworkImage(
+                                                userAccountData.imgUrl),
+                                            radius: 40,
+                                          ),
+                                        ),
+                                      ),
+                                      Divider(
+                                        height: 60,
+                                        color: Colors.grey[800],
+                                      ),
+                                      Text(
+                                        'Name',
+                                        style: TextStyle(
+                                          color: Colors.grey,
+                                          letterSpacing: 2,
+                                        ),
+                                      ),
+                                      SizedBox(height: 10),
+                                      TextFormField(
+                                        decoration: InputDecoration(
+                                          contentPadding:
+                                              const EdgeInsets.symmetric(
+                                                  vertical: 20),
+                                          border: InputBorder.none,
+                                          hintText: 'Username',
+                                          prefixIcon: Icon(
+                                            Icons.email,
+                                            color: Colors.white,
+                                          ),
+                                          hintStyle: kbod,
+                                        ),
+                                        validator: (val) => val.isEmpty
+                                            ? "Enter A Username!"
+                                            : null,
+                                        onChanged: (val) {
+                                          setState(() {
+                                            usernameForField = val;
+                                          });
+                                        },
+                                      ),
+                                      SizedBox(height: 30),
+                                      Row(
+                                        children: [
+                                          ElevatedButton(
+                                            onPressed: () async {
+                                              if (_formKey.currentState
+                                                  .validate()) {
+                                                await changeUsername();
+                                              }
+                                            },
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: 16.0),
+                                              child: Text(
+                                                'Change',
+                                                style: kbod,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      Column(
+                                        children: [
+                                          SizedBox(height: 50),
+                                          Container(
+                                            height: 60,
+                                            width: 88,
+                                            decoration: BoxDecoration(
+                                                color: Colors.blue,
+                                                borderRadius:
+                                                    BorderRadius.circular(16)),
+                                            child: FlatButton(
+                                              onPressed: () async {
+                                                print(
+                                                    "---------------------------------------Account Deletion Button Clicked----------------------------------------------");
+                                                dynamic delete =
+                                                    await DatabaseService(
+                                                            uid: userUID)
+                                                        .deleteUserAuth();
+                                                if (delete) {
+                                                  Navigator.push(context,MaterialPageRoute(builder: (context) => Login()));
+                                                  Fluttertoast.showToast(
+                                                      msg:
+                                                          "Account Successfully Deleted");
+                                                  print(
+                                                      "---------------------------------------Account Deletion Button Click Finished Processes Successfully----------------------------------------------");
+                                                } else {
+                                                  print(
+                                                      "---------------------------------------Account Deletion Error Has Occurred----------------------------------------------");
+                                                  Fluttertoast.showToast(
+                                                      msg:
+                                                          "Error Has Occurred During Account Deletion");
+                                                }
+                                              },
+                                              child: Text(
+                                                'Delete account',
+                                                style: butt,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                      ],
+                      ),
+                      floatingActionButton: FloatingActionButton.extended(
+                        onPressed: () async {
+                          await _auth.logOut(); // Calls sign out function
+                          Navigator.push(context,MaterialPageRoute(builder: (context) => Login()));
+                        },
+                        label: Text('Logout'),
+                        icon: Icon(Icons.logout),
+                        backgroundColor: Colors.pink,
+                      ),
                     ),
-                    Column(
-                      children: [
-                        SizedBox(height: 50),
-                        Container(
-                          height: 60,
-                          width: 88,
-                          decoration: BoxDecoration(
-                              color: Colors.blue,
-                              borderRadius:
-                              BorderRadius.circular(16)),
-                          child: FlatButton(
-                            onPressed: () {},
-                            child: Text(
-                              'Delete account',
-                              style: butt,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    ],
-                  ),
-                ),
-
-                      ),],
-            ),
-          ),
-          ),
-          floatingActionButton: FloatingActionButton.extended(
-          onPressed: () async{
-          await _auth.logOut(); // Calls sign out function
-          Navigator.push(context, MaterialPageRoute(builder: (context) => Login()));
-          },
-          label: Text('Logout'),
-          icon: Icon(Icons.logout),
-          backgroundColor: Colors.pink,
-          ),
-          ),
-          ],
-          );
-          } else {
-          return Loading();
-          }
-        });
+                  ],
+                );
+              } else {
+                return Loading();
+              }
+            });
   }
 
-
   changeUsername() async {
-    await DatabaseService(uid: userUID).updateUserData(
-        usernameForField, "member", outObjectUserAccount.imgUrl);
-
-    Fluttertoast.showToast(msg: "Username Successfully Updated");
+    try{
+      print("---------------------------------------Attempting to change Username----------------------------------------------");
+      await DatabaseService(uid: userUID).updateUserData(usernameForField, "member", outObjectUserAccount.imgUrl);
+      print("---------------------------------------Username Changed Successfully----------------------------------------------");
+      Fluttertoast.showToast(msg: "Username Successfully Updated");
+    }catch(e){
+      print("---------------------------------------Error Has Occurred During Username Change----------------------------------------------");
+      print(e.toString());
+      print("---------------------------------------End of Username Error Report----------------------------------------------");
+    }
   }
 
   uploadImage() async {
@@ -213,9 +244,9 @@ class _ProfileState extends State<Profile> {
               .onComplete;
           var downloadUrl = await snapshot.ref.getDownloadURL();
           imageUrl = downloadUrl;
-          await DatabaseService(uid: userUID)
-              .updateUserData(
+          await DatabaseService(uid: userUID).updateUserData(
               outObjectUserAccount.username, "member", imageUrl);
+          return true;
         } else {
           Fluttertoast.showToast(msg: "Image Error");
         }
@@ -223,11 +254,10 @@ class _ProfileState extends State<Profile> {
         Fluttertoast.showToast(msg: "Permissions not granted try again");
       }
     } catch (e) {
-      print(
-          "--------------------------------------------------------------------------------------------------------------------------");
+      print("---------------------------------------Image Upload Error Report----------------------------------------------");
       print(e);
-      print(
-          "--------------------------------------------------------------------------------------------------------------------------");
+      print("---------------------------------------End of Image Upload Error Report----------------------------------------------");
+      return false;
     }
   }
 }
