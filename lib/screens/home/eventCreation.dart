@@ -36,7 +36,7 @@ class _EventCreationState extends State<EventCreation> {
                 child: Column(
                   children: [
                     SizedBox(
-                      height: 50,
+                      height: 0,
                     ),
                     Container(
                       padding:
@@ -110,7 +110,52 @@ class _EventCreationState extends State<EventCreation> {
                                 });
                               },
                             ),
-                            SizedBox(height: 30),
+                            SizedBox(height: 0),
+                            TextFormField(
+                              decoration: InputDecoration(
+                                contentPadding:
+                                const EdgeInsets.symmetric(
+                                    vertical: 20),
+                                border: InputBorder.none,
+                                hintText: 'Month',
+                                prefixIcon: Icon(
+                                  Icons.calendar_view_day,
+                                  color: Colors.white,
+                                ),
+                                hintStyle: butt,
+                              ),
+                            ),
+                            SizedBox(height: 0),
+                            TextFormField(
+                              decoration: InputDecoration(
+                                contentPadding:
+                                const EdgeInsets.symmetric(
+                                    vertical: 20),
+                                border: InputBorder.none,
+                                hintText: 'Day',
+                                prefixIcon: Icon(
+                                  Icons.calendar_view_day,
+                                  color: Colors.white,
+                                ),
+                                hintStyle: butt,
+                              ),
+                            ),
+                            SizedBox(height: 0),
+                            TextFormField(
+                              decoration: InputDecoration(
+                                contentPadding:
+                                const EdgeInsets.symmetric(
+                                    vertical: 20),
+                                border: InputBorder.none,
+                                hintText: 'Time',
+                                prefixIcon: Icon(
+                                  Icons.alarm_add_sharp,
+                                  color: Colors.white,
+                                ),
+                                hintStyle: butt,
+                              ),
+                            ),
+                            SizedBox(height: 10),
                             Row(
                               children: [
                                 ElevatedButton(
