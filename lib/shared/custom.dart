@@ -25,6 +25,7 @@ class ExpansionTile extends StatefulWidget {
     Key key,
     this.headerBackgroundColor,
     this.leading,
+    this.subtitle,
     @required this.title,
     this.backgroundColor,
     this.iconColor,
@@ -45,6 +46,7 @@ class ExpansionTile extends StatefulWidget {
   /// Typically a [Text] widget.
   final Widget title;
 
+  final Widget subtitle;
   /// Called when the tile expands or collapses.
   ///
   /// When the tile starts expanding, this function is called with the value
