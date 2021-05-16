@@ -83,12 +83,12 @@ class DatabaseService {
 
   //----------------------------------------Event Related Things--------------------------------------
 
-  Future updateEventData(
-      String id, String eventName, String eventDescription) async {
+  Future updateEventData(String id, String eventName, String eventDescription, String eventDate) async {
     return await events.document(uid).setData({
       "id": id,
       "eventName": eventName,
       "eventDescription": eventDescription,
+      "eventDate": eventDate
     });
   }
 
@@ -97,6 +97,7 @@ class DatabaseService {
       id: snapshot.data["id"],
       eventName: snapshot.data["eventName"],
       eventDescription: snapshot.data["eventDescription"],
+      eventDate: snapshot.data["eventDate"],
     );
   }
 
@@ -110,6 +111,7 @@ class DatabaseService {
     return snapshot.documents.map((doc) {
       return Event(
           eventName: doc.data["eventName"] ?? "",
+          eventDate: doc.data["eventDate"] ?? "",
           eventDescription: doc.data["eventDescription"] ?? "");
     }).toList();
   }

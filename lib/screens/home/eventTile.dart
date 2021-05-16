@@ -22,9 +22,9 @@ class EventTile extends StatelessWidget {
             radius: 25,
           ),
           title: Text(event.eventName,
-          style: TextStyle(color: Colors.deepPurple),),
+          style: TextStyle(color: Colors.deepPurple)),
           children: [Text(event.eventDescription,
-            style: TextStyle(color: Colors.deepPurple),)],
+            style: TextStyle(color: Colors.deepPurple))],
         ),
       ),
     );

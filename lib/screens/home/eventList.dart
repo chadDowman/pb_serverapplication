@@ -19,6 +19,7 @@ class _EventListState extends State<EventList> {
     eventList.forEach((event) {
       print(event.eventName);
       print(event.eventDescription);
+      print(event.eventDate);
     });
 
     return ListView.builder(

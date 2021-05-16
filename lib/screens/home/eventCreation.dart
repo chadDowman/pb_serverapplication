@@ -14,12 +14,15 @@ class EventCreation extends StatefulWidget {
 }
 
 class _EventCreationState extends State<EventCreation> {
-
   final _formKey = GlobalKey<FormState>();
-  String eventID;
-  String eventName;
-  String eventDescription;
-  String uid;
+  String eventID = "";
+  String eventName = "";
+  String eventDescription = "";
+  String uid = "";
+  String month = "";
+  String day = "";
+  String time = "";
+  String dateAndTimeString = "";
 
   @override
   Widget build(BuildContext context) {
@@ -39,13 +42,11 @@ class _EventCreationState extends State<EventCreation> {
                       height: 0,
                     ),
                     Container(
-                      padding:
-                      const EdgeInsets.symmetric(horizontal: 40),
+                      padding: const EdgeInsets.symmetric(horizontal: 40),
                       child: Form(
                         key: _formKey,
                         child: Column(
-                          crossAxisAlignment:
-                          CrossAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Divider(
                               height: 60,
@@ -63,8 +64,7 @@ class _EventCreationState extends State<EventCreation> {
                               style: TextStyle(color: Colors.white),
                               decoration: InputDecoration(
                                 contentPadding:
-                                const EdgeInsets.symmetric(
-                                    vertical: 20),
+                                    const EdgeInsets.symmetric(vertical: 20),
                                 border: InputBorder.none,
                                 hintText: 'Event Name',
                                 prefixIcon: Icon(
@@ -73,7 +73,8 @@ class _EventCreationState extends State<EventCreation> {
                                 ),
                                 hintStyle: kbod,
                               ),
-                              validator: (val) => val.isEmpty ? "Enter A Event Name!" : null,
+                              validator: (val) =>
+                                  val.isEmpty ? "Enter A Event Name!" : null,
                               onChanged: (val) {
                                 setState(() {
                                   eventName = val;
@@ -93,8 +94,7 @@ class _EventCreationState extends State<EventCreation> {
                               style: TextStyle(color: Colors.white),
                               decoration: InputDecoration(
                                 contentPadding:
-                                const EdgeInsets.symmetric(
-                                    vertical: 20),
+                                    const EdgeInsets.symmetric(vertical: 20),
                                 border: InputBorder.none,
                                 hintText: 'Description',
                                 prefixIcon: Icon(
@@ -103,7 +103,9 @@ class _EventCreationState extends State<EventCreation> {
                                 ),
                                 hintStyle: kbod,
                               ),
-                              validator: (val) => val.length < 10 ? "Enter A Event Description!" : null,
+                              validator: (val) => val.length < 10
+                                  ? "Enter A Event Description!"
+                                  : null,
                               onChanged: (val) {
                                 setState(() {
                                   eventDescription = val;
@@ -112,54 +114,72 @@ class _EventCreationState extends State<EventCreation> {
                             ),
                             SizedBox(height: 0),
                             TextFormField(
-                              decoration: InputDecoration(
-                                contentPadding:
-                                const EdgeInsets.symmetric(
-                                    vertical: 20),
-                                border: InputBorder.none,
-                                hintText: 'Month',
-                                prefixIcon: Icon(
-                                  Icons.calendar_view_day,
-                                  color: Colors.white,
+                                decoration: InputDecoration(
+                                  contentPadding:
+                                      const EdgeInsets.symmetric(vertical: 20),
+                                  border: InputBorder.none,
+                                  hintText: 'Month',
+                                  prefixIcon: Icon(
+                                    Icons.calendar_view_day,
+                                    color: Colors.white,
+                                  ),
+                                  hintStyle: butt,
                                 ),
-                                hintStyle: butt,
-                              ),
-                            ),
+                                validator: (val) => val.isEmpty
+                                    ? "Enter a Month for the event"
+                                    : null,
+                                onChanged: (val) {
+                                  setState(() {
+                                    month = val;
+                                  });
+                                }),
                             SizedBox(height: 0),
                             TextFormField(
-                              decoration: InputDecoration(
-                                contentPadding:
-                                const EdgeInsets.symmetric(
-                                    vertical: 20),
-                                border: InputBorder.none,
-                                hintText: 'Day',
-                                prefixIcon: Icon(
-                                  Icons.calendar_view_day,
-                                  color: Colors.white,
+                                decoration: InputDecoration(
+                                  contentPadding:
+                                      const EdgeInsets.symmetric(vertical: 20),
+                                  border: InputBorder.none,
+                                  hintText: 'Day',
+                                  prefixIcon: Icon(
+                                    Icons.calendar_view_day,
+                                    color: Colors.white,
+                                  ),
+                                  hintStyle: butt,
                                 ),
-                                hintStyle: butt,
-                              ),
-                            ),
+                                validator: (val) => val.isEmpty
+                                    ? "Enter a Day for the event"
+                                    : null,
+                                onChanged: (val) {
+                                  setState(() {
+                                    day = val;
+                                  });
+                                }),
                             SizedBox(height: 0),
                             TextFormField(
-                              decoration: InputDecoration(
-                                contentPadding:
-                                const EdgeInsets.symmetric(
-                                    vertical: 20),
-                                border: InputBorder.none,
-                                hintText: 'Time',
-                                prefixIcon: Icon(
-                                  Icons.alarm_add_sharp,
-                                  color: Colors.white,
+                                decoration: InputDecoration(
+                                  contentPadding:
+                                      const EdgeInsets.symmetric(vertical: 20),
+                                  border: InputBorder.none,
+                                  hintText: 'Time',
+                                  prefixIcon: Icon(
+                                    Icons.alarm_add_sharp,
+                                    color: Colors.white,
+                                  ),
+                                  hintStyle: butt,
                                 ),
-                                hintStyle: butt,
-                              ),
-                            ),
+                                validator: (val) => val.isEmpty
+                                    ? "Enter a Timer for the event"
+                                    : null,
+                                onChanged: (val) {
+                                  setState(() {
+                                    time = val;
+                                  });
+                                }),
                             SizedBox(height: 10),
                             Row(
                               children: [
                                 ElevatedButton(
-                                  onPressed: () async{
+                                  onPressed: () async {
                                     if (_formKey.currentState.validate()) {
                                       eventID = eventName;
                                       uid = user.uid;
@@ -167,8 +187,7 @@ class _EventCreationState extends State<EventCreation> {
                                     }
                                   },
                                   child: Padding(
-                                    padding:
-                                    const EdgeInsets.symmetric(
+                                    padding: const EdgeInsets.symmetric(
                                         vertical: 16.0),
                                     child: Text(
                                       'Post Event',
@@ -193,16 +212,21 @@ class _EventCreationState extends State<EventCreation> {
   }
 
   changeEventDetails() async {
-    try{
-      print("---------------------------------------Attempting to add/change Event Details----------------------------------------------");
-      await DatabaseService(uid: eventName).updateEventData(uid, eventName, eventDescription);
-      Fluttertoast.showToast(msg: "User Event Successfully Updated");
-      print("---------------------------------------Event Details Updated/added Successfully----------------------------------------------");
-    }catch(e){
-      print("---------------------------------------An Error Has Occurred Well Adding/Changing Event Details----------------------------------------------");
-      print(e.toString());
-      print("---------------------------------------End of Error Report For Event Related Things----------------------------------------------");
-    }
+    try {
+      dateAndTimeString = day + " " + month + " at " + time + "GMT+2";
+      print(
+          "---------------------------------------Attempting to add/change Event Details----------------------------------------------");
+      await DatabaseService(uid: eventName).updateEventData(uid, eventName, eventDescription, dateAndTimeString);
 
+      Fluttertoast.showToast(msg: "User Event Successfully Updated");
+      print(
+          "---------------------------------------Event Details Updated/added Successfully----------------------------------------------");
+    } catch (e) {
+      print(
+          "---------------------------------------An Error Has Occurred Well Adding/Changing Event Details----------------------------------------------");
+      print(e.toString());
+      print(
+          "---------------------------------------End of Error Report For Event Related Things----------------------------------------------");
+    }
   }
 }
