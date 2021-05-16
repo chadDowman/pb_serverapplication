@@ -23,7 +23,7 @@ class EventTile extends StatelessWidget {
           ),
           title: Text(event.eventName,
           style: TextStyle(color: Colors.deepPurple)),
-          subtitle: Text('Chad you can add your kak over Here', style: TextStyle(color: Colors.deepPurple)),
+          subtitle: Text(event.eventDate, style: TextStyle(color: Colors.deepPurple)),
           children: [Text(event.eventDescription,
             style: TextStyle(color: Colors.deepPurple))],
         ),
