@@ -148,16 +148,9 @@ class _EventCreationState extends State<EventCreation> {
   }
 
   changeEventDetails() async {
-    try{
-      print("---------------------------------------Attempting to add/change Event Details----------------------------------------------");
-      await DatabaseService(uid: eventName).updateEventData(uid, eventName, eventDescription);
-      Fluttertoast.showToast(msg: "User Event Successfully Updated");
-      print("---------------------------------------Event Details Updated/added Successfully----------------------------------------------");
-    }catch(e){
-      print("---------------------------------------An Error Has Occurred Well Adding/Changing Event Details----------------------------------------------");
-      print(e.toString());
-      print("---------------------------------------End of Error Report For Event Related Things----------------------------------------------");
-    }
+    print("eventName");
+    await DatabaseService(uid: eventName).updateEventData(uid, eventName, eventDescription);
 
+    Fluttertoast.showToast(msg: "User Event Successfully Updated");
   }
 }

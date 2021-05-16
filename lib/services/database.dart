@@ -16,35 +16,20 @@ class DatabaseService {
 
   //Delete User Data Firestore
   Future _userDeleteAccount() async {
-    try{
-      return await userInfo.document(uid).delete();
-    }catch(e){
-      print("---------------------------------------Error Has Occurred During Firestore Deletion----------------------------------------------");
-      print(e.toString());
-      print("---------------------------------------End of Error During Firestore Deletion----------------------------------------------");
-    }
-
+    return await userInfo.document(uid).delete();
   }
 
-  Future _userDeleteAuth () async{
-    try{
-      final FirebaseUser user = await _auth.currentUser();
-      return await user.delete();
-    }catch(e){
-      print("---------------------------------------Error Has Occurred During Firebase Auth Deletion----------------------------------------------");
-      print(e.toString());
-      print("---------------------------------------End of Error During Firebase Auth Deletion----------------------------------------------");
-    }
-  }
-
-  Future deleteUserAuth() async {
+  Future deleteUserAuth(String email, String password) async {
     try {
-      print("---------------------------------------Starting Firestore Deletion----------------------------------------------");
+      final FirebaseUser user = await _auth.currentUser();
+      print("THE CURRENT USER!!!!!!!!!!!:");
+      final uid = user.uid;
+      print(uid.toString());
+      AuthCredential credentials =
+          EmailAuthProvider.getCredential(email: email, password: password);
+      AuthResult result = await user.reauthenticateWithCredential(credentials);
       await _userDeleteAccount();
-      print("------------------------------------------Firestore Deletion Successful-------------------------------------------");
-      print("------------------------------------------Starting Firebase Auth Deletion-------------------------------------------");
-      await _userDeleteAuth();
-      print("------------------------------------------Firebase Auth Deletion Successful-------------------------------------------");
+      await result.user.delete();
       return true;
     } catch (e) {
       print(e.toString());

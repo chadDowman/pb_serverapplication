@@ -17,8 +17,10 @@ class _EventListState extends State<EventList> {
     final eventList = Provider.of<List<Event>>(context) ?? [];
 
     eventList.forEach((event) {
+      print("IM PRINTING NULL WTF!!!!!!!!!!!!!");
       print(event.eventName);
       print(event.eventDescription);
+      print("IM PRINTING NULL WTF!!!!!!!!!!!!!");
     });
 
     return ListView.builder(

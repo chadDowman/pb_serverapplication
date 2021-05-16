@@ -24,87 +24,70 @@ class AuthService {
 
   //Sends Password Reset Email
   Future<void> sendPasswordResetEmail(String email) async {
-    try{
-      print("---------------------------------------Attempting to Send Password Reset email----------------------------------------------");
-      await _auth.sendPasswordResetEmail(email: email);
-      print("---------------------------------------Password Reset Email Sent Successfully----------------------------------------------");
-    }catch(e){
-      print("---------------------------------------Error Has Occurred Well Sending Password Reset Email----------------------------------------------");
-      print(e.toString());
-      print("---------------------------------------End of Password Reset Email Error----------------------------------------------");
-    }
-
+    await _auth.sendPasswordResetEmail(email: email);
   }
 
   //Login User With Email and Password
   Future loginUser(String email, String password) async {
     try {
-      print("---------------------------------------Starting User Login Attempt----------------------------------------------");
-      AuthResult result = await _auth.signInWithEmailAndPassword(email: email, password: password);
+      AuthResult result = await _auth.signInWithEmailAndPassword(
+          email: email, password: password);
+
       FirebaseUser user = result.user;
       if (user.isEmailVerified) {
-        print("--------------------------------------Users Email is Verified----------------------------------------------");
+        print(
+            "------------------------------------------------------------------------");
+        print("USERS EMAIL IS VERIFIED");
         emailVerified = true;
       } else {
-        print("---------------------------------------Users Email is NOT verified----------------------------------------------");
+        print(
+            "------------------------------------------------------------------------");
+        print("USERS EMAIL IS NOT VERIFIED!!!!!!!!!!!!!!!!");
         emailVerified = false;
       }
-      print("---------------------------------------User Successfully Logged In----------------------------------------------");
       return _userFromFirebaseUser(user);
     } catch (e) {
-      print("---------------------------------------An Error Has Occurred During User Login----------------------------------------------");
+      print(
+          "------------------------------------------------------------------------");
       print(e.toString());
-      print("---------------------------------------End of Login Error Details----------------------------------------------");
       return null;
     }
   }
 
   //register user
-  Future registerUser(String email, String password, String username, String imgUrl) async {
+  Future registerUser(
+      String email, String password, String username, String imgUrl) async {
     try {
-      print("---------------------------------------Starting User Registration Attempt----------------------------------------------");
-      AuthResult result = await _auth.createUserWithEmailAndPassword(email: email, password: password); //Creates User
-      print("---------------------------------------User Successfully Registered----------------------------------------------");
+      AuthResult result = await _auth.createUserWithEmailAndPassword(
+          email: email, password: password); //Creates User
       FirebaseUser user = result.user; //Gets that user back
-      try{
-        print("---------------------------------------Attempting to send Email Verification----------------------------------------------");
-        await user.sendEmailVerification(); //Sends email verification
-        print("---------------------------------------User Email Verification Email Successfully Sent----------------------------------------------");
-      }catch(e){
-        print("---------------------------------------User Email does not exist----------------------------------------------");
-        print(e.toString());
-        print("---------------------------------------End of Email Verification Error----------------------------------------------");
-      }
-      try{
-        //Create new Document for the user with the uid
-        print("---------------------------------------Registering User Details With Firestore----------------------------------------------");
-        await DatabaseService(uid: user.uid).updateUserData(username, "member", imgUrl); //Passes Uid to the constructor
-        print("---------------------------------------User Details Successfully Registered With Firestore----------------------------------------------");
-      }catch(e){
-        print("---------------------------------------Error Has Occurred During Firestore Registration----------------------------------------------");
-        print(e.toString());
-        print("---------------------------------------End of Error During Firestore Registration----------------------------------------------");
-      }
+      await user.sendEmailVerification(); //Sends email verification
+
+      //Create new Document for the user with the uid
+      await DatabaseService(uid: user.uid).updateUserData(
+          username, "member", imgUrl); //Passes Uid to the constructor
       return _userFromFirebaseUser(user);
     } catch (e) {
-      print("---------------------------------------Error Has Occurred During User Registration----------------------------------------------");
+      print(
+          "------------------------------------------------------------------------");
       print(e.toString());
-      print("---------------------------------------End of User Registration Error Report----------------------------------------------");
       return null;
     }
   }
 
+  // //LogOut
+  // Future logOut() async {
+  //   try {
+  //     return await _auth.signOut();
+  //   } catch (e) {
+  //     print(
+  //         "------------------------------------------------------------------------");
+  //     print(e.toString());
+  //     return null;
+  //   }
+  // }
+
   Future<void> logOut() async {
-    try{
-      print("---------------------------------------Attempting to Log Out User----------------------------------------------");
-      await FirebaseAuth.instance.signOut();
-      print("---------------------------------------User Logout Successful----------------------------------------------");
-    }catch(e){
-      print("---------------------------------------An Error Has Occurred During User Logout----------------------------------------------");
-      print(e.toString());
-      print("---------------------------------------End of User Logout Error Report----------------------------------------------");
-
-    }
-
+    await FirebaseAuth.instance.signOut();
   }
 }
