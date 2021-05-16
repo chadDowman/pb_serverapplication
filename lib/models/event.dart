@@ -5,8 +5,6 @@ class EventID{
   EventID({this.id});
 }
 
-
-
 class Event {
   final String id;
   final String eventName;
