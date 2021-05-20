@@ -3,9 +3,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pb_blueprotocal/models/event.dart';
 import 'package:pb_blueprotocal/models/user.dart';
 import 'package:pb_blueprotocal/services/database.dart';
-import 'package:pb_blueprotocal/services/eventDatabase.dart';
 import 'package:pb_blueprotocal/shared/constants.dart';
-import 'package:pb_blueprotocal/shared/loading.dart';
 import 'package:provider/provider.dart';
 
 class EventCreation extends StatefulWidget {
@@ -30,6 +28,7 @@ class _EventCreationState extends State<EventCreation> {
 
     return StreamProvider<Event>.value(
       value: DatabaseService().eventData,
+      initialData: null,
       child: Stack(
         children: [
           Scaffold(
@@ -213,9 +212,12 @@ class _EventCreationState extends State<EventCreation> {
 
   changeEventDetails() async {
     try {
-      dateAndTimeString = day + " " + month + " at " + time + "GMT+2";
+      final event = Provider.of<Event>(context);
+
+      dateAndTimeString = day + " " + month + " at " + time + " GMT+2";
       print(
           "---------------------------------------Attempting to add/change Event Details----------------------------------------------");
+
       await DatabaseService(uid: eventName).updateEventData(uid, eventName, eventDescription, dateAndTimeString);
 
       Fluttertoast.showToast(msg: "User Event Successfully Updated");
