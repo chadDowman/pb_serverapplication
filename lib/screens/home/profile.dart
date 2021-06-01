@@ -210,7 +210,7 @@ class _ProfileState extends State<Profile> {
   changeUsername() async {
     try{
       print("---------------------------------------Attempting to change Username----------------------------------------------");
-      await DatabaseService(uid: userUID).updateUserData(usernameForField, "member", outObjectUserAccount.imgUrl);
+      await DatabaseService(uid: userUID).updateUserData(usernameForField, outObjectUserAccount.role, outObjectUserAccount.imgUrl);
       print("---------------------------------------Username Changed Successfully----------------------------------------------");
       Fluttertoast.showToast(msg: "Username Successfully Updated");
     }catch(e){

@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:pb_blueprotocal/models/event.dart';
@@ -78,12 +80,12 @@ class DatabaseService {
 
   //-------------------------------------------------------------------------------
 
-  final CollectionReference events =
-      Firestore.instance.collection("Guild_Events");
+  final CollectionReference events = Firestore.instance.collection("Guild_Events");
+
 
   //----------------------------------------Event Related Things--------------------------------------
 
-  Future updateEventData(String id, String eventName, String eventDescription, String eventDate) async {
+  Future postEventData(String id, String eventName, String eventDescription, String eventDate) async {
     return await events.document(uid).setData({
       "id": id,
       "eventName": eventName,

@@ -37,53 +37,7 @@ class _LoginState extends State<Login> {
                   child: SafeArea(
                     child: Column(
                       children: [
-                        Column(
-                          children: [
-                            SizedBox(height: 0),
-                            Container(
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                color: Colors.blue,
-                              ),
-                              child: Row(
-                                mainAxisAlignment:  MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Container(
-                                    child: FlatButton(
-                                      onPressed: () {},
-                                      child: Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 16.0),
-                                        child: Text(
-                                          '',
-                                          style: kbod,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  Container(
-                                    child: FlatButton(
-                                      onPressed: () {
-                                        Navigator.push(context,MaterialPageRoute(builder: (context) => Register()));
-                                      },
-                                      child: Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 16.0),
-                                        child: Text(
-                                          'Sign Up',
-                                          style: kbod,
-                                        ),
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 250,
-                        ),
+                        SizedBox(height: 200),
                         Container(
                           padding: const EdgeInsets.symmetric(horizontal: 40),
                           child: Form(
@@ -123,6 +77,19 @@ class _LoginState extends State<Login> {
                                       ),
                                     ),
                                     SizedBox(height: 10),
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    ForgotPassword()));
+                                      },
+                                      child: Text(
+                                        'Forget your password? Reset',
+                                        style: kbod,
+                                      ),
+                                    ),
                                     Container(
                                       decoration: BoxDecoration(
                                         color:
@@ -142,7 +109,7 @@ class _LoginState extends State<Login> {
                                           ),
                                           hintStyle: kbod,
                                         ),
-                                        validator: (val) => val.length < 8
+                                        validator: (val) => val.length < 6
                                             ? "Enter a password with 6 or longer"
                                             : null,
                                         obscureText: true,
@@ -155,13 +122,17 @@ class _LoginState extends State<Login> {
                                     ),
                                     TextButton(
                                       onPressed: () {
-                                        Navigator.push( context,  MaterialPageRoute(builder: (context) => ForgotPassword()));
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    Register()));
                                       },
                                       child: Text(
-                                        'Forget Password?',
+                                        "Don't have an account? Sign Up now",
                                         style: kbod,
                                       ),
-                                    ),
+                                    )
                                   ],
                                 ),
                                 Column(

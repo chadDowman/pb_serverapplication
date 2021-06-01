@@ -38,51 +38,6 @@ class _RegisterState extends State<Register> {
                       children: [
                         Column(
                           children: [
-                            SizedBox(height: 0),
-                            Container(
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                color: Colors.blue,
-                              ),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Container(
-                                    decoration: BoxDecoration(
-                                        color: Colors.transparent,
-                                        borderRadius: BorderRadius.circular(16)),
-                                    child: Row(
-                                      children: [
-                                        Container(
-                                          child: IconButton(
-                                            icon: const Icon(Icons.backspace_sharp),
-                                            color: Colors.white,
-                                            tooltip: 'Increase volume by 10',
-                                            onPressed: () {
-                                              Navigator.pop(context);
-                                            },
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Container(
-                                    child: FlatButton(
-                                      onPressed: () {},
-                                      child: Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 16.0),
-                                        child: Text(
-                                          '',
-                                          style: kbod,
-                                        ),
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
                             SizedBox(
                               height: 100,
                             ),
@@ -279,6 +234,15 @@ class _RegisterState extends State<Register> {
                                                 style: kbod,
                                               ),
                                             ),
+                                          ),
+                                        ),
+                                        TextButton(
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                          },
+                                          child: Text(
+                                            'Already have an account? Sign in',
+                                            style: kbod,
                                           ),
                                         ),
                                         SizedBox(height: 20),

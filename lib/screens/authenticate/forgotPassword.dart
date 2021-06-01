@@ -31,38 +31,8 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                   child: SafeArea(
                     child: Column(
                       children: [
-                        Column(
-                          children: [
-                            SizedBox(height: 0),
-                            Container(
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                  color: Colors.blue,
-                                  borderRadius: BorderRadius.circular(16)),
-                              child: Row(
-                                children: [
-                                  Container(
-                                    child: FlatButton(
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                      },
-                                      child: Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 16.0),
-                                        child: Text(
-                                          'Back',
-                                          style: kbod,
-                                        ),
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
                         SizedBox(
-                          height: 300,
+                          height: 250,
                         ),
                         Container(
                           padding: const EdgeInsets.symmetric(horizontal: 40),
@@ -90,7 +60,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                                                   const EdgeInsets.symmetric(
                                                       vertical: 20),
                                               border: InputBorder.none,
-                                              hintText: 'Forgot Password',
+                                              hintText: 'Email',
                                               prefixIcon: Padding(
                                                 padding:
                                                     const EdgeInsets.symmetric(
@@ -105,7 +75,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                                             ),
                                             style: kbod,
                                             validator: (val) => val.isEmpty
-                                                ? "Enter An Email!"
+                                                ? "Enter A Valid Email!"
                                                 : null,
                                             onChanged: (val) {
                                               setState(() {
@@ -114,6 +84,15 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                                             },
                                           ),
                                         ),
+                                      ),
+                                    ),
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: Text(
+                                        'Remember your password? Sign in',
+                                        style: kbod,
                                       ),
                                     ),
                                   ],
@@ -138,23 +117,16 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                                               await _auth
                                                   .sendPasswordResetEmail(
                                                       email);
-                                              Fluttertoast.showToast(msg: "Password Reset Email Sent");
+                                              Fluttertoast.showToast(
+                                                  msg:
+                                                      "Password Reset Email Sent");
                                               loading = false;
-                                              Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          Login()));
+                                              Navigator.pop(context);
                                             } catch (e) {
                                               loading = false;
                                               print(
                                                   "------------------------------------------------------------------------------------------------");
                                               print("EMAIL DOES NO EXIST");
-                                              Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          Login()));
                                             }
                                           }
                                         },

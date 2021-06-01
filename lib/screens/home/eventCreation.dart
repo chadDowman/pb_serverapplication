@@ -1,12 +1,18 @@
+import 'dart:collection';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pb_blueprotocal/models/event.dart';
 import 'package:pb_blueprotocal/models/user.dart';
+import 'package:pb_blueprotocal/screens/home/eventTile.dart';
 import 'package:pb_blueprotocal/services/database.dart';
 import 'package:pb_blueprotocal/shared/constants.dart';
+import 'package:pb_blueprotocal/shared/loading.dart';
 import 'package:provider/provider.dart';
 
 class EventCreation extends StatefulWidget {
+
   @override
   _EventCreationState createState() => _EventCreationState();
 }
@@ -21,9 +27,15 @@ class _EventCreationState extends State<EventCreation> {
   String day = "";
   String time = "";
   String dateAndTimeString = "";
+  String databaseName = "";
+  String databaseDate = "";
+  String databaseDescription = "";
+
+
 
   @override
   Widget build(BuildContext context) {
+
     final user = Provider.of<User>(context);
 
     return StreamProvider<Event>.value(
@@ -182,7 +194,7 @@ class _EventCreationState extends State<EventCreation> {
                                     if (_formKey.currentState.validate()) {
                                       eventID = eventName;
                                       uid = user.uid;
-                                      await changeEventDetails();
+                                      await postEventDetails();
                                     }
                                   },
                                   child: Padding(
@@ -190,6 +202,20 @@ class _EventCreationState extends State<EventCreation> {
                                         vertical: 16.0),
                                     child: Text(
                                       'Post Event',
+                                      style: kbod,
+                                    ),
+                                  ),
+                                ),
+                                ElevatedButton(
+                                  onPressed: () async {
+                                    uid = user.uid;
+                                    updateEventDetails();
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 16.0),
+                                    child: Text(
+                                      'Update Events',
                                       style: kbod,
                                     ),
                                   ),
@@ -210,15 +236,14 @@ class _EventCreationState extends State<EventCreation> {
     );
   }
 
-  changeEventDetails() async {
+  postEventDetails() async {
     try {
-      final event = Provider.of<Event>(context);
-
       dateAndTimeString = day + " " + month + " at " + time + " GMT+2";
       print(
           "---------------------------------------Attempting to add/change Event Details----------------------------------------------");
 
-      await DatabaseService(uid: eventName).updateEventData(uid, eventName, eventDescription, dateAndTimeString);
+      await DatabaseService(uid: eventName)
+          .postEventData(uid, eventName, eventDescription, dateAndTimeString);
 
       Fluttertoast.showToast(msg: "User Event Successfully Updated");
       print(
@@ -229,6 +254,41 @@ class _EventCreationState extends State<EventCreation> {
       print(e.toString());
       print(
           "---------------------------------------End of Error Report For Event Related Things----------------------------------------------");
+    }
+  }
+
+  updateEventDetails() async {
+    await Firestore.instance.collection('Guild_Events').where(
+        FieldPath.documentId,
+        isEqualTo: eventName
+    ).getDocuments().then((event) {
+      if (event.documents.isNotEmpty) {
+        Map<String, dynamic> documentData = event.documents.single.data; //if it is a single document
+        print(documentData["eventDescription"]);
+        print(documentData["eventName"]);
+        print(documentData["eventDate"]);
+        databaseName = documentData["eventName"];
+        databaseDate = documentData["eventDate"];
+        databaseDescription = documentData["eventDescription"];
+
+      }
+    }).catchError((e) => print("error fetching data: $e"));
+
+    print("---------------------------------------UPDATE EVENT DETAILS----------------------------------------------");
+    if(eventDescription.isNotEmpty && day.isNotEmpty && month.isNotEmpty && time.isNotEmpty){
+      dateAndTimeString = day + " " + month + " at " + time + " GMT+2";
+      await DatabaseService(uid: eventName).postEventData(uid, eventName, eventDescription, dateAndTimeString);
+      Fluttertoast.showToast(msg: "Record Updated");
+    }else if (eventDescription.isNotEmpty && day.isEmpty && month.isEmpty && time.isEmpty){
+      await DatabaseService(uid: eventName).postEventData(uid, eventName, eventDescription, databaseDate);
+      Fluttertoast.showToast(msg: "Description Updated");
+    }
+    else if (day.isNotEmpty && month.isNotEmpty && time.isNotEmpty && eventDescription.isEmpty){
+      dateAndTimeString = day + " " + month + " at " + time + " GMT+2";
+      await DatabaseService(uid: eventName).postEventData(uid, eventName, databaseDescription, dateAndTimeString);
+      Fluttertoast.showToast(msg: "Date Updated");
+    }else{
+      Fluttertoast.showToast(msg: "Missing Fields");
     }
   }
 }
