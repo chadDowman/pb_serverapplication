@@ -242,7 +242,7 @@ class _RegisterState extends State<Register> {
                                           },
                                           child: Text(
                                             'Already have an account? Sign in',
-                                            style: kbod,
+                                            style: smols,
                                           ),
                                         ),
                                         SizedBox(height: 20),

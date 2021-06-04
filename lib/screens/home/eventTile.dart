@@ -13,9 +13,8 @@ class EventTile extends StatelessWidget {
       child: Card(
         color: Colors.grey[900],
         margin: EdgeInsets.fromLTRB(20, 6, 20, 0),
-        child: custom.ExpansionTile(
-          headerBackgroundColor: Colors.grey[900],
-
+        child: ExpansionTile(
+          backgroundColor: Colors.grey[900],
           leading: CircleAvatar(
             //The left image thing
             backgroundImage: AssetImage("pics/PixelatedBrosPic.png"),

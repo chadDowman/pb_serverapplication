@@ -198,25 +198,25 @@ class _EventCreationState extends State<EventCreation> {
                                     }
                                   },
                                   child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 16.0),
+                                    padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
                                     child: Text(
                                       'Post Event',
-                                      style: kbod,
+                                      style: butt,
                                     ),
                                   ),
                                 ),
+
                                 ElevatedButton(
                                   onPressed: () async {
                                     uid = user.uid;
                                     updateEventDetails();
                                   },
+
                                   child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 16.0),
+                                    padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
                                     child: Text(
                                       'Update Events',
-                                      style: kbod,
+                                      style: butt,
                                     ),
                                   ),
                                 ),

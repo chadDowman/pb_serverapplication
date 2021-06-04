@@ -7,6 +7,8 @@ import 'package:flutter/widgets.dart';
 import 'package:pb_blueprotocal/Widgets/forgetBackImg.dart';
 import 'package:pb_blueprotocal/shared/loading.dart';
 
+import '../../shared/constants.dart';
+
 class ForgotPassword extends StatefulWidget {
   @override
   _ForgotPasswordState createState() => _ForgotPasswordState();
@@ -92,7 +94,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                                       },
                                       child: Text(
                                         'Remember your password? Sign in',
-                                        style: kbod,
+                                        style: smols,
                                       ),
                                     ),
                                   ],

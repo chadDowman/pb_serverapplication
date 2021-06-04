@@ -15,3 +15,7 @@ const TextStyle butt = TextStyle(
   fontWeight: FontWeight.bold,
   color: Colors.white,
 );
+const TextStyle smols = TextStyle(
+  fontSize: 14,
+  color: Colors.white,
+);

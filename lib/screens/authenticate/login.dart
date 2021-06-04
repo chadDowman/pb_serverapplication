@@ -59,7 +59,7 @@ class _LoginState extends State<Login> {
                                               const EdgeInsets.symmetric(
                                                   vertical: 20),
                                           border: InputBorder.none,
-                                          hintText: 'Username or Email',
+                                          hintText: 'Email',
                                           prefixIcon: Icon(
                                             Icons.email,
                                             color: Colors.white,
@@ -77,19 +77,7 @@ class _LoginState extends State<Login> {
                                       ),
                                     ),
                                     SizedBox(height: 10),
-                                    TextButton(
-                                      onPressed: () {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    ForgotPassword()));
-                                      },
-                                      child: Text(
-                                        'Forget your password? Reset',
-                                        style: kbod,
-                                      ),
-                                    ),
+
                                     Container(
                                       decoration: BoxDecoration(
                                         color:
@@ -130,9 +118,24 @@ class _LoginState extends State<Login> {
                                       },
                                       child: Text(
                                         "Don't have an account? Sign Up now",
-                                        style: kbod,
+                                        style: smols,
                                       ),
-                                    )
+                                    ),
+
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    ForgotPassword()));
+                                      },
+                                      child: Text(
+                                        'Forget your password? Reset',
+                                        style: smols,
+                                      ),
+                                    ),
+
                                   ],
                                 ),
                                 Column(
