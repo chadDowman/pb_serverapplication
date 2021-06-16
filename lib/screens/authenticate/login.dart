@@ -76,8 +76,19 @@ class _LoginState extends State<Login> {
                                         },
                                       ),
                                     ),
-                                    SizedBox(height: 10),
-
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    ForgotPassword()));
+                                      },
+                                      child: Text(
+                                        'Forget your password? Reset',
+                                        style: smols,
+                                      ),
+                                    ),
                                     Container(
                                       decoration: BoxDecoration(
                                         color:
@@ -108,39 +119,11 @@ class _LoginState extends State<Login> {
                                         },
                                       ),
                                     ),
-                                    TextButton(
-                                      onPressed: () {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    Register()));
-                                      },
-                                      child: Text(
-                                        "Don't have an account? Sign Up now",
-                                        style: smols,
-                                      ),
-                                    ),
-
-                                    TextButton(
-                                      onPressed: () {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    ForgotPassword()));
-                                      },
-                                      child: Text(
-                                        'Forget your password? Reset',
-                                        style: smols,
-                                      ),
-                                    ),
-
                                   ],
                                 ),
                                 Column(
                                   children: [
-                                    SizedBox(height: 50),
+                                    SizedBox(height: 30),
                                     Container(
                                       width: double.infinity,
                                       decoration: BoxDecoration(
@@ -187,6 +170,19 @@ class _LoginState extends State<Login> {
                                             style: kbod,
                                           ),
                                         ),
+                                      ),
+                                    ),
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    Register()));
+                                      },
+                                      child: Text(
+                                        "Don't have an account? Sign Up now",
+                                        style: smols,
                                       ),
                                     ),
                                     SizedBox(height: 20),

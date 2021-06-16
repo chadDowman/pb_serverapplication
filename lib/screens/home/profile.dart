@@ -191,8 +191,9 @@ class _ProfileState extends State<Profile> {
                       ),
                       floatingActionButton: FloatingActionButton.extended(
                         onPressed: () async {
-                          await _auth.logOut(); // Calls sign out function
+
                           Navigator.push(context,MaterialPageRoute(builder: (context) => Login()));
+                          await _auth.logOut(); // Calls sign out function
                         },
                         label: Text('Logout'),
                         icon: Icon(Icons.logout),
