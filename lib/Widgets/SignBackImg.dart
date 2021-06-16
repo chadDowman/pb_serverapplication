@@ -18,7 +18,7 @@ class SignBackImg extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
             image: DecorationImage(
-                image: AssetImage('pics/cy.jpg'),
+                image: AssetImage('pics/wolfs.jpg'),
                 fit: BoxFit.cover,
                 colorFilter: ColorFilter.mode(Colors.white, BlendMode.darken)
             )
