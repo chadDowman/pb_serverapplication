@@ -137,6 +137,9 @@ class _LoginState extends State<Login> {
                                             setState(() {
                                               loading = true;
                                             });
+                                            print('EMAIL IS HERE1: ' + email);
+                                            email = email.trim();
+                                            print('EMAIL IS HERE2: ' + email);
                                             dynamic result = await _auth
                                                 .loginUser(email, password);
                                             if (result == null) {

@@ -203,6 +203,8 @@ class _RegisterState extends State<Register> {
                                                 setState(() {
                                                   loading = true;
                                                 });
+                                                email = email.trim();
+                                                username = username.trim();
                                                 dynamic result =
                                                     await _auth.registerUser(
                                                         email,

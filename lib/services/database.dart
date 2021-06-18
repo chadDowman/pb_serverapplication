@@ -94,6 +94,10 @@ class DatabaseService {
     });
   }
 
+  Future deleteEventData() async{
+    await events.document(uid).delete();
+  }
+
   Event _userEventFromSnapshot(DocumentSnapshot snapshot) {
     return Event(
       id: snapshot.data["id"],

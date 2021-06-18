@@ -12,7 +12,6 @@ import 'package:pb_blueprotocal/shared/loading.dart';
 import 'package:provider/provider.dart';
 
 class EventCreation extends StatefulWidget {
-
   @override
   _EventCreationState createState() => _EventCreationState();
 }
@@ -31,11 +30,8 @@ class _EventCreationState extends State<EventCreation> {
   String databaseDate = "";
   String databaseDescription = "";
 
-
-
   @override
   Widget build(BuildContext context) {
-
     final user = Provider.of<User>(context);
 
     return StreamProvider<Event>.value(
@@ -198,29 +194,42 @@ class _EventCreationState extends State<EventCreation> {
                                     }
                                   },
                                   child: Padding(
-                                    padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+                                    padding:
+                                        EdgeInsets.fromLTRB(10, 10, 10, 10),
                                     child: Text(
                                       'Post Event',
                                       style: butt,
                                     ),
                                   ),
                                 ),
-
                                 ElevatedButton(
                                   onPressed: () async {
                                     uid = user.uid;
                                     updateEventDetails();
                                   },
-
                                   child: Padding(
-                                    padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+                                    padding:
+                                        EdgeInsets.fromLTRB(10, 10, 10, 10),
                                     child: Text(
-                                      'Update Events',
+                                      'Update Event',
                                       style: butt,
                                     ),
                                   ),
                                 ),
                               ],
+                            ),
+                            ElevatedButton(
+                              onPressed: () async {
+                                uid = user.uid;
+                                await deleteEvent();
+                              },
+                              child: Padding(
+                                padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+                                child: Text(
+                                  'Delete Event',
+                                  style: butt,
+                                ),
+                              ),
                             ),
                           ],
                         ),
@@ -257,37 +266,70 @@ class _EventCreationState extends State<EventCreation> {
     }
   }
 
-  updateEventDetails() async {
-    await Firestore.instance.collection('Guild_Events').where(
-        FieldPath.documentId,
-        isEqualTo: eventName
-    ).getDocuments().then((event) {
+  deleteEvent() async {
+    await Firestore.instance
+        .collection('Guild_Events')
+        .where(FieldPath.documentId, isEqualTo: eventName)
+        .getDocuments()
+        .then((event) {
       if (event.documents.isNotEmpty) {
-        Map<String, dynamic> documentData = event.documents.single.data; //if it is a single document
+        Map<String, dynamic> documentData =
+            event.documents.single.data; //if it is a single document
         print(documentData["eventDescription"]);
         print(documentData["eventName"]);
         print(documentData["eventDate"]);
         databaseName = documentData["eventName"];
         databaseDate = documentData["eventDate"];
         databaseDescription = documentData["eventDescription"];
+      }
+    }).catchError((e) => print("error fetching data: $e"));
+    await DatabaseService(uid: eventName).deleteEventData();
+  }
 
+  updateEventDetails() async {
+    await Firestore.instance
+        .collection('Guild_Events')
+        .where(FieldPath.documentId, isEqualTo: eventName)
+        .getDocuments()
+        .then((event) {
+      if (event.documents.isNotEmpty) {
+        Map<String, dynamic> documentData =
+            event.documents.single.data; //if it is a single document
+        print(documentData["eventDescription"]);
+        print(documentData["eventName"]);
+        print(documentData["eventDate"]);
+        databaseName = documentData["eventName"];
+        databaseDate = documentData["eventDate"];
+        databaseDescription = documentData["eventDescription"];
       }
     }).catchError((e) => print("error fetching data: $e"));
 
-    print("---------------------------------------UPDATE EVENT DETAILS----------------------------------------------");
-    if(eventDescription.isNotEmpty && day.isNotEmpty && month.isNotEmpty && time.isNotEmpty){
+    print(
+        "---------------------------------------UPDATE EVENT DETAILS----------------------------------------------");
+    if (eventDescription.isNotEmpty &&
+        day.isNotEmpty &&
+        month.isNotEmpty &&
+        time.isNotEmpty) {
       dateAndTimeString = day + " " + month + " at " + time + " GMT+2";
-      await DatabaseService(uid: eventName).postEventData(uid, eventName, eventDescription, dateAndTimeString);
+      await DatabaseService(uid: eventName)
+          .postEventData(uid, eventName, eventDescription, dateAndTimeString);
       Fluttertoast.showToast(msg: "Record Updated");
-    }else if (eventDescription.isNotEmpty && day.isEmpty && month.isEmpty && time.isEmpty){
-      await DatabaseService(uid: eventName).postEventData(uid, eventName, eventDescription, databaseDate);
+    } else if (eventDescription.isNotEmpty &&
+        day.isEmpty &&
+        month.isEmpty &&
+        time.isEmpty) {
+      await DatabaseService(uid: eventName)
+          .postEventData(uid, eventName, eventDescription, databaseDate);
       Fluttertoast.showToast(msg: "Description Updated");
-    }
-    else if (day.isNotEmpty && month.isNotEmpty && time.isNotEmpty && eventDescription.isEmpty){
+    } else if (day.isNotEmpty &&
+        month.isNotEmpty &&
+        time.isNotEmpty &&
+        eventDescription.isEmpty) {
       dateAndTimeString = day + " " + month + " at " + time + " GMT+2";
-      await DatabaseService(uid: eventName).postEventData(uid, eventName, databaseDescription, dateAndTimeString);
+      await DatabaseService(uid: eventName).postEventData(
+          uid, eventName, databaseDescription, dateAndTimeString);
       Fluttertoast.showToast(msg: "Date Updated");
-    }else{
+    } else {
       Fluttertoast.showToast(msg: "Missing Fields");
     }
   }

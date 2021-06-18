@@ -116,6 +116,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                                               loading = true;
                                             });
                                             try {
+                                              email = email.trim();
                                               await _auth
                                                   .sendPasswordResetEmail(
                                                       email);

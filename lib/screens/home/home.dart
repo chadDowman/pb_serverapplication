@@ -25,7 +25,8 @@ class _HomeState extends State<Home> {
                 image: AssetImage('pics/wolf.jpg'),
               ),
             ),
-            child: EventList()),
+            child: EventList()
+        ),
       ),
     );
   }

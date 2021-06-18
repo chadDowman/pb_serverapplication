@@ -17,7 +17,7 @@ class EventTile extends StatelessWidget {
           backgroundColor: Colors.grey[900],
           leading: CircleAvatar(
             //The left image thing
-            backgroundImage: AssetImage("pics/PixelatedBrosPic.png"),
+            backgroundImage: AssetImage("pics/PB.png"),
             radius: 25,
           ),
           title: Text(event.eventName,
