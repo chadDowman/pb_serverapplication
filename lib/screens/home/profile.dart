@@ -122,6 +122,9 @@ class _ProfileState extends State<Profile> {
                                       Row(
                                         children: [
                                           ElevatedButton(
+                                            style: ButtonStyle(
+                                      backgroundColor: MaterialStateProperty.all(Colors.grey[900]),
+                        ),
                                             onPressed: () async {
                                               if (_formKey.currentState
                                                   .validate()) {
@@ -130,6 +133,7 @@ class _ProfileState extends State<Profile> {
                                             },
                                             child: Padding(
                                               padding:
+
                                                   const EdgeInsets.symmetric(
                                                       vertical: 16.0),
                                               child: Text(
@@ -150,7 +154,10 @@ class _ProfileState extends State<Profile> {
                                                 color: Colors.blue,
                                                 borderRadius:
                                                     BorderRadius.circular(16)),
-                                            child: FlatButton(
+                                            child: ElevatedButton(
+                                              style: ButtonStyle(
+                                                backgroundColor: MaterialStateProperty.all(Colors.grey[900]),
+                                              ),
                                               onPressed: () async {
                                                 print(
                                                     "---------------------------------------Account Deletion Button Clicked----------------------------------------------");

@@ -186,6 +186,9 @@ class _EventCreationState extends State<EventCreation> {
                             Row(
                               children: [
                                 ElevatedButton(
+                                  style: ButtonStyle(
+                                    backgroundColor: MaterialStateProperty.all(Colors.grey[900]),
+                                  ),
                                   onPressed: () async {
                                     if (_formKey.currentState.validate()) {
                                       eventID = eventName;
@@ -203,6 +206,9 @@ class _EventCreationState extends State<EventCreation> {
                                   ),
                                 ),
                                 ElevatedButton(
+                                  style: ButtonStyle(
+                                    backgroundColor: MaterialStateProperty.all(Colors.grey[900]),
+                                  ),
                                   onPressed: () async {
                                     uid = user.uid;
                                     updateEventDetails();
