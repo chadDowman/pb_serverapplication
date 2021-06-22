@@ -130,7 +130,7 @@ class _LoginState extends State<Login> {
                                           color: Colors.blue,
                                           borderRadius:
                                               BorderRadius.circular(16)),
-                                      child: FlatButton(
+                                      child: ElevatedButton(
                                         onPressed: () async {
                                           if (_formKey.currentState
                                               .validate()) {

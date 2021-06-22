@@ -201,7 +201,7 @@ class _EventCreationState extends State<EventCreation> {
                                         EdgeInsets.fromLTRB(10, 10, 20, 10),
                                     child: Text(
                                       'Post Event',
-                                      style: butt2,
+                                      style: butt,
                                     ),
                                   ),
                                 ),
@@ -219,32 +219,42 @@ class _EventCreationState extends State<EventCreation> {
                                         EdgeInsets.fromLTRB(10, 10, 0, 10),
                                     child: Text(
                                       'Update Event',
-                                      style: butt2,
+                                      style: butt,
                                     ),
                                   ),
                                 ),
                               ],
                             ),
-                            ElevatedButton(
-                              style: ButtonStyle(
-                                backgroundColor: MaterialStateProperty.all(Colors.grey[800]),
-                              ),
-                              onPressed: () async {
-                                uid = user.uid;
-                                await deleteEvent();
-                              },
-                              child: Padding(
-                                padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
-                                child: Text(
-                                  'Delete Event',
-                                  style: butt2,
-                                ),
-                              ),
-                            ),
+
+
                           ],
                         ),
                       ),
                     ),
+                    Column(
+                      children: [
+                        Container(
+
+                          child:  ElevatedButton(
+                            style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all(Colors.grey[800]),
+                            ),
+                            onPressed: () async {
+                              uid = user.uid;
+                              await deleteEvent();
+                            },
+                            child: Padding(
+                              padding: EdgeInsets.fromLTRB(10, 10, 0, 10),
+                              child: Text(
+                                'Delete Event',
+                                style: butt,
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
+
+                    )
                   ],
                 ),
               ),

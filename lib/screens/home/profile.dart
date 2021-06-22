@@ -138,7 +138,7 @@ class _ProfileState extends State<Profile> {
                                                       vertical: 16.0),
                                               child: Text(
                                                 'Change',
-                                                style: butt2,
+                                                style: butt,
                                               ),
                                             ),
                                           ),
@@ -182,7 +182,7 @@ class _ProfileState extends State<Profile> {
                                               },
                                               child: Text(
                                                 'Delete account',
-                                                style: butt2,
+                                                style: butt,
                                               ),
                                             ),
                                           ),
