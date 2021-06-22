@@ -146,15 +146,6 @@ class _EventCreationState extends State<EventCreation> {
                               onTap: _pickTime,
                             ),
                             SizedBox(height: 10),
-                            Row(
-                              children: [
-
-                                SizedBox(width: 10),
-
-                              ],
-                            ),
-
-
                           ],
                         ),
                       ),
@@ -333,6 +324,7 @@ class _EventCreationState extends State<EventCreation> {
       }
     }).catchError((e) => print("error fetching data: $e"));
     await DatabaseService(uid: eventName).deleteEventData();
+    Fluttertoast.showToast(msg: "Event Deleted if Exists");
   }
 
   updateEventDetails() async {
