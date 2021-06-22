@@ -185,7 +185,29 @@ class _EventCreationState extends State<EventCreation> {
                             SizedBox(height: 10),
                             Row(
                               children: [
-                                ElevatedButton(
+
+                                SizedBox(width: 10),
+
+                              ],
+                            ),
+
+
+                          ],
+                        ),
+                      ),
+                    ),
+                    Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment:  MainAxisAlignment.spaceBetween,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 20,
+                                vertical: 10,
+                              ),
+                              child: Container(
+                                child: ElevatedButton(
                                   style: ButtonStyle(
                                     backgroundColor: MaterialStateProperty.all(Colors.grey[800]),
                                   ),
@@ -198,15 +220,22 @@ class _EventCreationState extends State<EventCreation> {
                                   },
                                   child: Padding(
                                     padding:
-                                        EdgeInsets.fromLTRB(10, 10, 20, 10),
+                                    EdgeInsets.fromLTRB(10, 10, 20, 10),
                                     child: Text(
                                       'Post Event',
                                       style: butt,
                                     ),
                                   ),
                                 ),
-                                SizedBox(width: 10),
-                                ElevatedButton(
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 20,
+                                vertical: 10,
+                              ),
+                              child: Container(
+                                child: ElevatedButton(
                                   style: ButtonStyle(
                                     backgroundColor: MaterialStateProperty.all(Colors.grey[800]),
                                   ),
@@ -216,20 +245,19 @@ class _EventCreationState extends State<EventCreation> {
                                   },
                                   child: Padding(
                                     padding:
-                                        EdgeInsets.fromLTRB(10, 10, 0, 10),
+                                    EdgeInsets.fromLTRB(10, 10, 0, 10),
                                     child: Text(
                                       'Update Event',
                                       style: butt,
                                     ),
                                   ),
                                 ),
-                              ],
+
+                              ),
                             ),
-
-
                           ],
-                        ),
-                      ),
+                        )
+                      ],
                     ),
                     Column(
                       children: [
