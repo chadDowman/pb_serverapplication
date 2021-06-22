@@ -2,6 +2,7 @@ import 'dart:collection';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:pb_blueprotocal/models/event.dart';
 import 'package:pb_blueprotocal/models/user.dart';
 
@@ -85,12 +86,14 @@ class DatabaseService {
 
   //----------------------------------------Event Related Things--------------------------------------
 
-  Future postEventData(String id, String eventName, String eventDescription, String eventDate) async {
+  Future postEventData(String id, String eventName, String eventDescription, String pickedDate, int hour, int minute) async {
     return await events.document(uid).setData({
       "id": id,
       "eventName": eventName,
       "eventDescription": eventDescription,
-      "eventDate": eventDate
+      "pickedDate": pickedDate,
+      "hour": hour,
+      "minute": minute,
     });
   }
 
@@ -103,7 +106,9 @@ class DatabaseService {
       id: snapshot.data["id"],
       eventName: snapshot.data["eventName"],
       eventDescription: snapshot.data["eventDescription"],
-      eventDate: snapshot.data["eventDate"],
+      pickedDate: snapshot.data["pickedDate"],
+      hour: snapshot.data["hour"],
+      minute: snapshot.data["minute"],
     );
   }
 
@@ -117,7 +122,9 @@ class DatabaseService {
     return snapshot.documents.map((doc) {
       return Event(
           eventName: doc.data["eventName"] ?? "",
-          eventDate: doc.data["eventDate"] ?? "",
+          pickedDate: doc.data["pickedDate"] ?? "",
+          hour: doc.data["hour"] ?? 0,
+          minute: doc.data["minute"] ?? 0,
           eventDescription: doc.data["eventDescription"] ?? "");
     }).toList();
   }

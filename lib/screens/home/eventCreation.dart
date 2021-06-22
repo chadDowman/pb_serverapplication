@@ -18,17 +18,29 @@ class EventCreation extends StatefulWidget {
 
 class _EventCreationState extends State<EventCreation> {
   final _formKey = GlobalKey<FormState>();
+
+  DateTime pickedDate;
+  TimeOfDay time;
+
+  @override
+  void initState() {
+    super.initState();
+    pickedDate = DateTime.now();
+    time = TimeOfDay.now();
+  }
+
   String eventID = "";
   String eventName = "";
   String eventDescription = "";
   String uid = "";
-  String month = "";
-  String day = "";
-  String time = "";
   String dateAndTimeString = "";
   String databaseName = "";
-  String databaseDate = "";
+  String databaseDate;
+  int databaseHour = 0;
+  int databaseMinute = 0;
   String databaseDescription = "";
+  int timeHour;
+  int timeMinute;
 
   @override
   Widget build(BuildContext context) {
@@ -120,68 +132,19 @@ class _EventCreationState extends State<EventCreation> {
                               },
                             ),
                             SizedBox(height: 0),
-                            TextFormField(
-                                decoration: InputDecoration(
-                                  contentPadding:
-                                      const EdgeInsets.symmetric(vertical: 20),
-                                  border: InputBorder.none,
-                                  hintText: 'Month',
-                                  prefixIcon: Icon(
-                                    Icons.calendar_view_day,
-                                    color: Colors.white,
-                                  ),
-                                  hintStyle: butt,
-                                ),
-                                validator: (val) => val.isEmpty
-                                    ? "Enter a Month for the event"
-                                    : null,
-                                onChanged: (val) {
-                                  setState(() {
-                                    month = val;
-                                  });
-                                }),
-                            SizedBox(height: 0),
-                            TextFormField(
-                                decoration: InputDecoration(
-                                  contentPadding:
-                                      const EdgeInsets.symmetric(vertical: 20),
-                                  border: InputBorder.none,
-                                  hintText: 'Day',
-                                  prefixIcon: Icon(
-                                    Icons.calendar_view_day,
-                                    color: Colors.white,
-                                  ),
-                                  hintStyle: butt,
-                                ),
-                                validator: (val) => val.isEmpty
-                                    ? "Enter a Day for the event"
-                                    : null,
-                                onChanged: (val) {
-                                  setState(() {
-                                    day = val;
-                                  });
-                                }),
-                            SizedBox(height: 0),
-                            TextFormField(
-                                decoration: InputDecoration(
-                                  contentPadding:
-                                      const EdgeInsets.symmetric(vertical: 20),
-                                  border: InputBorder.none,
-                                  hintText: 'Time',
-                                  prefixIcon: Icon(
-                                    Icons.alarm_add_sharp,
-                                    color: Colors.white,
-                                  ),
-                                  hintStyle: butt,
-                                ),
-                                validator: (val) => val.isEmpty
-                                    ? "Enter a Timer for the event"
-                                    : null,
-                                onChanged: (val) {
-                                  setState(() {
-                                    time = val;
-                                  });
-                                }),
+                            ListTile(
+                              title: Text(
+                                  "Current Date ${pickedDate.year}, ${pickedDate.month}, ${pickedDate.day}"),
+                              trailing: Icon(Icons.keyboard_arrow_down),
+                              onTap: _pickDate,
+                            ),
+                            SizedBox(height: 10),
+                            ListTile(
+                              title: Text(
+                                  "Current Date ${time.hour}:${time.minute}"),
+                              trailing: Icon(Icons.keyboard_arrow_down),
+                              onTap: _pickTime,
+                            ),
                             SizedBox(height: 10),
                             Row(
                               children: [
@@ -209,7 +172,8 @@ class _EventCreationState extends State<EventCreation> {
                               child: Container(
                                 child: ElevatedButton(
                                   style: ButtonStyle(
-                                    backgroundColor: MaterialStateProperty.all(Colors.grey[800]),
+                                    backgroundColor: MaterialStateProperty.all(
+                                        Colors.grey[800]),
                                   ),
                                   onPressed: () async {
                                     if (_formKey.currentState.validate()) {
@@ -237,7 +201,8 @@ class _EventCreationState extends State<EventCreation> {
                               child: Container(
                                 child: ElevatedButton(
                                   style: ButtonStyle(
-                                    backgroundColor: MaterialStateProperty.all(Colors.grey[800]),
+                                    backgroundColor: MaterialStateProperty.all(
+                                        Colors.grey[800]),
                                   ),
                                   onPressed: () async {
                                     uid = user.uid;
@@ -262,10 +227,10 @@ class _EventCreationState extends State<EventCreation> {
                     Column(
                       children: [
                         Container(
-
-                          child:  ElevatedButton(
+                          child: ElevatedButton(
                             style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all(Colors.grey[800]),
+                              backgroundColor:
+                                  MaterialStateProperty.all(Colors.grey[800]),
                             ),
                             onPressed: () async {
                               uid = user.uid;
@@ -281,7 +246,6 @@ class _EventCreationState extends State<EventCreation> {
                           ),
                         )
                       ],
-
                     )
                   ],
                 ),
@@ -293,14 +257,47 @@ class _EventCreationState extends State<EventCreation> {
     );
   }
 
+  _pickDate() async {
+    DateTime date = await showDatePicker(
+      context: context,
+      firstDate: DateTime(DateTime.now().year - 5),
+      lastDate: DateTime(DateTime.now().year + 5),
+      initialDate: pickedDate,
+    );
+
+    if (date != null) {
+      setState(() {
+        print(date);
+        pickedDate = date;
+      });
+    }
+  }
+
+  _pickTime() async {
+    TimeOfDay t = await showTimePicker(
+      context: context,
+      initialTime: time,
+    );
+
+    if (t != null) {
+      setState(() {
+        print(t);
+        time = t;
+      });
+    }
+  }
+
   postEventDetails() async {
     try {
-      dateAndTimeString = day + " " + month + " at " + time + " GMT+2";
       print(
           "---------------------------------------Attempting to add/change Event Details----------------------------------------------");
+      print(pickedDate);
 
-      await DatabaseService(uid: eventName)
-          .postEventData(uid, eventName, eventDescription, dateAndTimeString);
+      print(time);
+      print(time.hour);
+      print(time.minute);
+      await DatabaseService(uid: eventName).postEventData(uid, eventName, eventDescription, pickedDate.toString(), time.hour, time.minute);
+
 
       Fluttertoast.showToast(msg: "User Event Successfully Updated");
       print(
@@ -325,9 +322,13 @@ class _EventCreationState extends State<EventCreation> {
             event.documents.single.data; //if it is a single document
         print(documentData["eventDescription"]);
         print(documentData["eventName"]);
-        print(documentData["eventDate"]);
+        print(documentData["pickedDate"]);
+        print(documentData["hour"]);
+        print(documentData["minute"]);
         databaseName = documentData["eventName"];
-        databaseDate = documentData["eventDate"];
+        databaseDate = documentData["pickedDate"];
+        databaseHour = documentData["hour"];
+        databaseMinute = documentData["minute"];
         databaseDescription = documentData["eventDescription"];
       }
     }).catchError((e) => print("error fetching data: $e"));
@@ -345,40 +346,35 @@ class _EventCreationState extends State<EventCreation> {
             event.documents.single.data; //if it is a single document
         print(documentData["eventDescription"]);
         print(documentData["eventName"]);
-        print(documentData["eventDate"]);
+        print(documentData["pickedDate"]);
+        print(documentData["hour"]);
+        print(documentData["minute"]);
         databaseName = documentData["eventName"];
-        databaseDate = documentData["eventDate"];
+        databaseDate = documentData["pickedDate"];
+        databaseHour = documentData["hour"];
+        databaseMinute = documentData["minute"];
         databaseDescription = documentData["eventDescription"];
       }
     }).catchError((e) => print("error fetching data: $e"));
 
     print(
         "---------------------------------------UPDATE EVENT DETAILS----------------------------------------------");
-    if (eventDescription.isNotEmpty &&
-        day.isNotEmpty &&
-        month.isNotEmpty &&
-        time.isNotEmpty) {
-      dateAndTimeString = day + " " + month + " at " + time + " GMT+2";
-      await DatabaseService(uid: eventName)
-          .postEventData(uid, eventName, eventDescription, dateAndTimeString);
-      Fluttertoast.showToast(msg: "Record Updated");
-    } else if (eventDescription.isNotEmpty &&
-        day.isEmpty &&
-        month.isEmpty &&
-        time.isEmpty) {
-      await DatabaseService(uid: eventName)
-          .postEventData(uid, eventName, eventDescription, databaseDate);
-      Fluttertoast.showToast(msg: "Description Updated");
-    } else if (day.isNotEmpty &&
-        month.isNotEmpty &&
-        time.isNotEmpty &&
-        eventDescription.isEmpty) {
-      dateAndTimeString = day + " " + month + " at " + time + " GMT+2";
-      await DatabaseService(uid: eventName).postEventData(
-          uid, eventName, databaseDescription, dateAndTimeString);
-      Fluttertoast.showToast(msg: "Date Updated");
+    if (eventName.isNotEmpty) {
+      if (eventName != databaseName) {
+        Fluttertoast.showToast(msg: "Event Does Not Exist");
+      } else {
+        if (eventDescription.isNotEmpty) {
+          await DatabaseService(uid: eventName).postEventData(uid, eventName, eventDescription, databaseDate, databaseHour, databaseMinute);
+
+          Fluttertoast.showToast(msg: "Record Description Updated");
+        } else {
+          await DatabaseService(uid: eventName).postEventData(uid, eventName, databaseDescription, pickedDate.toString(), time.hour, time.minute);
+
+          Fluttertoast.showToast(msg: "Record Description Updated");
+        }
+      }
     } else {
-      Fluttertoast.showToast(msg: "Missing Fields");
+      Fluttertoast.showToast(msg: "Please Input Event Name");
     }
   }
 }

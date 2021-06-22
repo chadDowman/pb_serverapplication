@@ -22,7 +22,7 @@ class EventTile extends StatelessWidget {
           ),
           title: Text(event.eventName,
           style: TextStyle(color: Colors.purple[300])),
-          subtitle: Text(event.eventDate, style: TextStyle(color: Colors.purple[300])),
+          subtitle: Text(event.pickedDate.substring(0, 11) + "  at  " + event.hour.toString() + " : " + event.minute.toString() + " GMT+2", style: TextStyle(color: Colors.purple[300])),
           children: [Text(event.eventDescription,
             style: TextStyle(color: Colors.purple[300]))],
         ),

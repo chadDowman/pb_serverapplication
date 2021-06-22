@@ -6,12 +6,15 @@ import 'package:pb_blueprotocal/shared/constants.dart';
 import 'package:pb_blueprotocal/Widgets/SignBackImg.dart';
 import 'package:pb_blueprotocal/shared/loading.dart';
 
-class Register extends StatefulWidget {
+class AdminCreation extends StatefulWidget {
+  const AdminCreation({Key key}) : super(key: key);
+
   @override
-  _RegisterState createState() => _RegisterState();
+  _AdminCreationState createState() => _AdminCreationState();
 }
 
-class _RegisterState extends State<Register> {
+class _AdminCreationState extends State<AdminCreation> {
+
   final AuthService _auth = AuthService(); // Instance of auth service class
   final _formKey = GlobalKey<FormState>();
 
@@ -22,6 +25,7 @@ class _RegisterState extends State<Register> {
   String username = "";
   String error = "";
   bool loading = false;
+
 
   @override
   Widget build(BuildContext context) {
@@ -272,3 +276,8 @@ class _RegisterState extends State<Register> {
     );
   }
 }
+
+
+
+
+

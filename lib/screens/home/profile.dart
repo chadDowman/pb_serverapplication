@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -33,7 +34,7 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<User>(context);
+    dynamic user = Provider.of<User>(context);
     return user == null
         ? Loading()
         : StreamBuilder<UserAccountData>(
@@ -123,8 +124,10 @@ class _ProfileState extends State<Profile> {
                                         children: [
                                           ElevatedButton(
                                             style: ButtonStyle(
-                                      backgroundColor: MaterialStateProperty.all(Colors.grey[800]),
-                        ),
+                                              backgroundColor:
+                                                  MaterialStateProperty.all(
+                                                      Colors.grey[800]),
+                                            ),
                                             onPressed: () async {
                                               if (_formKey.currentState
                                                   .validate()) {
@@ -133,7 +136,6 @@ class _ProfileState extends State<Profile> {
                                             },
                                             child: Padding(
                                               padding:
-
                                                   const EdgeInsets.symmetric(
                                                       vertical: 16.0),
                                               child: Text(
@@ -156,7 +158,9 @@ class _ProfileState extends State<Profile> {
                                                     BorderRadius.circular(16)),
                                             child: ElevatedButton(
                                               style: ButtonStyle(
-                                                backgroundColor: MaterialStateProperty.all(Colors.grey[800]),
+                                                backgroundColor:
+                                                    MaterialStateProperty.all(
+                                                        Colors.grey[800]),
                                               ),
                                               onPressed: () async {
                                                 print(
@@ -166,7 +170,11 @@ class _ProfileState extends State<Profile> {
                                                             uid: userUID)
                                                         .deleteUserAuth();
                                                 if (delete) {
-                                                  Navigator.push(context,MaterialPageRoute(builder: (context) => Login()));
+                                                  Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              Login()));
                                                   Fluttertoast.showToast(
                                                       msg:
                                                           "Account Successfully Deleted");
@@ -198,9 +206,17 @@ class _ProfileState extends State<Profile> {
                       ),
                       floatingActionButton: FloatingActionButton.extended(
                         onPressed: () async {
+                          await Navigator.pushAndRemoveUntil<dynamic>(
+                            context,
+                            MaterialPageRoute<dynamic>(
+                              builder: (BuildContext context) => Login(),
+                            ),
+                            (route) =>
+                                false, //if you want to disable back feature set to false
+                          );
+                          await signOut();
 
-                          Navigator.push(context,MaterialPageRoute(builder: (context) => Login()));
-                          await _auth.logOut(); // Calls sign out function
+                          // Calls sign out function
                         },
                         label: Text('Logout'),
                         icon: Icon(Icons.logout),
@@ -216,15 +232,33 @@ class _ProfileState extends State<Profile> {
   }
 
   changeUsername() async {
-    try{
-      print("---------------------------------------Attempting to change Username----------------------------------------------");
-      await DatabaseService(uid: userUID).updateUserData(usernameForField, outObjectUserAccount.role, outObjectUserAccount.imgUrl);
-      print("---------------------------------------Username Changed Successfully----------------------------------------------");
+    try {
+      print(
+          "---------------------------------------Attempting to change Username----------------------------------------------");
+      await DatabaseService(uid: userUID).updateUserData(usernameForField,
+          outObjectUserAccount.role, outObjectUserAccount.imgUrl);
+      print(
+          "---------------------------------------Username Changed Successfully----------------------------------------------");
       Fluttertoast.showToast(msg: "Username Successfully Updated");
-    }catch(e){
-      print("---------------------------------------Error Has Occurred During Username Change----------------------------------------------");
+    } catch (e) {
+      print(
+          "---------------------------------------Error Has Occurred During Username Change----------------------------------------------");
       print(e.toString());
-      print("---------------------------------------End of Username Error Report----------------------------------------------");
+      print(
+          "---------------------------------------End of Username Error Report----------------------------------------------");
+    }
+  }
+
+  signOut() async{
+    try{
+      print("---------------------------------------Attempting to Log Out User----------------------------------------------");
+      await FirebaseAuth.instance.signOut();
+      print("---------------------------------------User Logout Successful----------------------------------------------");
+    }catch(e){
+      print("---------------------------------------An Error Has Occurred During User Logout----------------------------------------------");
+      print(e.toString());
+      print("---------------------------------------End of User Logout Error Report----------------------------------------------");
+
     }
   }
 
@@ -262,9 +296,11 @@ class _ProfileState extends State<Profile> {
         Fluttertoast.showToast(msg: "Permissions not granted try again");
       }
     } catch (e) {
-      print("---------------------------------------Image Upload Error Report----------------------------------------------");
+      print(
+          "---------------------------------------Image Upload Error Report----------------------------------------------");
       print(e);
-      print("---------------------------------------End of Image Upload Error Report----------------------------------------------");
+      print(
+          "---------------------------------------End of Image Upload Error Report----------------------------------------------");
       return false;
     }
   }

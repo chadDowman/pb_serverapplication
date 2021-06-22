@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pb_blueprotocal/models/event.dart';
 import 'package:pb_blueprotocal/models/user.dart';
+import 'package:pb_blueprotocal/screens/home/AdminCreate.dart';
 import 'package:pb_blueprotocal/screens/home/eventCreation.dart';
 import 'package:pb_blueprotocal/screens/home/home.dart';
 import 'package:pb_blueprotocal/screens/home/profile.dart';
@@ -24,6 +25,7 @@ class _NavState extends State<Nav> {
     Home(),
     Profile(),
     EventCreation(),
+    AdminCreation(),
   ];
 
   void _onItemTap(int index) {
@@ -34,6 +36,8 @@ class _NavState extends State<Nav> {
         screenName = "Profile Screen";
       } else if (index == 2) {
         screenName = "Event Creation Screen";
+      }else if (index == 3) {
+        screenName = "Admin Creation Screen";
       }
       _selectedIndex = index;
     });
@@ -74,6 +78,10 @@ class _NavState extends State<Nav> {
                     BottomNavigationBarItem(
                       icon: Icon(Icons.event),
                       title: Text('Event Creation'),
+                    ),
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.admin_panel_settings),
+                      title: Text('Admin Creation'),
                     ),
                   ],
                   currentIndex: _selectedIndex,

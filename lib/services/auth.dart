@@ -93,18 +93,4 @@ class AuthService {
       return null;
     }
   }
-
-  Future<void> logOut() async {
-    try{
-      print("---------------------------------------Attempting to Log Out User----------------------------------------------");
-      await FirebaseAuth.instance.signOut();
-      print("---------------------------------------User Logout Successful----------------------------------------------");
-    }catch(e){
-      print("---------------------------------------An Error Has Occurred During User Logout----------------------------------------------");
-      print(e.toString());
-      print("---------------------------------------End of User Logout Error Report----------------------------------------------");
-
-    }
-
-  }
 }
