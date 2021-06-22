@@ -123,7 +123,7 @@ class _ProfileState extends State<Profile> {
                                         children: [
                                           ElevatedButton(
                                             style: ButtonStyle(
-                                      backgroundColor: MaterialStateProperty.all(Colors.grey[900]),
+                                      backgroundColor: MaterialStateProperty.all(Colors.grey[800]),
                         ),
                                             onPressed: () async {
                                               if (_formKey.currentState
@@ -138,7 +138,7 @@ class _ProfileState extends State<Profile> {
                                                       vertical: 16.0),
                                               child: Text(
                                                 'Change',
-                                                style: kbod,
+                                                style: butt2,
                                               ),
                                             ),
                                           ),
@@ -156,7 +156,7 @@ class _ProfileState extends State<Profile> {
                                                     BorderRadius.circular(16)),
                                             child: ElevatedButton(
                                               style: ButtonStyle(
-                                                backgroundColor: MaterialStateProperty.all(Colors.grey[900]),
+                                                backgroundColor: MaterialStateProperty.all(Colors.grey[800]),
                                               ),
                                               onPressed: () async {
                                                 print(
@@ -182,7 +182,7 @@ class _ProfileState extends State<Profile> {
                                               },
                                               child: Text(
                                                 'Delete account',
-                                                style: butt,
+                                                style: butt2,
                                               ),
                                             ),
                                           ),

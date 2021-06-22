@@ -19,3 +19,8 @@ const TextStyle smols = TextStyle(
   fontSize: 14,
   color: Colors.white,
 );
+const TextStyle butt2 = TextStyle(
+  fontSize: 15,
+  fontWeight: FontWeight.bold,
+  color: Colors.purpleAccent,
+);

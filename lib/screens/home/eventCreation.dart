@@ -187,7 +187,7 @@ class _EventCreationState extends State<EventCreation> {
                               children: [
                                 ElevatedButton(
                                   style: ButtonStyle(
-                                    backgroundColor: MaterialStateProperty.all(Colors.grey[900]),
+                                    backgroundColor: MaterialStateProperty.all(Colors.grey[800]),
                                   ),
                                   onPressed: () async {
                                     if (_formKey.currentState.validate()) {
@@ -198,16 +198,17 @@ class _EventCreationState extends State<EventCreation> {
                                   },
                                   child: Padding(
                                     padding:
-                                        EdgeInsets.fromLTRB(10, 10, 10, 10),
+                                        EdgeInsets.fromLTRB(10, 10, 20, 10),
                                     child: Text(
                                       'Post Event',
-                                      style: butt,
+                                      style: butt2,
                                     ),
                                   ),
                                 ),
+                                SizedBox(width: 10),
                                 ElevatedButton(
                                   style: ButtonStyle(
-                                    backgroundColor: MaterialStateProperty.all(Colors.grey[900]),
+                                    backgroundColor: MaterialStateProperty.all(Colors.grey[800]),
                                   ),
                                   onPressed: () async {
                                     uid = user.uid;
@@ -215,16 +216,19 @@ class _EventCreationState extends State<EventCreation> {
                                   },
                                   child: Padding(
                                     padding:
-                                        EdgeInsets.fromLTRB(10, 10, 10, 10),
+                                        EdgeInsets.fromLTRB(10, 10, 0, 10),
                                     child: Text(
                                       'Update Event',
-                                      style: butt,
+                                      style: butt2,
                                     ),
                                   ),
                                 ),
                               ],
                             ),
                             ElevatedButton(
+                              style: ButtonStyle(
+                                backgroundColor: MaterialStateProperty.all(Colors.grey[800]),
+                              ),
                               onPressed: () async {
                                 uid = user.uid;
                                 await deleteEvent();
@@ -233,7 +237,7 @@ class _EventCreationState extends State<EventCreation> {
                                 padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
                                 child: Text(
                                   'Delete Event',
-                                  style: butt,
+                                  style: butt2,
                                 ),
                               ),
                             ),
