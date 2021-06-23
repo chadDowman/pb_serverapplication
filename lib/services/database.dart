@@ -13,47 +13,11 @@ class DatabaseService {
   //Reference to a specific collection in Firestore database
   DatabaseService({this.uid}); // Constructor
   //Creates if not created and makes the database reference
+
   final CollectionReference userInfo =
       Firestore.instance.collection("Guild_Members");
-  final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  //Delete User Data Firestore
-  Future _userDeleteAccount() async {
-    try{
-      return await userInfo.document(uid).delete();
-    }catch(e){
-      print("---------------------------------------Error Has Occurred During Firestore Deletion----------------------------------------------");
-      print(e.toString());
-      print("---------------------------------------End of Error During Firestore Deletion----------------------------------------------");
-    }
 
-  }
-
-  Future _userDeleteAuth () async{
-    try{
-      final FirebaseUser user = await _auth.currentUser();
-      return await user.delete();
-    }catch(e){
-      print("---------------------------------------Error Has Occurred During Firebase Auth Deletion----------------------------------------------");
-      print(e.toString());
-      print("---------------------------------------End of Error During Firebase Auth Deletion----------------------------------------------");
-    }
-  }
-
-  Future deleteUserAuth() async {
-    try {
-      print("---------------------------------------Starting Firestore Deletion----------------------------------------------");
-      await _userDeleteAccount();
-      print("------------------------------------------Firestore Deletion Successful-------------------------------------------");
-      print("------------------------------------------Starting Firebase Auth Deletion-------------------------------------------");
-      await _userDeleteAuth();
-      print("------------------------------------------Firebase Auth Deletion Successful-------------------------------------------");
-      return true;
-    } catch (e) {
-      print(e.toString());
-      return false;
-    }
-  }
 
   //Sets User Data
   Future updateUserData(String username, String role, String imgUrl) async {

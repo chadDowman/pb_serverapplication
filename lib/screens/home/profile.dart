@@ -8,6 +8,7 @@ import 'package:pb_blueprotocal/models/user.dart';
 import 'package:pb_blueprotocal/screens/authenticate/login.dart';
 import 'package:pb_blueprotocal/services/auth.dart';
 import 'package:pb_blueprotocal/services/database.dart';
+import 'package:pb_blueprotocal/services/deleteUser.dart';
 import 'package:pb_blueprotocal/shared/constants.dart';
 import 'package:pb_blueprotocal/shared/loading.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -29,18 +30,39 @@ class _ProfileState extends State<Profile> {
   UserAccountData outObjectUserAccount;
   final _formKey = GlobalKey<FormState>();
   final AuthService _auth = AuthService(); // Instance of auth service class
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  bool accountDeleted = false;
 
   // Accesses User Data from the provider
 
   @override
   Widget build(BuildContext context) {
-    dynamic user = Provider.of<User>(context);
+    final user = Provider.of<User>(context);
+
+    final BuildContext profileContext = context;
+    print('I RAN AGAIN !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+    if(accountDeleted == true){
+      accountDeleted = false;
+      Navigator.pushAndRemoveUntil<dynamic>(
+        context,
+        MaterialPageRoute<dynamic>(
+          builder: (BuildContext context) => Login(),
+        ),
+            (route) =>
+        false, //if you want to disable back feature set to false
+      );
+    }
     return user == null
         ? Loading()
         : StreamBuilder<UserAccountData>(
             stream: DatabaseService(uid: user.uid).userData,
             builder: (context, snapshot) {
-              if (snapshot.hasData) {
+              if(accountDeleted == true){
+                print('INSIDE STREAM!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+              }else{
+
+              }
+              if (snapshot.data != null && snapshot.hasData) {
                 UserAccountData userAccountData = snapshot.data;
                 outObjectUserAccount = userAccountData;
                 userUID = user.uid;
@@ -162,31 +184,11 @@ class _ProfileState extends State<Profile> {
                                                     MaterialStateProperty.all(
                                                         Colors.grey[800]),
                                               ),
-                                              onPressed: () async {
-                                                print(
-                                                    "---------------------------------------Account Deletion Button Clicked----------------------------------------------");
-                                                dynamic delete =
-                                                    await DatabaseService(
-                                                            uid: userUID)
-                                                        .deleteUserAuth();
-                                                if (delete) {
-                                                  Navigator.push(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              Login()));
-                                                  Fluttertoast.showToast(
-                                                      msg:
-                                                          "Account Successfully Deleted");
-                                                  print(
-                                                      "---------------------------------------Account Deletion Button Click Finished Processes Successfully----------------------------------------------");
-                                                } else {
-                                                  print(
-                                                      "---------------------------------------Account Deletion Error Has Occurred----------------------------------------------");
-                                                  Fluttertoast.showToast(
-                                                      msg:
-                                                          "Error Has Occurred During Account Deletion");
-                                                }
+                                              onPressed:  () async{
+                                                  accountDeleted = true;
+                                                  print( "---------------------------------------Account Deletion Button Clicked----------------------------------------------");
+                                                  await DeleteService(uid: userUID, context: profileContext).deleteUserAuth();
+                                                  print('I GUESS I ALSO RUN');
                                               },
                                               child: Text(
                                                 'Delete account',
@@ -225,7 +227,10 @@ class _ProfileState extends State<Profile> {
                     ),
                   ],
                 );
-              } else {
+              } else if(snapshot.hasError){
+                print('-------------------ERROR HAS OCCURRED HERES THE LOGIN PAGE LMAO');
+                return Login();
+              }else {
                 return Loading();
               }
             });

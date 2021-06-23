@@ -93,4 +93,39 @@ class AuthService {
       return null;
     }
   }
+
+  //register user
+  Future registerAdmin(String email, String password, String username, String imgUrl) async {
+    try {
+      print("---------------------------------------Starting Admin Registration Attempt----------------------------------------------");
+      AuthResult result = await _auth.createUserWithEmailAndPassword(email: email, password: password); //Creates User
+      print("---------------------------------------Admin Successfully Registered----------------------------------------------");
+      FirebaseUser user = result.user; //Gets that user back
+      try{
+        print("---------------------------------------Attempting to send Email Verification----------------------------------------------");
+        await user.sendEmailVerification(); //Sends email verification
+        print("---------------------------------------Admin Email Verification Email Successfully Sent----------------------------------------------");
+      }catch(e){
+        print("---------------------------------------Admin Email does not exist----------------------------------------------");
+        print(e.toString());
+        print("---------------------------------------End of Email Verification Error----------------------------------------------");
+      }
+      try{
+        //Create new Document for the user with the uid
+        print("---------------------------------------Registering Admin Details With Firestore----------------------------------------------");
+        await DatabaseService(uid: user.uid).updateUserData(username, "admin", imgUrl); //Passes Uid to the constructor
+        print("---------------------------------------Admin Details Successfully Registered With Firestore----------------------------------------------");
+      }catch(e){
+        print("---------------------------------------Error Has Occurred During Firestore Registration----------------------------------------------");
+        print(e.toString());
+        print("---------------------------------------End of Error During Firestore Registration----------------------------------------------");
+      }
+      return _userFromFirebaseUser(user);
+    } catch (e) {
+      print("---------------------------------------Error Has Occurred During Admin Registration----------------------------------------------");
+      print(e.toString());
+      print("---------------------------------------End of Admin Registration Error Report----------------------------------------------");
+      return null;
+    }
+  }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pb_blueprotocal/models/event.dart';
 import 'package:pb_blueprotocal/models/user.dart';
+import 'package:pb_blueprotocal/screens/authenticate/login.dart';
 import 'package:pb_blueprotocal/screens/home/AdminCreate.dart';
 import 'package:pb_blueprotocal/screens/home/eventCreation.dart';
 import 'package:pb_blueprotocal/screens/home/home.dart';
@@ -46,8 +47,7 @@ class _NavState extends State<Nav> {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
-
-    return StreamBuilder<UserAccountData>(
+    return user == null ? Login() : StreamBuilder<UserAccountData>(
         stream: DatabaseService(uid: user.uid).userData,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
