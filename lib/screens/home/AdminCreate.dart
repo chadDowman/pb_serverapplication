@@ -198,7 +198,12 @@ class _AdminCreationState extends State<AdminCreation> {
                                               color: Colors.blue,
                                               borderRadius:
                                                   BorderRadius.circular(16)),
-                                          child: FlatButton(
+                                          child: ElevatedButton(
+                                            style: ButtonStyle(
+                                              backgroundColor:
+                                              MaterialStateProperty.all(
+                                                  Colors.grey[800]),
+                                            ),
                                             onPressed: () async {
                                               if (_formKey.currentState
                                                   .validate()) {

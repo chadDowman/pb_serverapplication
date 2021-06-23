@@ -54,7 +54,7 @@ class _NavState extends State<Nav> {
             UserAccountData userAccountData = snapshot.data;
             if (userAccountData.role == "admin") {
               return Scaffold(
-                backgroundColor: Colors.black,
+                backgroundColor: Colors.transparent,
                 appBar: AppBar(
                   backgroundColor: Colors.grey[800],
                   automaticallyImplyLeading: false,
@@ -63,25 +63,29 @@ class _NavState extends State<Nav> {
                 ),
                 body: _widgetOptions.elementAt(_selectedIndex),
                 bottomNavigationBar: BottomNavigationBar(
-                  backgroundColor: Colors.transparent,
+                  backgroundColor: Colors.black,
                   selectedItemColor: Colors.deepPurple,
                   unselectedItemColor: Colors.red,
                   items: const <BottomNavigationBarItem>[
                     BottomNavigationBarItem(
                       icon: Icon(Icons.home),
                       title: Text("Home"),
+                      backgroundColor: Colors.black,
                     ),
                     BottomNavigationBarItem(
                       icon: Icon(Icons.person),
                       title: Text('Profile'),
+                      backgroundColor: Colors.black,
                     ),
                     BottomNavigationBarItem(
                       icon: Icon(Icons.event),
                       title: Text('Event Creation'),
+                      backgroundColor: Colors.black,
                     ),
                     BottomNavigationBarItem(
                       icon: Icon(Icons.admin_panel_settings),
                       title: Text('Admin Creation'),
+                      backgroundColor: Colors.black,
                     ),
                   ],
                   currentIndex: _selectedIndex,
@@ -106,10 +110,12 @@ class _NavState extends State<Nav> {
                     BottomNavigationBarItem(
                       icon: Icon(Icons.home),
                       title: Text("Home"),
+                      backgroundColor: Colors.black,
                     ),
                     BottomNavigationBarItem(
                       icon: Icon(Icons.person),
                       title: Text('Profile'),
+                      backgroundColor: Colors.black,
                     ),
                   ],
                   currentIndex: _selectedIndex,
