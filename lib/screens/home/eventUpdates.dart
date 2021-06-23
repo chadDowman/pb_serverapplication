@@ -5,20 +5,42 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pb_blueprotocal/models/event.dart';
 import 'package:pb_blueprotocal/models/user.dart';
-import 'package:pb_blueprotocal/screens/home/eventTile.dart';
 import 'package:pb_blueprotocal/services/database.dart';
 import 'package:pb_blueprotocal/shared/constants.dart';
 import 'package:pb_blueprotocal/shared/loading.dart';
 import 'package:provider/provider.dart';
 
-class EventCreation extends StatefulWidget {
-  const EventCreation({Key key}) : super(key: key);
+
+class EventCreation2 extends StatefulWidget {
+
+  final eventName;
+  final eventDescription;
+  final date;
+  final hour;
+  final min;
+
+  const EventCreation2({Key key, this.eventName, this.eventDescription, this.date, this.hour, this.min}) : super(key: key);
 
   @override
-  _EventCreationState createState() => _EventCreationState();
+  _EventCreation2State createState() => _EventCreation2State(this.eventName, this.eventDescription, this.date, this.hour, this.min);
 }
 
-class _EventCreationState extends State<EventCreation> {
+class _EventCreation2State extends State<EventCreation2> {
+
+  String getEventName;
+  String getEventDescription;
+  String date;
+  int hour;
+  int min;
+
+  _EventCreation2State(String getEventName, String getEventDescription, String date, int hour, int min){
+    this.getEventName = getEventName;
+    this.getEventDescription = getEventDescription;
+    this.date = date;
+    this.hour = hour;
+    this.min = min;
+  }
+
   final _formKey = GlobalKey<FormState>();
 
   DateTime pickedDate;
@@ -27,13 +49,12 @@ class _EventCreationState extends State<EventCreation> {
   @override
   void initState() {
     super.initState();
-    pickedDate = DateTime.now();
-    time = TimeOfDay.now();
+    DateTime dbDate = DateTime.parse(date);
+    pickedDate = dbDate;
+    TimeOfDay releaseTime = TimeOfDay(hour: hour, minute: min);
+    time = releaseTime;
   }
 
-  String eventID = "";
-  String eventName = "";
-  String eventDescription = "";
   String uid = "";
   String dateAndTimeString = "";
   String databaseName = "";
@@ -48,7 +69,7 @@ class _EventCreationState extends State<EventCreation> {
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
 
-    return StreamProvider<Event>.value(
+    return user == null ? Loading() : StreamProvider<Event>.value(
       value: DatabaseService().eventData,
       initialData: null,
       child: Stack(
@@ -74,7 +95,7 @@ class _EventCreationState extends State<EventCreation> {
                               color: Colors.grey[800],
                             ),
                             Text(
-                              'Enter the name of the event',
+                              'Event Name: ',
                               style: TextStyle(
                                 color: Colors.white,
                                 letterSpacing: 2,
@@ -82,10 +103,11 @@ class _EventCreationState extends State<EventCreation> {
                             ),
                             SizedBox(height: 10),
                             TextFormField(
+                              initialValue: getEventName,
                               style: TextStyle(color: Colors.white),
                               decoration: InputDecoration(
                                 contentPadding:
-                                    const EdgeInsets.symmetric(vertical: 20),
+                                const EdgeInsets.symmetric(vertical: 20),
                                 border: InputBorder.none,
                                 hintText: 'Event Name',
                                 prefixIcon: Icon(
@@ -95,16 +117,18 @@ class _EventCreationState extends State<EventCreation> {
                                 hintStyle: kbod,
                               ),
                               validator: (val) =>
-                                  val.isEmpty ? "Enter A Event Name!" : null,
+                              val.isEmpty
+                                  ? "Event Name Missing"
+                                  : null,
                               onChanged: (val) {
                                 setState(() {
-                                  eventName = val;
+                                  getEventName = val;
                                 });
                               },
                             ),
                             SizedBox(height: 10),
                             Text(
-                              'Describe the Event that is taking place',
+                              'Event Description',
                               style: TextStyle(
                                 color: Colors.white,
                                 letterSpacing: 2,
@@ -112,10 +136,11 @@ class _EventCreationState extends State<EventCreation> {
                             ),
                             SizedBox(height: 10),
                             TextFormField(
+                              initialValue: getEventDescription,
                               style: TextStyle(color: Colors.white),
                               decoration: InputDecoration(
                                 contentPadding:
-                                    const EdgeInsets.symmetric(vertical: 20),
+                                const EdgeInsets.symmetric(vertical: 20),
                                 border: InputBorder.none,
                                 hintText: 'Description',
                                 prefixIcon: Icon(
@@ -124,19 +149,21 @@ class _EventCreationState extends State<EventCreation> {
                                 ),
                                 hintStyle: kbod,
                               ),
-                              validator: (val) => val.length < 10
+                              validator: (val) =>
+                              val.isEmpty
                                   ? "Enter A Event Description!"
                                   : null,
                               onChanged: (val) {
                                 setState(() {
-                                  eventDescription = val;
+                                  getEventDescription = val;
                                 });
                               },
                             ),
                             SizedBox(height: 0),
                             ListTile(
                               title: Text(
-                                  "Current Date ${pickedDate.year}, ${pickedDate.month}, ${pickedDate.day}"),
+                                  "Current Date ${pickedDate.year}, ${pickedDate
+                                      .month}, ${pickedDate.day}"),
                               trailing: Icon(Icons.keyboard_arrow_down),
                               onTap: _pickDate,
                             ),
@@ -155,7 +182,7 @@ class _EventCreationState extends State<EventCreation> {
                     Column(
                       children: [
                         Row(
-                          mainAxisAlignment:  MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Padding(
                               padding: const EdgeInsets.symmetric(
@@ -170,76 +197,26 @@ class _EventCreationState extends State<EventCreation> {
                                   ),
                                   onPressed: () async {
                                     if (_formKey.currentState.validate()) {
-                                      eventID = eventName;
                                       uid = user.uid;
-                                      await postEventDetails();
+                                      await updateEventDetails();
+                                      Navigator.pop(context);
                                     }
                                   },
                                   child: Padding(
                                     padding:
                                     EdgeInsets.fromLTRB(10, 10, 20, 10),
                                     child: Text(
-                                      'Post Event',
-                                      style: butt,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 20,
-                                vertical: 10,
-                              ),
-                              child: Container(
-                                child: ElevatedButton(
-                                  style: ButtonStyle(
-                                    backgroundColor: MaterialStateProperty.all(
-                                        Colors.grey[800]),
-                                  ),
-                                  onPressed: () async {
-                                    uid = user.uid;
-                                    updateEventDetails();
-                                  },
-                                  child: Padding(
-                                    padding:
-                                    EdgeInsets.fromLTRB(10, 10, 0, 10),
-                                    child: Text(
                                       'Update Event',
                                       style: butt,
                                     ),
                                   ),
                                 ),
-
                               ),
                             ),
                           ],
                         )
                       ],
                     ),
-                    Column(
-                      children: [
-                        Container(
-                          child: ElevatedButton(
-                            style: ButtonStyle(
-                              backgroundColor:
-                                  MaterialStateProperty.all(Colors.grey[800]),
-                            ),
-                            onPressed: () async {
-                              uid = user.uid;
-                              await deleteEvent();
-                            },
-                            child: Padding(
-                              padding: EdgeInsets.fromLTRB(10, 10, 0, 10),
-                              child: Text(
-                                'Delete Event',
-                                style: butt,
-                              ),
-                            ),
-                          ),
-                        )
-                      ],
-                    )
                   ],
                 ),
               ),
@@ -250,6 +227,36 @@ class _EventCreationState extends State<EventCreation> {
     );
   }
 
+  updateEventDetails() async {
+    await Firestore.instance
+        .collection('Guild_Events')
+        .where(FieldPath.documentId, isEqualTo: getEventName)
+        .getDocuments()
+        .then((event) {
+      if (event.documents.isNotEmpty) {
+        Map<String, dynamic> documentData =
+            event.documents.single.data; //if it is a single document
+        print(documentData["eventDescription"]);
+        print(documentData["eventName"]);
+        print(documentData["pickedDate"]);
+        print(documentData["hour"]);
+        print(documentData["minute"]);
+        databaseName = documentData["eventName"];
+        databaseDate = documentData["pickedDate"];
+        databaseHour = documentData["hour"];
+        databaseMinute = documentData["minute"];
+        databaseDescription = documentData["eventDescription"];
+      }
+    }).catchError((e) => print("error fetching data: $e"));
+
+    print(
+        "---------------------------------------UPDATE EVENT DETAILS----------------------------------------------");
+    if (getEventName.isNotEmpty) {
+          await DatabaseService(uid: getEventName).postEventData(uid, getEventName, getEventDescription, pickedDate.toString(), time.hour, time.minute);
+    } else {
+      Fluttertoast.showToast(msg: "Please Input An Event Name");
+    }
+  }
   _pickDate() async {
     DateTime date = await showDatePicker(
       context: context,
@@ -279,99 +286,4 @@ class _EventCreationState extends State<EventCreation> {
       });
     }
   }
-
-  postEventDetails() async {
-    try {
-      print(
-          "---------------------------------------Attempting to add/change Event Details----------------------------------------------");
-      print(pickedDate);
-
-      print(time);
-      print(time.hour);
-      print(time.minute);
-      await DatabaseService(uid: eventName).postEventData(uid, eventName, eventDescription, pickedDate.toString(), time.hour, time.minute);
-
-
-      Fluttertoast.showToast(msg: "User Event Successfully Updated");
-      print(
-          "---------------------------------------Event Details Updated/added Successfully----------------------------------------------");
-    } catch (e) {
-      print(
-          "---------------------------------------An Error Has Occurred Well Adding/Changing Event Details----------------------------------------------");
-      print(e.toString());
-      print(
-          "---------------------------------------End of Error Report For Event Related Things----------------------------------------------");
-    }
-  }
-
-  deleteEvent() async {
-    await Firestore.instance
-        .collection('Guild_Events')
-        .where(FieldPath.documentId, isEqualTo: eventName)
-        .getDocuments()
-        .then((event) {
-      if (event.documents.isNotEmpty) {
-        Map<String, dynamic> documentData =
-            event.documents.single.data; //if it is a single document
-        print(documentData["eventDescription"]);
-        print(documentData["eventName"]);
-        print(documentData["pickedDate"]);
-        print(documentData["hour"]);
-        print(documentData["minute"]);
-        databaseName = documentData["eventName"];
-        databaseDate = documentData["pickedDate"];
-        databaseHour = documentData["hour"];
-        databaseMinute = documentData["minute"];
-        databaseDescription = documentData["eventDescription"];
-      }
-    }).catchError((e) => print("error fetching data: $e"));
-    await DatabaseService(uid: eventName).deleteEventData();
-    Fluttertoast.showToast(msg: "Event Deleted if Exists");
-  }
-
-  updateEventDetails() async {
-    await Firestore.instance
-        .collection('Guild_Events')
-        .where(FieldPath.documentId, isEqualTo: eventName)
-        .getDocuments()
-        .then((event) {
-      if (event.documents.isNotEmpty) {
-        Map<String, dynamic> documentData =
-            event.documents.single.data; //if it is a single document
-        print(documentData["eventDescription"]);
-        print(documentData["eventName"]);
-        print(documentData["pickedDate"]);
-        print(documentData["hour"]);
-        print(documentData["minute"]);
-        databaseName = documentData["eventName"];
-        databaseDate = documentData["pickedDate"];
-        databaseHour = documentData["hour"];
-        databaseMinute = documentData["minute"];
-        databaseDescription = documentData["eventDescription"];
-      }
-    }).catchError((e) => print("error fetching data: $e"));
-
-    print(
-        "---------------------------------------UPDATE EVENT DETAILS----------------------------------------------");
-    if (eventName.isNotEmpty) {
-      if (eventName != databaseName) {
-        Fluttertoast.showToast(msg: "Event Does Not Exist");
-      } else {
-        if (eventDescription.isNotEmpty) {
-          await DatabaseService(uid: eventName).postEventData(uid, eventName, eventDescription, databaseDate, databaseHour, databaseMinute);
-
-          Fluttertoast.showToast(msg: "Record Description Updated");
-        } else {
-          await DatabaseService(uid: eventName).postEventData(uid, eventName, databaseDescription, pickedDate.toString(), time.hour, time.minute);
-
-          Fluttertoast.showToast(msg: "Record Description Updated");
-        }
-      }
-    } else {
-      Fluttertoast.showToast(msg: "Please Input Event Name");
-    }
-  }
 }
-
-
-
