@@ -359,7 +359,6 @@ class _EventCreationState extends State<EventCreation> {
       } else {
         if (eventDescription.isNotEmpty) {
           await DatabaseService(uid: eventName).postEventData(uid, eventName, eventDescription, databaseDate, databaseHour, databaseMinute);
-
           Fluttertoast.showToast(msg: "Record Description Updated");
         } else {
           await DatabaseService(uid: eventName).postEventData(uid, eventName, databaseDescription, pickedDate.toString(), time.hour, time.minute);
