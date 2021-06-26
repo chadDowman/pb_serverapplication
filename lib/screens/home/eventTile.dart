@@ -143,6 +143,7 @@ class _EventTileState extends State<EventTile> {
                       child: ExpansionTile(
                         backgroundColor: Colors.grey[900],
                         leading: CircleAvatar(
+                          backgroundColor: Colors.transparent,
                           //The left image thing
                           backgroundImage: AssetImage("pics/PB.png"),
                           radius: 25,
