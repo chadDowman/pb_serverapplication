@@ -74,34 +74,31 @@ class _EventTileState extends State<EventTile> {
                               horizontal: 20,
                               vertical: 10,
                             ),
-                                  child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(15.0),
-                                    child: ElevatedButton(
-                                      style: ButtonStyle(
-                                        backgroundColor: MaterialStateProperty.all(
-                                            Colors.grey[800]),
-                                      ),
-                                      onPressed: () async {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) => EventCreation2(
-                                                      eventName:
-                                                          widget.event.eventName,
-                                                      eventDescription: widget
-                                                          .event.eventDescription,
-                                                      date: widget.event.pickedDate
-                                                          .toString(),
-                                                      hour: widget.event.hour,
-                                                      min: widget.event.minute,
-                                                    )));
-                                      },
-                                      child: Padding(
-                                        padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
-                                        child: Text(
-                                          'Update Event',
-                                          style: butt,
-                                        ),
+                                  child: ElevatedButton(
+                                    style: ButtonStyle(
+                                      backgroundColor: MaterialStateProperty.all(
+                                          Colors.grey[800]),
+                                    ),
+                                    onPressed: () async {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => EventCreation2(
+                                                    eventName:
+                                                        widget.event.eventName,
+                                                    eventDescription: widget
+                                                        .event.eventDescription,
+                                                    date: widget.event.pickedDate
+                                                        .toString(),
+                                                    hour: widget.event.hour,
+                                                    min: widget.event.minute,
+                                                  )));
+                                    },
+                                    child: Padding(
+                                      padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                                      child: Text(
+                                        'Update Event',
+                                        style: butt,
                                       ),
                                     ),
                                   ),
