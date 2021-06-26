@@ -54,6 +54,7 @@ class _LoginState extends State<Login> {
                                         borderRadius: BorderRadius.circular(16),
                                       ),
                                       child: TextFormField(
+                                        style: TextStyle(color: Colors.white),
                                         decoration: InputDecoration(
                                           contentPadding:
                                               const EdgeInsets.symmetric(
@@ -96,6 +97,7 @@ class _LoginState extends State<Login> {
                                         borderRadius: BorderRadius.circular(16),
                                       ),
                                       child: TextFormField(
+                                        style: TextStyle(color: Colors.white),
                                         decoration: InputDecoration(
                                           contentPadding:
                                               const EdgeInsets.symmetric(

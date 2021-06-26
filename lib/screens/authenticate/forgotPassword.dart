@@ -57,6 +57,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                                         ),
                                         child: Form(
                                           child: TextFormField(
+                                            style: TextStyle(color: Colors.white),
                                             decoration: InputDecoration(
                                               contentPadding:
                                                   const EdgeInsets.symmetric(
@@ -75,7 +76,6 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                                               ),
                                               hintStyle: kbod,
                                             ),
-                                            style: kbod,
                                             validator: (val) => val.isEmpty
                                                 ? "Enter A Valid Email!"
                                                 : null,

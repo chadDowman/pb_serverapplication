@@ -188,6 +188,7 @@ class _ProfileState extends State<Profile> {
                                                   accountDeleted = true;
                                                   print( "---------------------------------------Account Deletion Button Clicked----------------------------------------------");
                                                   await DeleteService(uid: userUID, context: profileContext).deleteUserAuth();
+                                                  Fluttertoast.showToast(msg: "Account Deleted Successfully");
                                                   print('I GUESS I ALSO RUN');
                                               },
                                               child: Text(
@@ -208,6 +209,7 @@ class _ProfileState extends State<Profile> {
                       ),
                       floatingActionButton: FloatingActionButton.extended(
                         onPressed: () async {
+                          Fluttertoast.showToast(msg: "You have successfully Logged Out");
                           await Navigator.pushAndRemoveUntil<dynamic>(
                             context,
                             MaterialPageRoute<dynamic>(
