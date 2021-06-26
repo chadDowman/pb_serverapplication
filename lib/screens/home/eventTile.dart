@@ -83,6 +83,8 @@ class _EventTileState extends State<EventTile> {
                             ),
                                   child: ElevatedButton(
                                     style: ButtonStyle(
+                                      shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(18.0),
+                                          side: BorderSide(color: Colors.purpleAccent))),
                                       backgroundColor: MaterialStateProperty.all(
                                           Colors.grey[800]),
                                     ),
@@ -117,6 +119,8 @@ class _EventTileState extends State<EventTile> {
                                   ),
                                   child: ElevatedButton(
                                     style: ButtonStyle(
+                                      shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(18.0),
+                                          side: BorderSide(color: Colors.purpleAccent))),
                                       backgroundColor: MaterialStateProperty.all(
                                           Colors.grey[800]),
                                     ),

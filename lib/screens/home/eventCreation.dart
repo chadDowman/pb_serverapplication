@@ -167,6 +167,8 @@ class _EventCreationState extends State<EventCreation> {
                               child: Container(
                                 child: ElevatedButton(
                                   style: ButtonStyle(
+                                    shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(18.0),
+                                        side: BorderSide(color: Colors.purpleAccent))),
                                     backgroundColor: MaterialStateProperty.all(
                                         Colors.grey[800]),
                                   ),
@@ -196,6 +198,8 @@ class _EventCreationState extends State<EventCreation> {
                               child: Container(
                                 child: ElevatedButton(
                                   style: ButtonStyle(
+                                    shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(18.0),
+                                        side: BorderSide(color: Colors.purpleAccent))),
                                     backgroundColor: MaterialStateProperty.all(
                                         Colors.grey[800]),
                                   ),
@@ -224,6 +228,8 @@ class _EventCreationState extends State<EventCreation> {
                         Container(
                           child: ElevatedButton(
                             style: ButtonStyle(
+                              shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(18.0),
+                                  side: BorderSide(color: Colors.purpleAccent))),
                               backgroundColor:
                                   MaterialStateProperty.all(Colors.grey[800]),
                             ),
