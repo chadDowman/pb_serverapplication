@@ -32,6 +32,7 @@ class _ProfileState extends State<Profile> {
   final AuthService _auth = AuthService(); // Instance of auth service class
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   bool accountDeleted = false;
+  bool deleteAlert = false;
 
   // Accesses User Data from the provider
 
@@ -40,202 +41,237 @@ class _ProfileState extends State<Profile> {
     final user = Provider.of<User>(context);
 
     final BuildContext profileContext = context;
-    print('I RAN AGAIN !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
-    if(accountDeleted == true){
+    print(
+        'I RAN AGAIN !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+    if (accountDeleted == true) {
       accountDeleted = false;
       Navigator.pushAndRemoveUntil<dynamic>(
         context,
         MaterialPageRoute<dynamic>(
           builder: (BuildContext context) => Login(),
         ),
-            (route) =>
-        false, //if you want to disable back feature set to false
+        (route) => false, //if you want to disable back feature set to false
       );
     }
-    return user == null
-        ? Loading()
-        : StreamBuilder<UserAccountData>(
-            stream: DatabaseService(uid: user.uid).userData,
-            builder: (context, snapshot) {
-              if(accountDeleted == true){
-                print('INSIDE STREAM!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
-              }else{
 
-              }
-              if (snapshot.data != null && snapshot.hasData) {
-                UserAccountData userAccountData = snapshot.data;
-                outObjectUserAccount = userAccountData;
-                userUID = user.uid;
-                return Stack(
-                  children: [
-                    Scaffold(
-                      backgroundColor: Colors.grey[900],
-                      body: SingleChildScrollView(
-                        child: SafeArea(
-                          child: Column(
-                            children: [
-                              SizedBox(
-                                height: 50,
-                              ),
-                              Container(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 40),
-                                child: Form(
-                                  key: _formKey,
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      Center(
-                                        child: InkWell(
-                                          onTap: () {
-                                            print(
-                                                "---------------------------------------Image Upload Process Has Begun----------------------------------------------");
-                                            dynamic uploadIMG = uploadImage();
-                                            if (uploadIMG) {
+    // set up the buttons
+    Widget yesButton = FlatButton(
+      child: Text("Yes"),
+      onPressed: () async{
+        accountDeleted = true;
+        print( "---------------------------------------Account Deletion Button Clicked----------------------------------------------");
+        await DeleteService(uid: userUID, context: profileContext).deleteUserAuth();
+        Fluttertoast.showToast(msg: "Account Deleted Successfully");
+        setState(() {
+          deleteAlert = false;
+        });
+      },
+    );
+    Widget noButton = FlatButton(
+      child: Text("No"),
+      onPressed: () {
+        setState(() {
+          deleteAlert = false;
+        });
+      },
+    );
+
+    AlertDialog alert = AlertDialog(
+      title: Text("ALERT!"),
+      content: Text("Are you sure you want to delete your account ?"),
+      actions: [
+        yesButton,
+        noButton,
+      ],
+    );
+
+    if (deleteAlert == true) {
+      return alert;
+    } else {
+      return user == null
+          ? Loading()
+          : StreamBuilder<UserAccountData>(
+              stream: DatabaseService(uid: user.uid).userData,
+              builder: (context, snapshot) {
+                if (accountDeleted == true) {
+                  print(
+                      'INSIDE STREAM!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+                } else {}
+                if (snapshot.data != null && snapshot.hasData) {
+                  UserAccountData userAccountData = snapshot.data;
+                  outObjectUserAccount = userAccountData;
+                  userUID = user.uid;
+                  return Stack(
+                    children: [
+                      Scaffold(
+                        backgroundColor: Colors.grey[900],
+                        body: SingleChildScrollView(
+                          child: SafeArea(
+                            child: Column(
+                              children: [
+                                SizedBox(
+                                  height: 50,
+                                ),
+                                Container(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 40),
+                                  child: Form(
+                                    key: _formKey,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        Center(
+                                          child: InkWell(
+                                            onTap: () {
                                               print(
-                                                  "---------------------------------------Image Successfully Uploaded----------------------------------------------");
-                                            } else {
-                                              print(
-                                                  "---------------------------------------An Error Has Occurred During Image Upload----------------------------------------------");
-                                            }
-                                          },
-                                          child: CircleAvatar(
-                                            backgroundImage: NetworkImage(
-                                                userAccountData.imgUrl),
-                                            radius: 40,
-                                          ),
-                                        ),
-                                      ),
-                                      Divider(
-                                        height: 60,
-                                        color: Colors.grey[800],
-                                      ),
-                                      Text(
-                                        'Name',
-                                        style: TextStyle(
-                                          color: Colors.grey,
-                                          letterSpacing: 2,
-                                        ),
-                                      ),
-                                      SizedBox(height: 10),
-                                      TextFormField(
-                                        decoration: InputDecoration(
-                                          contentPadding:
-                                              const EdgeInsets.symmetric(
-                                                  vertical: 20),
-                                          border: InputBorder.none,
-                                          hintText: 'Username',
-                                          prefixIcon: Icon(
-                                            Icons.email,
-                                            color: Colors.white,
-                                          ),
-                                          hintStyle: kbod,
-                                        ),
-                                        validator: (val) => val.isEmpty
-                                            ? "Enter A Username!"
-                                            : null,
-                                        onChanged: (val) {
-                                          setState(() {
-                                            usernameForField = val;
-                                          });
-                                        },
-                                      ),
-                                      SizedBox(height: 30),
-                                      Row(
-                                        children: [
-                                          ElevatedButton(
-                                            style: ButtonStyle(
-                                              backgroundColor:
-                                                  MaterialStateProperty.all(
-                                                      Colors.grey[800]),
-                                            ),
-                                            onPressed: () async {
-                                              if (_formKey.currentState
-                                                  .validate()) {
-                                                await changeUsername();
+                                                  "---------------------------------------Image Upload Process Has Begun----------------------------------------------");
+                                              dynamic uploadIMG = uploadImage();
+                                              if (uploadIMG) {
+                                                print(
+                                                    "---------------------------------------Image Successfully Uploaded----------------------------------------------");
+                                              } else {
+                                                print(
+                                                    "---------------------------------------An Error Has Occurred During Image Upload----------------------------------------------");
                                               }
                                             },
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      vertical: 16.0),
-                                              child: Text(
-                                                'Change',
-                                                style: butt,
-                                              ),
+                                            child: CircleAvatar(
+                                              backgroundImage: NetworkImage(
+                                                  userAccountData.imgUrl),
+                                              radius: 40,
                                             ),
                                           ),
-                                        ],
-                                      ),
-                                      Column(
-                                        children: [
-                                          SizedBox(height: 50),
-                                          Container(
-                                            height: 60,
-                                            width: 88,
-                                            decoration: BoxDecoration(
-                                                color: Colors.blue,
-                                                borderRadius:
-                                                    BorderRadius.circular(16)),
-                                            child: ElevatedButton(
+                                        ),
+                                        Divider(
+                                          height: 60,
+                                          color: Colors.grey[800],
+                                        ),
+                                        Text(
+                                          'Name',
+                                          style: TextStyle(
+                                            color: Colors.grey,
+                                            letterSpacing: 2,
+                                          ),
+                                        ),
+                                        SizedBox(height: 10),
+                                        TextFormField(
+                                          decoration: InputDecoration(
+                                            contentPadding:
+                                                const EdgeInsets.symmetric(
+                                                    vertical: 20),
+                                            border: InputBorder.none,
+                                            hintText: 'Username',
+                                            prefixIcon: Icon(
+                                              Icons.email,
+                                              color: Colors.white,
+                                            ),
+                                            hintStyle: kbod,
+                                          ),
+                                          validator: (val) => val.isEmpty
+                                              ? "Enter A Username!"
+                                              : null,
+                                          onChanged: (val) {
+                                            setState(() {
+                                              usernameForField = val;
+                                            });
+                                          },
+                                        ),
+                                        SizedBox(height: 30),
+                                        Row(
+                                          children: [
+                                            ElevatedButton(
                                               style: ButtonStyle(
                                                 backgroundColor:
                                                     MaterialStateProperty.all(
                                                         Colors.grey[800]),
                                               ),
-                                              onPressed:  () async{
-                                                  accountDeleted = true;
-                                                  print( "---------------------------------------Account Deletion Button Clicked----------------------------------------------");
-                                                  await DeleteService(uid: userUID, context: profileContext).deleteUserAuth();
-                                                  Fluttertoast.showToast(msg: "Account Deleted Successfully");
-                                                  print('I GUESS I ALSO RUN');
+                                              onPressed: () async {
+                                                if (_formKey.currentState
+                                                    .validate()) {
+                                                  await changeUsername();
+                                                }
                                               },
-                                              child: Text(
-                                                'Delete account',
-                                                style: butt,
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        vertical: 16.0),
+                                                child: Text(
+                                                  'Change',
+                                                  style: butt,
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
+                                          ],
+                                        ),
+                                        Column(
+                                          children: [
+                                            SizedBox(height: 50),
+                                            Container(
+                                              height: 60,
+                                              width: 88,
+                                              decoration: BoxDecoration(
+                                                  color: Colors.blue,
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          16)),
+                                              child: ElevatedButton(
+                                                style: ButtonStyle(
+                                                  backgroundColor:
+                                                      MaterialStateProperty.all(
+                                                          Colors.grey[800]),
+                                                ),
+                                                onPressed: () async {
+                                                  print('Delete Button Clicked');
+                                                  setState(() {deleteAlert = true;});
+                                                },
+                                                child: Text(
+                                                  'Delete account',
+                                                  style: butt,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                      floatingActionButton: FloatingActionButton.extended(
-                        onPressed: () async {
-                          Fluttertoast.showToast(msg: "You have successfully Logged Out");
-                          await Navigator.pushAndRemoveUntil<dynamic>(
-                            context,
-                            MaterialPageRoute<dynamic>(
-                              builder: (BuildContext context) => Login(),
-                            ),
-                            (route) =>
-                                false, //if you want to disable back feature set to false
-                          );
-                          await signOut();
+                        floatingActionButton: FloatingActionButton.extended(
+                          onPressed: () async {
+                            Fluttertoast.showToast(
+                                msg: "You have successfully Logged Out");
+                            await Navigator.pushAndRemoveUntil<dynamic>(
+                              context,
+                              MaterialPageRoute<dynamic>(
+                                builder: (BuildContext context) => Login(),
+                              ),
+                              (route) =>
+                                  false, //if you want to disable back feature set to false
+                            );
+                            await signOut();
 
-                          // Calls sign out function
-                        },
-                        label: Text('Logout'),
-                        icon: Icon(Icons.logout),
-                        backgroundColor: Colors.pink,
+                            // Calls sign out function
+                          },
+                          label: Text('Logout'),
+                          icon: Icon(Icons.logout),
+                          backgroundColor: Colors.pink,
+                        ),
                       ),
-                    ),
-                  ],
-                );
-              } else if(snapshot.hasError){
-                print('-------------------ERROR HAS OCCURRED HERES THE LOGIN PAGE LMAO');
-                return Login();
-              }else {
-                return Loading();
-              }
-            });
+                    ],
+                  );
+                } else if (snapshot.hasError) {
+                  print(
+                      '-------------------ERROR HAS OCCURRED HERES THE LOGIN PAGE LMAO');
+                  return Login();
+                } else {
+                  return Loading();
+                }
+              });
+    }
   }
 
   changeUsername() async {
@@ -256,16 +292,19 @@ class _ProfileState extends State<Profile> {
     }
   }
 
-  signOut() async{
-    try{
-      print("---------------------------------------Attempting to Log Out User----------------------------------------------");
+  signOut() async {
+    try {
+      print(
+          "---------------------------------------Attempting to Log Out User----------------------------------------------");
       await FirebaseAuth.instance.signOut();
-      print("---------------------------------------User Logout Successful----------------------------------------------");
-    }catch(e){
-      print("---------------------------------------An Error Has Occurred During User Logout----------------------------------------------");
+      print(
+          "---------------------------------------User Logout Successful----------------------------------------------");
+    } catch (e) {
+      print(
+          "---------------------------------------An Error Has Occurred During User Logout----------------------------------------------");
       print(e.toString());
-      print("---------------------------------------End of User Logout Error Report----------------------------------------------");
-
+      print(
+          "---------------------------------------End of User Logout Error Report----------------------------------------------");
     }
   }
 
