@@ -112,6 +112,8 @@ class _EventCreationState extends State<EventCreation> {
                             ),
                             SizedBox(height: 10),
                             TextFormField(
+                              keyboardType: TextInputType.multiline,
+                              maxLines: null,
                               style: TextStyle(color: Colors.white),
                               decoration: InputDecoration(
                                 contentPadding:

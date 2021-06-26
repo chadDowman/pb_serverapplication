@@ -103,6 +103,8 @@ class _EventCreation2State extends State<EventCreation2> {
                             ),
                             SizedBox(height: 10),
                             TextFormField(
+                              keyboardType: TextInputType.multiline,
+                              maxLines: null,
                               initialValue: getEventName,
                               style: TextStyle(color: Colors.white),
                               decoration: InputDecoration(
@@ -136,6 +138,8 @@ class _EventCreation2State extends State<EventCreation2> {
                             ),
                             SizedBox(height: 10),
                             TextFormField(
+                              keyboardType: TextInputType.multiline,
+                              maxLines: null,
                               initialValue: getEventDescription,
                               style: TextStyle(color: Colors.white),
                               decoration: InputDecoration(
@@ -181,15 +185,7 @@ class _EventCreation2State extends State<EventCreation2> {
                     ),
                     Column(
                       children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 20,
-                                vertical: 10,
-                              ),
-                              child: Container(
+                        Container(
                                 child: ElevatedButton(
                                   style: ButtonStyle(
                                     backgroundColor: MaterialStateProperty.all(
@@ -212,10 +208,10 @@ class _EventCreation2State extends State<EventCreation2> {
                                   ),
                                 ),
                               ),
-                            ),
+
                           ],
-                        )
-                      ],
+
+
                     ),
                   ],
                 ),
