@@ -177,59 +177,72 @@ class _ProfileState extends State<Profile> {
                                           },
                                         ),
                                         SizedBox(height: 30),
-                                        Row(
+                                        Column(
                                           children: [
-                                            ElevatedButton(
-                                              style: ButtonStyle(
-                                                backgroundColor:
-                                                    MaterialStateProperty.all(
-                                                        Colors.grey[800]),
-                                              ),
-                                              onPressed: () async {
-                                                if (_formKey.currentState
-                                                    .validate()) {
-                                                  await changeUsername();
-                                                }
-                                              },
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        vertical: 16.0),
-                                                child: Text(
-                                                  'Change',
-                                                  style: butt,
+                                            Row(
+                                              children: [
+                                                Padding(
+                                                  padding: const EdgeInsets.symmetric(
+                                                    horizontal: 90,
+                                                    vertical: 10,
+                                                  ),
+                                                  child: ElevatedButton(
+                                                    style: ButtonStyle(
+                                                      shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(18.0),
+                                                          side: BorderSide(color: Colors.purpleAccent))),
+                                                      backgroundColor:
+                                                          MaterialStateProperty.all(
+                                                              Colors.grey[800]),
+                                                    ),
+                                                    onPressed: () async {
+                                                      if (_formKey.currentState
+                                                          .validate()) {
+                                                        await changeUsername();
+                                                      }
+                                                    },
+                                                    child: Padding(
+                                                      padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+                                                      child: Text(
+                                                        'Change',
+                                                        style: butt,
+                                                      ),
+                                                    ),
+                                                  ),
                                                 ),
-                                              ),
+                                              ],
                                             ),
                                           ],
                                         ),
                                         Column(
                                           children: [
-                                            SizedBox(height: 50),
-                                            Container(
-                                              height: 60,
-                                              width: 88,
-                                              decoration: BoxDecoration(
-                                                  color: Colors.blue,
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          16)),
-                                              child: ElevatedButton(
-                                                style: ButtonStyle(
-                                                  backgroundColor:
-                                                      MaterialStateProperty.all(
-                                                          Colors.grey[800]),
-                                                ),
-                                                onPressed: () async {
-                                                  print('Delete Button Clicked');
-                                                  setState(() {deleteAlert = true;});
-                                                },
-                                                child: Text(
-                                                  'Delete account',
-                                                  style: butt,
-                                                ),
+                                              Row(
+                                                children: [
+                                                  Padding(
+                                                    padding: const EdgeInsets.symmetric(
+                                                      horizontal: 70,
+                                                      vertical: 10,
+                                                    ),
+                                                    child: ElevatedButton(
+                                                      style: ButtonStyle(
+                                                        shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(18.0),
+                                                            side: BorderSide(color: Colors.purpleAccent))),
+                                                        backgroundColor:
+                                                            MaterialStateProperty.all(
+                                                                Colors.grey[800]),
+                                                      ),
+                                                      onPressed: () async {
+                                                        print('Delete Button Clicked');
+                                                        setState(() {deleteAlert = true;});
+                                                      },
+                                                      child: Text(
+                                                        'Delete account',
+                                                        style: butt,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
                                               ),
-                                            ),
+
                                           ],
                                         ),
                                       ],
