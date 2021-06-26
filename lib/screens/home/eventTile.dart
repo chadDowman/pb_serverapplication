@@ -64,8 +64,14 @@ class _EventTileState extends State<EventTile> {
                                   " GMT+2",
                               style: TextStyle(color: Colors.purple[300])),
                           children: [
-                            Text(widget.event.eventDescription,
-                                style: TextStyle(color: Colors.purple[300])),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 20,
+                                vertical: 10,
+                              ),
+                              child: Text(widget.event.eventDescription,
+                                  style: TextStyle(color: Colors.purple[300])),
+                            ),
                             SizedBox(height: 10),
                             Row(
                               mainAxisAlignment:  MainAxisAlignment.spaceBetween,
@@ -140,29 +146,32 @@ class _EventTileState extends State<EventTile> {
                     child: Card(
                       color: Colors.grey[900],
                       margin: EdgeInsets.fromLTRB(20, 6, 20, 0),
-                      child: ExpansionTile(
-                        backgroundColor: Colors.grey[900],
-                        leading: CircleAvatar(
-                          backgroundColor: Colors.transparent,
-                          //The left image thing
-                          backgroundImage: AssetImage("pics/PB.png"),
-                          radius: 25,
-                        ),
-                        title: Text(widget.event.eventName,
-                            style: TextStyle(color: Colors.purple[300])),
-                        subtitle: Text(
-                            widget.event.pickedDate.substring(0, 11) +
-                                "  at  " +
-                                widget.event.hour.toString() +
-                                " : " +
-                                widget.event.minute.toString() +
-                                " GMT+2",
-                            style: TextStyle(color: Colors.purple[300])),
-                        children: [
-                          Text(widget.event.eventDescription,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(25.0),
+                        child: ExpansionTile(
+                          backgroundColor: Colors.grey[900],
+                          leading: CircleAvatar(
+                            backgroundColor: Colors.transparent,
+                            //The left image thing
+                            backgroundImage: AssetImage("pics/PB.png"),
+                            radius: 25,
+                          ),
+                          title: Text(widget.event.eventName,
                               style: TextStyle(color: Colors.purple[300])),
-                          SizedBox(height: 10),
-                        ],
+                          subtitle: Text(
+                              widget.event.pickedDate.substring(0, 11) +
+                                  "  at  " +
+                                  widget.event.hour.toString() +
+                                  " : " +
+                                  widget.event.minute.toString() +
+                                  " GMT+2",
+                              style: TextStyle(color: Colors.purple[300])),
+                          children: [
+                            Text(widget.event.eventDescription,
+                                style: TextStyle(color: Colors.purple[300])),
+                            SizedBox(height: 10),
+                          ],
+                        ),
                       ),
                     ),
                   );
