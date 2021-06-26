@@ -42,90 +42,97 @@ class _EventTileState extends State<EventTile> {
                     child: Card(
                       color: Colors.grey[900],
                       margin: EdgeInsets.fromLTRB(20, 6, 20, 0),
-                      child: ExpansionTile(
-                        backgroundColor: Colors.grey[900],
-                        leading: CircleAvatar(
-                          //The left image thing
-                          backgroundImage: AssetImage("pics/PB.png"),
-                          radius: 25,
-                        ),
-                        title: Text(widget.event.eventName,
-                            style: TextStyle(color: Colors.purple[300])),
-                        subtitle: Text(
-                            widget.event.pickedDate.substring(0, 11) +
-                                "  at  " +
-                                widget.event.hour.toString() +
-                                " : " +
-                                widget.event.minute.toString() +
-                                " GMT+2",
-                            style: TextStyle(color: Colors.purple[300])),
-                        children: [
-                          Text(widget.event.eventDescription,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(25.0),
+                        child: ExpansionTile(
+
+                          backgroundColor: Colors.grey[900],
+                          leading: CircleAvatar(
+                            //The left image thing
+                            backgroundImage: AssetImage("pics/PB.png"),
+                            radius: 25,
+                          ),
+                          title: Text(widget.event.eventName,
                               style: TextStyle(color: Colors.purple[300])),
-                          SizedBox(height: 10),
-                          Row(
-                            mainAxisAlignment:  MainAxisAlignment.spaceBetween,
-                            children: [
-                              Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 20,
-                            vertical: 10,
-                          ),
-                                child: ElevatedButton(
-                                  style: ButtonStyle(
-                                    backgroundColor: MaterialStateProperty.all(
-                                        Colors.grey[800]),
-                                  ),
-                                  onPressed: () async {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => EventCreation2(
-                                                  eventName:
-                                                      widget.event.eventName,
-                                                  eventDescription: widget
-                                                      .event.eventDescription,
-                                                  date: widget.event.pickedDate
-                                                      .toString(),
-                                                  hour: widget.event.hour,
-                                                  min: widget.event.minute,
-                                                )));
-                                  },
-                                  child: Padding(
-                                    padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
-                                    child: Text(
-                                      'Update Event',
-                                      style: butt,
+                          subtitle: Text(
+                              widget.event.pickedDate.substring(0, 11) +
+                                  "  at  " +
+                                  widget.event.hour.toString() +
+                                  " : " +
+                                  widget.event.minute.toString() +
+                                  " GMT+2",
+                              style: TextStyle(color: Colors.purple[300])),
+                          children: [
+                            Text(widget.event.eventDescription,
+                                style: TextStyle(color: Colors.purple[300])),
+                            SizedBox(height: 10),
+                            Row(
+                              mainAxisAlignment:  MainAxisAlignment.spaceBetween,
+                              children: [
+                                Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 20,
+                              vertical: 10,
+                            ),
+                                  child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(15.0),
+                                    child: ElevatedButton(
+                                      style: ButtonStyle(
+                                        backgroundColor: MaterialStateProperty.all(
+                                            Colors.grey[800]),
+                                      ),
+                                      onPressed: () async {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) => EventCreation2(
+                                                      eventName:
+                                                          widget.event.eventName,
+                                                      eventDescription: widget
+                                                          .event.eventDescription,
+                                                      date: widget.event.pickedDate
+                                                          .toString(),
+                                                      hour: widget.event.hour,
+                                                      min: widget.event.minute,
+                                                    )));
+                                      },
+                                      child: Padding(
+                                        padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                                        child: Text(
+                                          'Update Event',
+                                          style: butt,
+                                        ),
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 20,
-                                  vertical: 10,
-                                ),
-                                child: ElevatedButton(
-                                  style: ButtonStyle(
-                                    backgroundColor: MaterialStateProperty.all(
-                                        Colors.grey[800]),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 20,
+                                    vertical: 10,
                                   ),
-                                  onPressed: () async {
-                                    await deleteEvent();
-                                  },
-                                  child: Padding(
-                                    padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
-                                    child: Text(
-                                      'Delete Event',
-                                      style: butt,
+                                  child: ElevatedButton(
+                                    style: ButtonStyle(
+                                      backgroundColor: MaterialStateProperty.all(
+                                          Colors.grey[800]),
+                                    ),
+                                    onPressed: () async {
+                                      await deleteEvent();
+                                    },
+                                    child: Padding(
+                                      padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                                      child: Text(
+                                        'Delete Event',
+                                        style: butt,
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(height: 10),
-                        ],
+                              ],
+                            ),
+                            SizedBox(height: 10),
+                          ],
+                        ),
                       ),
                     ),
                   );
