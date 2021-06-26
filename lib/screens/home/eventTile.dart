@@ -2,10 +2,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pb_blueprotocal/models/event.dart';
+import 'package:pb_blueprotocal/models/user.dart';
 import 'package:pb_blueprotocal/screens/home/eventUpdates.dart';
 import 'package:pb_blueprotocal/services/database.dart';
 import 'package:pb_blueprotocal/shared/constants.dart';
 import 'package:pb_blueprotocal/shared/custom.dart' as custom;
+import 'package:pb_blueprotocal/shared/loading.dart';
+import 'package:provider/provider.dart';
+
 class EventTile extends StatefulWidget {
   final Event event;
 
@@ -16,7 +20,6 @@ class EventTile extends StatefulWidget {
 }
 
 class _EventTileState extends State<EventTile> {
-
   String databaseName = "";
   String databaseDate;
   int databaseHour = 0;
@@ -25,73 +28,133 @@ class _EventTileState extends State<EventTile> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(top: 8.0),
-      child: Card(
-        color: Colors.grey[900],
-        margin: EdgeInsets.fromLTRB(20, 6, 20, 0),
-        child: ExpansionTile(
-          backgroundColor: Colors.grey[900],
-          leading: CircleAvatar(
-            //The left image thing
-            backgroundImage: AssetImage("pics/PB.png"),
-            radius: 25,
-          ),
-          title: Text(widget.event.eventName,
-          style: TextStyle(color: Colors.purple[300])),
-          subtitle: Text(widget.event.pickedDate.substring(0, 11) + "  at  " + widget.event.hour.toString() + " : " + widget.event.minute.toString() + " GMT+2", style: TextStyle(color: Colors.purple[300])),
-          children: [
-            Text(widget.event.eventDescription,
-            style: TextStyle(color: Colors.purple[300])),
-            SizedBox(height: 10),
-            Row(
-              children: [
-                ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor:
-                    MaterialStateProperty.all(
-                        Colors.grey[800]),
-                  ),
-                  onPressed: () async {
-                    Navigator.push( context, MaterialPageRoute(builder: (context) => EventCreation2(eventName: widget.event.eventName, eventDescription: widget.event.eventDescription, date: widget.event.pickedDate.toString(), hour: widget.event.hour, min: widget.event.minute,)));
-                  },
-                  child: Padding(
-                    padding:
-                    const EdgeInsets.symmetric(
-                        vertical: 16.0),
-                    child: Text(
-                      'Update Event',
-                      style: butt,
+    final user = Provider.of<User>(context);
+    return user == null
+        ? Loading()
+        : StreamBuilder<UserAccountData>(
+            stream: DatabaseService(uid: user.uid).userData,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                UserAccountData userAccountData = snapshot.data;
+                if (userAccountData.role == "admin") {
+                  return Padding(
+                    padding: EdgeInsets.only(top: 8.0),
+                    child: Card(
+                      color: Colors.grey[900],
+                      margin: EdgeInsets.fromLTRB(20, 6, 20, 0),
+                      child: ExpansionTile(
+                        backgroundColor: Colors.grey[900],
+                        leading: CircleAvatar(
+                          //The left image thing
+                          backgroundImage: AssetImage("pics/PB.png"),
+                          radius: 25,
+                        ),
+                        title: Text(widget.event.eventName,
+                            style: TextStyle(color: Colors.purple[300])),
+                        subtitle: Text(
+                            widget.event.pickedDate.substring(0, 11) +
+                                "  at  " +
+                                widget.event.hour.toString() +
+                                " : " +
+                                widget.event.minute.toString() +
+                                " GMT+2",
+                            style: TextStyle(color: Colors.purple[300])),
+                        children: [
+                          Text(widget.event.eventDescription,
+                              style: TextStyle(color: Colors.purple[300])),
+                          SizedBox(height: 10),
+                          Row(
+                            children: [
+                              ElevatedButton(
+                                style: ButtonStyle(
+                                  backgroundColor: MaterialStateProperty.all(
+                                      Colors.grey[800]),
+                                ),
+                                onPressed: () async {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => EventCreation2(
+                                                eventName:
+                                                    widget.event.eventName,
+                                                eventDescription: widget
+                                                    .event.eventDescription,
+                                                date: widget.event.pickedDate
+                                                    .toString(),
+                                                hour: widget.event.hour,
+                                                min: widget.event.minute,
+                                              )));
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 16.0),
+                                  child: Text(
+                                    'Update Event',
+                                    style: butt,
+                                  ),
+                                ),
+                              ),
+                              ElevatedButton(
+                                style: ButtonStyle(
+                                  backgroundColor: MaterialStateProperty.all(
+                                      Colors.grey[800]),
+                                ),
+                                onPressed: () async {
+                                  await deleteEvent();
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 16.0),
+                                  child: Text(
+                                    'Delete Event',
+                                    style: butt,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 10),
+                        ],
+                      ),
                     ),
-                  ),
-                ),
-                ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor:
-                    MaterialStateProperty.all(
-                        Colors.grey[800]),
-                  ),
-                  onPressed: () async {
-                    await deleteEvent();
-                  },
-                  child: Padding(
-                    padding:
-                    const EdgeInsets.symmetric(
-                        vertical: 16.0),
-                    child: Text(
-                      'Delete Event',
-                      style: butt,
+                  );
+                } else {
+                  return Padding(
+                    padding: EdgeInsets.only(top: 8.0),
+                    child: Card(
+                      color: Colors.grey[900],
+                      margin: EdgeInsets.fromLTRB(20, 6, 20, 0),
+                      child: ExpansionTile(
+                        backgroundColor: Colors.grey[900],
+                        leading: CircleAvatar(
+                          //The left image thing
+                          backgroundImage: AssetImage("pics/PB.png"),
+                          radius: 25,
+                        ),
+                        title: Text(widget.event.eventName,
+                            style: TextStyle(color: Colors.purple[300])),
+                        subtitle: Text(
+                            widget.event.pickedDate.substring(0, 11) +
+                                "  at  " +
+                                widget.event.hour.toString() +
+                                " : " +
+                                widget.event.minute.toString() +
+                                " GMT+2",
+                            style: TextStyle(color: Colors.purple[300])),
+                        children: [
+                          Text(widget.event.eventDescription,
+                              style: TextStyle(color: Colors.purple[300])),
+                          SizedBox(height: 10),
+                        ],
+                      ),
                     ),
-                  ),
-                ),
-              ],
-
-            ),
-            SizedBox(height: 10),
-          ],
-        ),
-      ),
-    );
+                  );
+                }
+              } else {
+                return Loading();
+              }
+            },
+          );
   }
 
   deleteEvent() async {
