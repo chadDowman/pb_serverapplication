@@ -8,8 +8,7 @@ class BackgroungImg extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ShaderMask(
-
-      shaderCallback: (bounds) =>  LinearGradient(
+      shaderCallback: (bounds) => LinearGradient(
         colors: [Colors.black, Colors.black12],
         begin: Alignment.bottomCenter,
         end: Alignment.center,
@@ -20,13 +19,8 @@ class BackgroungImg extends StatelessWidget {
             image: DecorationImage(
                 image: AssetImage('pics/wolfs.jpg'),
                 fit: BoxFit.cover,
-                colorFilter: ColorFilter.mode(Colors.white, BlendMode.darken)
-            )
-        ),
+                colorFilter: ColorFilter.mode(Colors.white, BlendMode.darken))),
       ),
-
-
-
     );
   }
 }

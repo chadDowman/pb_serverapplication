@@ -60,7 +60,8 @@ class _RegisterState extends State<Register> {
                                                 BorderRadius.circular(16),
                                           ),
                                           child: TextFormField(
-                                            style: TextStyle(color: Colors.white),
+                                            style:
+                                                TextStyle(color: Colors.white),
                                             decoration: InputDecoration(
                                               contentPadding:
                                                   const EdgeInsets.symmetric(
@@ -94,7 +95,8 @@ class _RegisterState extends State<Register> {
                                                 BorderRadius.circular(16),
                                           ),
                                           child: TextFormField(
-                                            style: TextStyle(color: Colors.white),
+                                            style:
+                                                TextStyle(color: Colors.white),
                                             decoration: InputDecoration(
                                               contentPadding:
                                                   const EdgeInsets.symmetric(
@@ -129,7 +131,8 @@ class _RegisterState extends State<Register> {
                                                 BorderRadius.circular(16),
                                           ),
                                           child: TextFormField(
-                                            style: TextStyle(color: Colors.white),
+                                            style:
+                                                TextStyle(color: Colors.white),
                                             decoration: InputDecoration(
                                               contentPadding:
                                                   const EdgeInsets.symmetric(
@@ -165,7 +168,8 @@ class _RegisterState extends State<Register> {
                                                 BorderRadius.circular(16),
                                           ),
                                           child: TextFormField(
-                                            style: TextStyle(color: Colors.white),
+                                            style:
+                                                TextStyle(color: Colors.white),
                                             decoration: InputDecoration(
                                               contentPadding:
                                                   const EdgeInsets.symmetric(

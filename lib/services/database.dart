@@ -17,8 +17,6 @@ class DatabaseService {
   final CollectionReference userInfo =
       Firestore.instance.collection("Guild_Members");
 
-
-
   //Sets User Data
   Future updateUserData(String username, String role, String imgUrl) async {
     return await userInfo.document(uid).setData({
@@ -45,12 +43,13 @@ class DatabaseService {
 
   //-------------------------------------------------------------------------------
 
-  final CollectionReference events = Firestore.instance.collection("Guild_Events");
-
+  final CollectionReference events =
+      Firestore.instance.collection("Guild_Events");
 
   //----------------------------------------Event Related Things--------------------------------------
 
-  Future postEventData(String id, String eventName, String eventDescription, String pickedDate, int hour, int minute) async {
+  Future postEventData(String id, String eventName, String eventDescription,
+      String pickedDate, int hour, int minute) async {
     return await events.document(uid).setData({
       "id": id,
       "eventName": eventName,
@@ -61,7 +60,7 @@ class DatabaseService {
     });
   }
 
-  Future deleteEventData() async{
+  Future deleteEventData() async {
     await events.document(uid).delete();
   }
 

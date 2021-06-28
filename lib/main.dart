@@ -20,63 +20,53 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         home: Login(),
-
       ),
-
     );
     // Creates instance of auth service and accesses the user stream on it
   }
 }
 
 class MassageHandler extends StatefulWidget {
-
   @override
   _MassageHandlerState createState() => _MassageHandlerState();
 }
 
 class _MassageHandlerState extends State<MassageHandler> {
-
   final Firestore _firestore = Firestore.instance;
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
   final List<Message> messages = [];
 
-  
   @override
   void initState() {
     super.initState();
 
     // _firebaseMessaging.subscribeToTopic("events");
     _firebaseMessaging.configure(
-      onMessage: (Map<String, dynamic> message) async{
+      onMessage: (Map<String, dynamic> message) async {
         print("onMessage:  $message");
         final notification = message['notification'];
         setState(() {
-          messages.add(Message(title: notification['title'], body: notification['body']));
+          messages.add(Message(
+              title: notification['title'], body: notification['body']));
         });
       },
-      onResume: (Map<String, dynamic> message) async{
+      onResume: (Map<String, dynamic> message) async {
         print("onMessage:  $message");
       },
-      onLaunch: (Map<String, dynamic> message) async{
+      onLaunch: (Map<String, dynamic> message) async {
         print("onMessage:  $message");
       },
     );
     //NO IOS ADDED
-
   }
 
   @override
   Widget build(BuildContext context) => ListView(
-    children: messages.map(buildMessage).toList(),
-
-  );
+        children: messages.map(buildMessage).toList(),
+      );
 
   Widget buildMessage(Message message) => ListTile(
-    title: Text(message.title),
-    subtitle: Text(message.body),
-  );
-
+        title: Text(message.title),
+        subtitle: Text(message.body),
+      );
 }
-
-
-

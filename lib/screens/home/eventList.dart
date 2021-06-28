@@ -13,7 +13,6 @@ class EventList extends StatefulWidget {
 class _EventListState extends State<EventList> {
   @override
   Widget build(BuildContext context) {
-
     final eventList = Provider.of<List<Event>>(context) ?? [];
 
     eventList.forEach((event) {
@@ -26,9 +25,9 @@ class _EventListState extends State<EventList> {
 
     return ListView.builder(
       itemCount: eventList.length,
-        itemBuilder: (context, index){
+      itemBuilder: (context, index) {
         return EventTile(event: eventList[index]);
-        },
+      },
     );
   }
 }

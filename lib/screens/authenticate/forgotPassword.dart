@@ -57,7 +57,8 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                                         ),
                                         child: Form(
                                           child: TextFormField(
-                                            style: TextStyle(color: Colors.white),
+                                            style:
+                                                TextStyle(color: Colors.white),
                                             decoration: InputDecoration(
                                               contentPadding:
                                                   const EdgeInsets.symmetric(

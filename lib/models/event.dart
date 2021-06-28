@@ -1,7 +1,6 @@
-
 import 'package:flutter/material.dart';
 
-class EventID{
+class EventID {
   final String id;
 
   EventID({this.id});
@@ -15,5 +14,11 @@ class Event {
   final int hour;
   final int minute;
 
-  Event({this.id, this.eventName, this.eventDescription, this.pickedDate, this.hour, this.minute});
+  Event(
+      {this.id,
+      this.eventName,
+      this.eventDescription,
+      this.pickedDate,
+      this.hour,
+      this.minute});
 }

@@ -1,10 +1,10 @@
-class User{
+class User {
   final String uid;
 
   User({this.uid});
 }
 
-class UserAccountData{
+class UserAccountData {
   final String uid;
   final String username;
   final String role;

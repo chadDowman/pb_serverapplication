@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
 @immutable
-class Message{
+class Message {
   final String title;
   final String body;
 

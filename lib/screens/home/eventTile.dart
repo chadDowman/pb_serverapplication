@@ -171,8 +171,14 @@ class _EventTileState extends State<EventTile> {
                                   " GMT+2",
                               style: TextStyle(color: Colors.purple[300])),
                           children: [
-                            Text(widget.event.eventDescription,
-                                style: TextStyle(color: Colors.purple[300])),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 20,
+                                vertical: 10,
+                              ),
+                              child: Text(widget.event.eventDescription,
+                                  style: TextStyle(color: Colors.purple[300])),
+                            ),
                             SizedBox(height: 10),
                           ],
                         ),

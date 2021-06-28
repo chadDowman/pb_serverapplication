@@ -47,6 +47,7 @@ class ExpansionTile extends StatefulWidget {
   final Widget title;
 
   final Widget subtitle;
+
   /// Called when the tile expands or collapses.
   ///
   /// When the tile starts expanding, this function is called with the value
@@ -81,11 +82,11 @@ class ExpansionTile extends StatefulWidget {
 class _ExpansionTileState extends State<ExpansionTile>
     with SingleTickerProviderStateMixin {
   static final Animatable<double> _easeOutTween =
-  CurveTween(curve: Curves.easeOut);
+      CurveTween(curve: Curves.easeOut);
   static final Animatable<double> _easeInTween =
-  CurveTween(curve: Curves.easeIn);
+      CurveTween(curve: Curves.easeIn);
   static final Animatable<double> _halfTween =
-  Tween<double>(begin: 0.0, end: 0.5);
+      Tween<double>(begin: 0.0, end: 0.5);
 
   final ColorTween _borderColorTween = ColorTween();
   final ColorTween _headerColorTween = ColorTween();

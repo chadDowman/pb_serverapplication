@@ -138,14 +138,18 @@ class _EventCreationState extends State<EventCreation> {
                             SizedBox(height: 0),
                             ListTile(
                               title: Text(
-                                  "Current Date ${pickedDate.year}, ${pickedDate.month}, ${pickedDate.day}"),
+                                "Current Date ${pickedDate.year}, ${pickedDate.month}, ${pickedDate.day}",
+                                style: TextStyle(color: Colors.white),
+                              ),
                               trailing: Icon(Icons.keyboard_arrow_down),
                               onTap: _pickDate,
                             ),
                             SizedBox(height: 10),
                             ListTile(
                               title: Text(
-                                  "Current Date ${time.hour}:${time.minute}"),
+                                "Current Date ${time.hour}:${time.minute}",
+                                style: TextStyle(color: Colors.white),
+                              ),
                               trailing: Icon(Icons.keyboard_arrow_down),
                               onTap: _pickTime,
                             ),
@@ -157,7 +161,7 @@ class _EventCreationState extends State<EventCreation> {
                     Column(
                       children: [
                         Row(
-                          mainAxisAlignment:  MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Padding(
                               padding: const EdgeInsets.symmetric(
@@ -167,8 +171,12 @@ class _EventCreationState extends State<EventCreation> {
                               child: Container(
                                 child: ElevatedButton(
                                   style: ButtonStyle(
-                                    shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(18.0),
-                                        side: BorderSide(color: Colors.purpleAccent))),
+                                    shape: MaterialStateProperty.all(
+                                        RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(18.0),
+                                            side: BorderSide(
+                                                color: Colors.purpleAccent))),
                                     backgroundColor: MaterialStateProperty.all(
                                         Colors.grey[800]),
                                   ),
@@ -181,7 +189,7 @@ class _EventCreationState extends State<EventCreation> {
                                   },
                                   child: Padding(
                                     padding:
-                                    EdgeInsets.fromLTRB(10, 10, 20, 10),
+                                        EdgeInsets.fromLTRB(10, 10, 20, 10),
                                     child: Text(
                                       'Post Event',
                                       style: butt,
@@ -198,8 +206,12 @@ class _EventCreationState extends State<EventCreation> {
                               child: Container(
                                 child: ElevatedButton(
                                   style: ButtonStyle(
-                                    shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(18.0),
-                                        side: BorderSide(color: Colors.purpleAccent))),
+                                    shape: MaterialStateProperty.all(
+                                        RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(18.0),
+                                            side: BorderSide(
+                                                color: Colors.purpleAccent))),
                                     backgroundColor: MaterialStateProperty.all(
                                         Colors.grey[800]),
                                   ),
@@ -208,15 +220,13 @@ class _EventCreationState extends State<EventCreation> {
                                     updateEventDetails();
                                   },
                                   child: Padding(
-                                    padding:
-                                    EdgeInsets.fromLTRB(10, 10, 0, 10),
+                                    padding: EdgeInsets.fromLTRB(10, 10, 0, 10),
                                     child: Text(
                                       'Update Event',
                                       style: butt,
                                     ),
                                   ),
                                 ),
-
                               ),
                             ),
                           ],
@@ -228,8 +238,11 @@ class _EventCreationState extends State<EventCreation> {
                         Container(
                           child: ElevatedButton(
                             style: ButtonStyle(
-                              shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(18.0),
-                                  side: BorderSide(color: Colors.purpleAccent))),
+                              shape: MaterialStateProperty.all(
+                                  RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(18.0),
+                                      side: BorderSide(
+                                          color: Colors.purpleAccent))),
                               backgroundColor:
                                   MaterialStateProperty.all(Colors.grey[800]),
                             ),
@@ -297,8 +310,8 @@ class _EventCreationState extends State<EventCreation> {
       print(time);
       print(time.hour);
       print(time.minute);
-      await DatabaseService(uid: eventName).postEventData(uid, eventName, eventDescription, pickedDate.toString(), time.hour, time.minute);
-
+      await DatabaseService(uid: eventName).postEventData(uid, eventName,
+          eventDescription, pickedDate.toString(), time.hour, time.minute);
 
       Fluttertoast.showToast(msg: "User Event Successfully Updated");
       print(
@@ -366,10 +379,17 @@ class _EventCreationState extends State<EventCreation> {
         Fluttertoast.showToast(msg: "Event Does Not Exist");
       } else {
         if (eventDescription.isNotEmpty) {
-          await DatabaseService(uid: eventName).postEventData(uid, eventName, eventDescription, databaseDate, databaseHour, databaseMinute);
+          await DatabaseService(uid: eventName).postEventData(uid, eventName,
+              eventDescription, databaseDate, databaseHour, databaseMinute);
           Fluttertoast.showToast(msg: "Record Description Updated");
         } else {
-          await DatabaseService(uid: eventName).postEventData(uid, eventName, databaseDescription, pickedDate.toString(), time.hour, time.minute);
+          await DatabaseService(uid: eventName).postEventData(
+              uid,
+              eventName,
+              databaseDescription,
+              pickedDate.toString(),
+              time.hour,
+              time.minute);
 
           Fluttertoast.showToast(msg: "Record Description Updated");
         }
@@ -379,6 +399,3 @@ class _EventCreationState extends State<EventCreation> {
     }
   }
 }
-
-
-

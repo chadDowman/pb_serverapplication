@@ -20,12 +20,12 @@ class _HomeState extends State<Home> {
       child: Scaffold(
         backgroundColor: Colors.transparent,
         body: Container(
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('pics/wolf.jpg'),
-              ),
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('pics/wolf.jpg'),
             ),
-            child: EventList(),
+          ),
+          child: EventList(),
         ),
       ),
     );

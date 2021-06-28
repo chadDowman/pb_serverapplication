@@ -37,7 +37,7 @@ class _NavState extends State<Nav> {
         screenName = "Profile Screen";
       } else if (index == 2) {
         screenName = "Event Creation Screen";
-      }else if (index == 3) {
+      } else if (index == 3) {
         screenName = "Admin Creation Screen";
       }
       _selectedIndex = index;
@@ -47,85 +47,87 @@ class _NavState extends State<Nav> {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
-    return user == null ? Login() : StreamBuilder<UserAccountData>(
-        stream: DatabaseService(uid: user.uid).userData,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            UserAccountData userAccountData = snapshot.data;
-            if (userAccountData.role == "admin") {
-              return Scaffold(
-                backgroundColor: Colors.transparent,
-                appBar: AppBar(
-                  backgroundColor: Colors.grey[800],
-                  automaticallyImplyLeading: false,
-                  title: Center(child: Text(screenName)),
-                  elevation: 0.0,
-                ),
-                body: _widgetOptions.elementAt(_selectedIndex),
-                bottomNavigationBar: BottomNavigationBar(
-                  backgroundColor: Colors.black,
-                  selectedItemColor: Colors.deepPurple,
-                  unselectedItemColor: Colors.red,
-                  items: const <BottomNavigationBarItem>[
-                    BottomNavigationBarItem(
-                      icon: Icon(Icons.home),
-                      title: Text("Home"),
-                      backgroundColor: Colors.black,
+    return user == null
+        ? Login()
+        : StreamBuilder<UserAccountData>(
+            stream: DatabaseService(uid: user.uid).userData,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                UserAccountData userAccountData = snapshot.data;
+                if (userAccountData.role == "admin") {
+                  return Scaffold(
+                    backgroundColor: Colors.transparent,
+                    appBar: AppBar(
+                      backgroundColor: Colors.grey[800],
+                      automaticallyImplyLeading: false,
+                      title: Center(child: Text(screenName)),
+                      elevation: 0.0,
                     ),
-                    BottomNavigationBarItem(
-                      icon: Icon(Icons.person),
-                      title: Text('Profile'),
+                    body: _widgetOptions.elementAt(_selectedIndex),
+                    bottomNavigationBar: BottomNavigationBar(
                       backgroundColor: Colors.black,
+                      selectedItemColor: Colors.deepPurple,
+                      unselectedItemColor: Colors.red,
+                      items: const <BottomNavigationBarItem>[
+                        BottomNavigationBarItem(
+                          icon: Icon(Icons.home),
+                          title: Text("Home"),
+                          backgroundColor: Colors.black,
+                        ),
+                        BottomNavigationBarItem(
+                          icon: Icon(Icons.person),
+                          title: Text('Profile'),
+                          backgroundColor: Colors.black,
+                        ),
+                        BottomNavigationBarItem(
+                          icon: Icon(Icons.event),
+                          title: Text('Event Creation'),
+                          backgroundColor: Colors.black,
+                        ),
+                        BottomNavigationBarItem(
+                          icon: Icon(Icons.admin_panel_settings),
+                          title: Text('Admin Creation'),
+                          backgroundColor: Colors.black,
+                        ),
+                      ],
+                      currentIndex: _selectedIndex,
+                      onTap: _onItemTap,
                     ),
-                    BottomNavigationBarItem(
-                      icon: Icon(Icons.event),
-                      title: Text('Event Creation'),
-                      backgroundColor: Colors.black,
+                  );
+                } else {
+                  return Scaffold(
+                    backgroundColor: Colors.black,
+                    appBar: AppBar(
+                      backgroundColor: Colors.grey[800],
+                      automaticallyImplyLeading: false,
+                      title: Center(child: Text(screenName)),
+                      elevation: 0.0,
                     ),
-                    BottomNavigationBarItem(
-                      icon: Icon(Icons.admin_panel_settings),
-                      title: Text('Admin Creation'),
-                      backgroundColor: Colors.black,
+                    body: _widgetOptions.elementAt(_selectedIndex),
+                    bottomNavigationBar: BottomNavigationBar(
+                      backgroundColor: Colors.transparent,
+                      selectedItemColor: Colors.deepPurple,
+                      unselectedItemColor: Colors.red,
+                      items: const <BottomNavigationBarItem>[
+                        BottomNavigationBarItem(
+                          icon: Icon(Icons.home),
+                          title: Text("Home"),
+                          backgroundColor: Colors.black,
+                        ),
+                        BottomNavigationBarItem(
+                          icon: Icon(Icons.person),
+                          title: Text('Profile'),
+                          backgroundColor: Colors.black,
+                        ),
+                      ],
+                      currentIndex: _selectedIndex,
+                      onTap: _onItemTap,
                     ),
-                  ],
-                  currentIndex: _selectedIndex,
-                  onTap: _onItemTap,
-                ),
-              );
-            } else {
-              return Scaffold(
-                backgroundColor: Colors.black,
-                appBar: AppBar(
-                  backgroundColor: Colors.grey[800],
-                  automaticallyImplyLeading: false,
-                  title: Center(child: Text(screenName)),
-                  elevation: 0.0,
-                ),
-                body: _widgetOptions.elementAt(_selectedIndex),
-                bottomNavigationBar: BottomNavigationBar(
-                  backgroundColor: Colors.transparent,
-                  selectedItemColor: Colors.deepPurple,
-                  unselectedItemColor: Colors.red,
-                  items: const <BottomNavigationBarItem>[
-                    BottomNavigationBarItem(
-                      icon: Icon(Icons.home),
-                      title: Text("Home"),
-                      backgroundColor: Colors.black,
-                    ),
-                    BottomNavigationBarItem(
-                      icon: Icon(Icons.person),
-                      title: Text('Profile'),
-                      backgroundColor: Colors.black,
-                    ),
-                  ],
-                  currentIndex: _selectedIndex,
-                  onTap: _onItemTap,
-                ),
-              );
-            }
-          } else {
-            return Loading();
-          }
-        });
+                  );
+                }
+              } else {
+                return Loading();
+              }
+            });
   }
 }

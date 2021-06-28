@@ -57,10 +57,12 @@ class _ProfileState extends State<Profile> {
     // set up the buttons
     Widget yesButton = FlatButton(
       child: Text("Yes"),
-      onPressed: () async{
+      onPressed: () async {
         accountDeleted = true;
-        print( "---------------------------------------Account Deletion Button Clicked----------------------------------------------");
-        await DeleteService(uid: userUID, context: profileContext).deleteUserAuth();
+        print(
+            "---------------------------------------Account Deletion Button Clicked----------------------------------------------");
+        await DeleteService(uid: userUID, context: profileContext)
+            .deleteUserAuth();
         Fluttertoast.showToast(msg: "Account Deleted Successfully");
         setState(() {
           deleteAlert = false;
@@ -179,67 +181,85 @@ class _ProfileState extends State<Profile> {
                                         SizedBox(height: 30),
                                         Center(
                                           child: Column(
-                                            mainAxisAlignment: MainAxisAlignment.center,
-                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
                                             children: [
                                               Container(
-                                                child:
-                                                  ElevatedButton(
-                                                      style: ButtonStyle(
-                                                        shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(18.0),
-                                                            side: BorderSide(color: Colors.purpleAccent))),
-                                                        backgroundColor:
-                                                            MaterialStateProperty.all(
-                                                                Colors.grey[800]),
-                                                      ),
-                                                      onPressed: () async {
-                                                        if (_formKey.currentState
-                                                            .validate()) {
-                                                          await changeUsername();
-                                                        }
-                                                      },
-                                                      child: Padding(
-                                                        padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
-                                                        child: Text(
-                                                          'Change',
-                                                          style: butt,
-                                                        ),
-                                                      ),
+                                                child: ElevatedButton(
+                                                  style: ButtonStyle(
+                                                    shape: MaterialStateProperty
+                                                        .all(RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        18.0),
+                                                            side: BorderSide(
+                                                                color: Colors
+                                                                    .purpleAccent))),
+                                                    backgroundColor:
+                                                        MaterialStateProperty
+                                                            .all(Colors
+                                                                .grey[800]),
+                                                  ),
+                                                  onPressed: () async {
+                                                    if (_formKey.currentState
+                                                        .validate()) {
+                                                      await changeUsername();
+                                                    }
+                                                  },
+                                                  child: Padding(
+                                                    padding: const EdgeInsets
+                                                        .fromLTRB(0, 10, 0, 10),
+                                                    child: Text(
+                                                      'Change',
+                                                      style: butt,
                                                     ),
-
-
+                                                  ),
+                                                ),
                                               ),
                                             ],
                                           ),
                                         ),
-                                        SizedBox(height:30),
+                                        SizedBox(height: 30),
                                         Center(
                                           child: Column(
-                                            mainAxisAlignment: MainAxisAlignment.center,
-                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
                                             children: [
-                                               Container(
-                                                      child: ElevatedButton(
-                                                        style: ButtonStyle(
-                                                          shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(18.0),
-                                                              side: BorderSide(color: Colors.purpleAccent))),
-                                                          backgroundColor:
-                                                              MaterialStateProperty.all(
-                                                                  Colors.grey[800]),
-                                                        ),
-                                                        onPressed: () async {
-                                                          print('Delete Button Clicked');
-                                                          setState(() {deleteAlert = true;});
-                                                        },
-                                                        child: Text(
-                                                          'Delete account',
-                                                          style: butt,
-                                                        ),
-                                                      ),
-
-
+                                              Container(
+                                                child: ElevatedButton(
+                                                  style: ButtonStyle(
+                                                    shape: MaterialStateProperty
+                                                        .all(RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        18.0),
+                                                            side: BorderSide(
+                                                                color: Colors
+                                                                    .purpleAccent))),
+                                                    backgroundColor:
+                                                        MaterialStateProperty
+                                                            .all(Colors
+                                                                .grey[800]),
+                                                  ),
+                                                  onPressed: () async {
+                                                    print(
+                                                        'Delete Button Clicked');
+                                                    setState(() {
+                                                      deleteAlert = true;
+                                                    });
+                                                  },
+                                                  child: Text(
+                                                    'Delete account',
+                                                    style: butt,
+                                                  ),
                                                 ),
-
+                                              ),
                                             ],
                                           ),
                                         ),
