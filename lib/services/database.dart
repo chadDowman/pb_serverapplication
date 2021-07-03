@@ -14,8 +14,7 @@ class DatabaseService {
   DatabaseService({this.uid}); // Constructor
   //Creates if not created and makes the database reference
 
-  final CollectionReference userInfo =
-      Firestore.instance.collection("Guild_Members");
+  final CollectionReference userInfo = Firestore.instance.collection("Guild_Members");
 
   //Sets User Data
   Future updateUserData(String username, String role, String imgUrl) async {
@@ -43,8 +42,8 @@ class DatabaseService {
 
   //-------------------------------------------------------------------------------
 
-  final CollectionReference events =
-      Firestore.instance.collection("Guild_Events");
+  final CollectionReference events = Firestore.instance.collection("Guild_Events");
+
 
   //----------------------------------------Event Related Things--------------------------------------
 
@@ -99,5 +98,18 @@ class DatabaseService {
   }
 
 //-------------------------------------------------------------------------------
+
+  // Future postRSVP(String id, String username) async {
+  //   final CollectionReference rsvpRef = Firestore.instance.collection(uid);
+  //   return await rsvpRef.document(id).setData({
+  //     "id": id,
+  //     "username": username,
+  //   });
+  // }
+  //
+  // Future deleteRSVP() async {
+  //   final CollectionReference rsvpRef = Firestore.instance.collection(uid);
+  //
+  // }
 
 }
