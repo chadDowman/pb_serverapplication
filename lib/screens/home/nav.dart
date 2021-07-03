@@ -20,7 +20,6 @@ class Nav extends StatefulWidget {
 class _NavState extends State<Nav> {
   String screenName = "Home Screen";
   int _selectedIndex = 0;
-  final AuthService _auth = AuthService(); // Instance of auth service class
 
   List<Widget> _widgetOptions = <Widget>[
     Home(),
@@ -71,22 +70,22 @@ class _NavState extends State<Nav> {
                       items: const <BottomNavigationBarItem>[
                         BottomNavigationBarItem(
                           icon: Icon(Icons.home),
-                          title: Text("Home"),
+                          label: "Home",
                           backgroundColor: Colors.black,
                         ),
                         BottomNavigationBarItem(
                           icon: Icon(Icons.person),
-                          title: Text('Profile'),
+                          label: "Profile",
                           backgroundColor: Colors.black,
                         ),
                         BottomNavigationBarItem(
                           icon: Icon(Icons.event),
-                          title: Text('Event Creation'),
+                          label: "Event Creation",
                           backgroundColor: Colors.black,
                         ),
                         BottomNavigationBarItem(
                           icon: Icon(Icons.admin_panel_settings),
-                          title: Text('Admin Creation'),
+                          label: "Admin Creation",
                           backgroundColor: Colors.black,
                         ),
                       ],
@@ -111,12 +110,12 @@ class _NavState extends State<Nav> {
                       items: const <BottomNavigationBarItem>[
                         BottomNavigationBarItem(
                           icon: Icon(Icons.home),
-                          title: Text("Home"),
+                          label: "Home",
                           backgroundColor: Colors.black,
                         ),
                         BottomNavigationBarItem(
                           icon: Icon(Icons.person),
-                          title: Text('Profile'),
+                          label: "Profile",
                           backgroundColor: Colors.black,
                         ),
                       ],
