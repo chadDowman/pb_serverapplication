@@ -196,6 +196,61 @@ class _EventTileState extends State<EventTile> {
                                       ),
                                     ],
                                   ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 20,
+                                          vertical: 10,
+                                        ),
+                                        child: ElevatedButton(
+                                          style: ButtonStyle(
+                                            shape: MaterialStateProperty.all(
+                                                RoundedRectangleBorder(
+                                                    borderRadius:
+                                                    BorderRadius.circular(
+                                                        18.0),
+                                                    side: BorderSide(
+                                                        color: Colors
+                                                            .purpleAccent))),
+                                            backgroundColor:
+                                            MaterialStateProperty.all(
+                                                Colors.grey[800]),
+                                          ),
+                                          onPressed: () async {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        EventCreation2(
+                                                          eventName: widget
+                                                              .event.eventName,
+                                                          eventDescription: widget
+                                                              .event
+                                                              .eventDescription,
+                                                          date: widget
+                                                              .event.pickedDate
+                                                              .toString(),
+                                                          hour:
+                                                          widget.event.hour,
+                                                          min: widget
+                                                              .event.minute,
+                                                        )));
+                                          },
+                                          child: Padding(
+                                            padding: EdgeInsets.fromLTRB(
+                                                0, 10, 0, 10),
+                                            child: Text(
+                                              'RSVP',
+                                              style: butt,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                   SizedBox(height: 10),
                                 ],
                               ),
