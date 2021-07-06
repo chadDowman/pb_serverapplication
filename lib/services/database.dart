@@ -97,19 +97,32 @@ class DatabaseService {
     return events.snapshots().map(_userEventListFromSnapshot);
   }
 
-//-------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------
 
-  // Future postRSVP(String id, String username) async {
-  //   final CollectionReference rsvpRef = Firestore.instance.collection(uid);
-  //   return await rsvpRef.document(id).setData({
-  //     "id": id,
-  //     "username": username,
-  //   });
-  // }
-  //
-  // Future deleteRSVP() async {
-  //   final CollectionReference rsvpRef = Firestore.instance.collection(uid);
-  //
-  // }
+  Future createRSVPCollection(String eventName, String username) async {
+    final CollectionReference rsvpRef = Firestore.instance.collection("Guild_RSVP_Events").document("RSVPS").collection(eventName);
+    return await rsvpRef.document(uid).setData({
+      "id": uid,
+      "username": username,
+    });
+  }
+
+  Future postRSVP(String id, String username) async {
+    final CollectionReference rsvpRef = Firestore.instance.collection(uid);
+    return await rsvpRef.document(id).setData({
+      "id": id,
+      "username": username,
+    });
+  }
+
+  Future deleteRSVP() async {
+    await Firestore.instance.collection("Guild_RSVP_Events").document("RSVPS").collection(uid).getDocuments().then((snapshot) {
+      for (DocumentSnapshot ds in snapshot.documents){
+        ds.reference.delete();
+      }
+    });
+
+
+  }
 
 }

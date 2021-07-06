@@ -257,13 +257,10 @@ class _EventTileState extends State<EventTile> {
           );
   }
 
-  // rsvpEvent() async {
-  //   DatabaseService(uid: widget.event.eventName).postRSVP(userUID, username);
-  // }
+  rsvpEvent() async {
+    await DatabaseService(uid: userUID).createRSVPCollection(widget.event.eventName, username);
+  }
   //
-  // rsvpDelete() async{
-  //   await DatabaseService(uid: widget.event.eventName).deleteRSVP();
-  // }
 
   deleteEvent() async {
     await Firestore.instance
@@ -287,6 +284,7 @@ class _EventTileState extends State<EventTile> {
       }
     }).catchError((e) => print("error fetching data: $e"));
     await DatabaseService(uid: widget.event.eventName).deleteEventData();
+    await DatabaseService(uid: widget.event.eventName).deleteRSVP();
     Fluttertoast.showToast(msg: "Event Deleted if Exists");
   }
 }
