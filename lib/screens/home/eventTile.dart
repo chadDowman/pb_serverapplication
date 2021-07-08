@@ -435,10 +435,6 @@ class _EventTileState extends State<EventTile> {
   rsvpEvent() async {
     await DatabaseService(uid: userUID)
         .createRSVPCollection(widget.event.eventName, username);
-    Fluttertoast.showToast(
-        msg: "You have Successfully RSVPED for the " +
-            widget.event.eventName +
-            " event");
   }
 
   // Firestore.instance.collection("Guild_RSVP_Events").document("RSVPS").collection(getEventName)
