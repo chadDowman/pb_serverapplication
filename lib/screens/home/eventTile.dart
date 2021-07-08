@@ -203,7 +203,7 @@ class _EventTileState extends State<EventTile> {
                                     children: [
                                       Padding(
                                         padding: const EdgeInsets.symmetric(
-                                          horizontal: 20,
+                                          horizontal: 14,
                                           vertical: 10,
                                         ),
                                         child: ElevatedButton(
@@ -235,7 +235,7 @@ class _EventTileState extends State<EventTile> {
                                       ),
                                       Padding(
                                         padding: const EdgeInsets.symmetric(
-                                          horizontal: 20,
+                                          horizontal: 10,
                                           vertical: 10,
                                         ),
                                         child: ElevatedButton(
@@ -329,7 +329,7 @@ class _EventTileState extends State<EventTile> {
                                     children: [
                                       Padding(
                                         padding: const EdgeInsets.symmetric(
-                                          horizontal: 20,
+                                          horizontal: 14,
                                           vertical: 10,
                                         ),
                                         child: ElevatedButton(
@@ -361,7 +361,7 @@ class _EventTileState extends State<EventTile> {
                                       ),
                                       Padding(
                                         padding: const EdgeInsets.symmetric(
-                                          horizontal: 20,
+                                          horizontal: 10,
                                           vertical: 10,
                                         ),
                                         child: ElevatedButton(
