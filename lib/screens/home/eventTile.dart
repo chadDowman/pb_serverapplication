@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pb_blueprotocal/models/event.dart';
 import 'package:pb_blueprotocal/models/user.dart';
+import 'package:pb_blueprotocal/screens/home/RSVPView.dart';
 import 'package:pb_blueprotocal/screens/home/eventUpdates.dart';
 import 'package:pb_blueprotocal/services/database.dart';
 import 'package:pb_blueprotocal/shared/constants.dart';
@@ -32,7 +33,6 @@ class _EventTileState extends State<EventTile> {
   DatabaseService dbService = new DatabaseService();
   String userUID = "";
   String username = "";
-
 
   @override
   void initState() {
@@ -198,7 +198,8 @@ class _EventTileState extends State<EventTile> {
                                   ),
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
                                     children: [
                                       Padding(
                                         padding: const EdgeInsets.symmetric(
@@ -210,14 +211,14 @@ class _EventTileState extends State<EventTile> {
                                             shape: MaterialStateProperty.all(
                                                 RoundedRectangleBorder(
                                                     borderRadius:
-                                                    BorderRadius.circular(
-                                                        18.0),
+                                                        BorderRadius.circular(
+                                                            18.0),
                                                     side: BorderSide(
                                                         color: Colors
                                                             .purpleAccent))),
                                             backgroundColor:
-                                            MaterialStateProperty.all(
-                                                Colors.grey[800]),
+                                                MaterialStateProperty.all(
+                                                    Colors.grey[800]),
                                           ),
                                           onPressed: () async {
                                             await rsvpEvent();
@@ -226,7 +227,46 @@ class _EventTileState extends State<EventTile> {
                                             padding: EdgeInsets.fromLTRB(
                                                 0, 10, 0, 10),
                                             child: Text(
-                                              'RSVP',
+                                              'RSVP For Event',
+                                              style: butt,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 20,
+                                          vertical: 10,
+                                        ),
+                                        child: ElevatedButton(
+                                          style: ButtonStyle(
+                                            shape: MaterialStateProperty.all(
+                                                RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            18.0),
+                                                    side: BorderSide(
+                                                        color: Colors
+                                                            .purpleAccent))),
+                                            backgroundColor:
+                                                MaterialStateProperty.all(
+                                                    Colors.grey[800]),
+                                          ),
+                                          onPressed: () async {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        RsvpViewClass(
+                                                          eventName: widget
+                                                              .event.eventName,
+                                                        )));
+                                          },
+                                          child: Padding(
+                                            padding: EdgeInsets.fromLTRB(
+                                                0, 10, 0, 10),
+                                            child: Text(
+                                              'View RSVPS',
                                               style: butt,
                                             ),
                                           ),
@@ -284,8 +324,41 @@ class _EventTileState extends State<EventTile> {
                                   SizedBox(height: 10),
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
                                     children: [
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 20,
+                                          vertical: 10,
+                                        ),
+                                        child: ElevatedButton(
+                                          style: ButtonStyle(
+                                            shape: MaterialStateProperty.all(
+                                                RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            18.0),
+                                                    side: BorderSide(
+                                                        color: Colors
+                                                            .purpleAccent))),
+                                            backgroundColor:
+                                                MaterialStateProperty.all(
+                                                    Colors.grey[800]),
+                                          ),
+                                          onPressed: () async {
+                                            await rsvpEvent();
+                                          },
+                                          child: Padding(
+                                            padding: EdgeInsets.fromLTRB(
+                                                0, 10, 0, 10),
+                                            child: Text(
+                                              'RSVP For Event',
+                                              style: butt,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
                                       Padding(
                                         padding: const EdgeInsets.symmetric(
                                           horizontal: 20,
@@ -306,13 +379,20 @@ class _EventTileState extends State<EventTile> {
                                                 Colors.grey[800]),
                                           ),
                                           onPressed: () async {
-                                            await rsvpEvent();
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        RsvpViewClass(
+                                                          eventName: widget
+                                                              .event.eventName,
+                                                        )));
                                           },
                                           child: Padding(
                                             padding: EdgeInsets.fromLTRB(
                                                 0, 10, 0, 10),
                                             child: Text(
-                                              'RSVP For Event',
+                                              'View RSVPS',
                                               style: butt,
                                             ),
                                           ),
@@ -334,9 +414,14 @@ class _EventTileState extends State<EventTile> {
   }
 
   rsvpEvent() async {
-    await DatabaseService(uid: userUID).createRSVPCollection(widget.event.eventName, username);
-    Fluttertoast.showToast(msg: "You have Successfully RSVPED for the " + widget.event.eventName + " event");
+    await DatabaseService(uid: userUID)
+        .createRSVPCollection(widget.event.eventName, username);
+    Fluttertoast.showToast(
+        msg: "You have Successfully RSVPED for the " +
+            widget.event.eventName +
+            " event");
   }
+
   //
 
   deleteEvent() async {
@@ -364,4 +449,5 @@ class _EventTileState extends State<EventTile> {
     await DatabaseService(uid: widget.event.eventName).deleteRSVP();
     Fluttertoast.showToast(msg: "Event Deleted if Exists");
   }
+
 }

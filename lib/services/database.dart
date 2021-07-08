@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pb_blueprotocal/models/event.dart';
+import 'package:pb_blueprotocal/models/rsvp.dart';
 import 'package:pb_blueprotocal/models/user.dart';
 
 class DatabaseService {
@@ -99,18 +100,12 @@ class DatabaseService {
 
 // -------------------------------------------------------------------------------
 
+
+
   Future createRSVPCollection(String eventName, String username) async {
     final CollectionReference rsvpRef = Firestore.instance.collection("Guild_RSVP_Events").document("RSVPS").collection(eventName);
     return await rsvpRef.document(uid).setData({
       "id": uid,
-      "username": username,
-    });
-  }
-
-  Future postRSVP(String id, String username) async {
-    final CollectionReference rsvpRef = Firestore.instance.collection(uid);
-    return await rsvpRef.document(id).setData({
-      "id": id,
       "username": username,
     });
   }
