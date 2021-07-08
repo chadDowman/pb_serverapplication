@@ -27,12 +27,17 @@ class _EventTileState extends State<EventTile> {
   int databaseMinute = 0;
   String databaseDescription = "";
 
+  String databaseUsername = "";
+  String databaseID = "";
+
+
   DateTime currentDate;
   bool removeEvent = false;
   DateTime dbDate;
   DatabaseService dbService = new DatabaseService();
   String userUID = "";
   String username = "";
+  bool rsvp = false;
 
   @override
   void initState() {
@@ -61,356 +66,370 @@ class _EventTileState extends State<EventTile> {
     return user == null
         ? Loading()
         : StreamBuilder<UserAccountData>(
-            stream: DatabaseService(uid: user.uid).userData,
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                UserAccountData userAccountData = snapshot.data;
-                userUID = user.uid;
-                username = userAccountData.username;
-                if (userAccountData.role == "admin") {
-                  return Padding(
-                    padding: EdgeInsets.only(top: 8.0),
-                    child: Card(
-                      color: Colors.grey[900],
-                      margin: EdgeInsets.fromLTRB(20, 6, 20, 0),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(25.0),
-                        child: dbDate.isBefore(
-                                currentDate.subtract(Duration(days: 6)))
-                            ? null
-                            : ExpansionTile(
-                                backgroundColor: Colors.grey[900],
-                                leading: CircleAvatar(
-                                  backgroundColor: Colors.transparent,
-                                  //The left image thing
-                                  backgroundImage: AssetImage("pics/PB.png"),
-                                  radius: 25,
-                                ),
-                                title: Text(widget.event.eventName,
-                                    style:
-                                        TextStyle(color: Colors.purple[300])),
-                                subtitle: Text(
-                                    widget.event.pickedDate.substring(0, 11) +
-                                        "  at  " +
-                                        widget.event.hour.toString() +
-                                        " : " +
-                                        widget.event.minute.toString() +
-                                        " GMT+2",
-                                    style:
-                                        TextStyle(color: Colors.purple[300])),
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 20,
-                                      vertical: 10,
-                                    ),
-                                    child: Text(widget.event.eventDescription,
-                                        style: TextStyle(
-                                            color: Colors.purple[300])),
-                                  ),
-                                  SizedBox(height: 10),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                          horizontal: 20,
-                                          vertical: 10,
-                                        ),
-                                        child: ElevatedButton(
-                                          style: ButtonStyle(
-                                            shape: MaterialStateProperty.all(
-                                                RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            18.0),
-                                                    side: BorderSide(
-                                                        color: Colors
-                                                            .purpleAccent))),
-                                            backgroundColor:
-                                                MaterialStateProperty.all(
-                                                    Colors.grey[800]),
-                                          ),
-                                          onPressed: () async {
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        EventCreation2(
-                                                          eventName: widget
-                                                              .event.eventName,
-                                                          eventDescription: widget
-                                                              .event
-                                                              .eventDescription,
-                                                          date: widget
-                                                              .event.pickedDate
-                                                              .toString(),
-                                                          hour:
-                                                              widget.event.hour,
-                                                          min: widget
-                                                              .event.minute,
-                                                        )));
-                                          },
-                                          child: Padding(
-                                            padding: EdgeInsets.fromLTRB(
-                                                0, 10, 0, 10),
-                                            child: Text(
-                                              'Update Event',
-                                              style: butt,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                          horizontal: 20,
-                                          vertical: 10,
-                                        ),
-                                        child: ElevatedButton(
-                                          style: ButtonStyle(
-                                            shape: MaterialStateProperty.all(
-                                                RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            18.0),
-                                                    side: BorderSide(
-                                                        color: Colors
-                                                            .purpleAccent))),
-                                            backgroundColor:
-                                                MaterialStateProperty.all(
-                                                    Colors.grey[800]),
-                                          ),
-                                          onPressed: () async {
-                                            await deleteEvent();
-                                          },
-                                          child: Padding(
-                                            padding: EdgeInsets.fromLTRB(
-                                                0, 10, 0, 10),
-                                            child: Text(
-                                              'Delete Event',
-                                              style: butt,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                          horizontal: 14,
-                                          vertical: 10,
-                                        ),
-                                        child: ElevatedButton(
-                                          style: ButtonStyle(
-                                            shape: MaterialStateProperty.all(
-                                                RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            18.0),
-                                                    side: BorderSide(
-                                                        color: Colors
-                                                            .purpleAccent))),
-                                            backgroundColor:
-                                                MaterialStateProperty.all(
-                                                    Colors.grey[800]),
-                                          ),
-                                          onPressed: () async {
-                                            await rsvpEvent();
-                                          },
-                                          child: Padding(
-                                            padding: EdgeInsets.fromLTRB(
-                                                0, 10, 0, 10),
-                                            child: Text(
-                                              'RSVP For Event',
-                                              style: butt,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                          horizontal: 10,
-                                          vertical: 10,
-                                        ),
-                                        child: ElevatedButton(
-                                          style: ButtonStyle(
-                                            shape: MaterialStateProperty.all(
-                                                RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            18.0),
-                                                    side: BorderSide(
-                                                        color: Colors
-                                                            .purpleAccent))),
-                                            backgroundColor:
-                                                MaterialStateProperty.all(
-                                                    Colors.grey[800]),
-                                          ),
-                                          onPressed: () async {
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        RsvpViewClass(
-                                                          eventName: widget
-                                                              .event.eventName,
-                                                        )));
-                                          },
-                                          child: Padding(
-                                            padding: EdgeInsets.fromLTRB(
-                                                0, 10, 0, 10),
-                                            child: Text(
-                                              'View RSVPS',
-                                              style: butt,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(height: 10),
-                                ],
-                              ),
-                      ),
+      stream: DatabaseService(uid: user.uid).userData,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          UserAccountData userAccountData = snapshot.data;
+          userUID = user.uid;
+          username = userAccountData.username;
+          if (userAccountData.role == "admin") {
+            return Padding(
+              padding: EdgeInsets.only(top: 8.0),
+              child: Card(
+                color: Colors.grey[900],
+                margin: EdgeInsets.fromLTRB(20, 6, 20, 0),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(25.0),
+                  child: dbDate.isBefore(
+                      currentDate.subtract(Duration(days: 6)))
+                      ? null
+                      : ExpansionTile(
+                    backgroundColor: Colors.grey[900],
+                    leading: CircleAvatar(
+                      backgroundColor: Colors.transparent,
+                      //The left image thing
+                      backgroundImage: AssetImage("pics/PB.png"),
+                      radius: 25,
                     ),
-                  );
-                } else {
-                  return Padding(
-                    padding: EdgeInsets.only(top: 8.0),
-                    child: Card(
-                      color: Colors.grey[900],
-                      margin: EdgeInsets.fromLTRB(20, 6, 20, 0),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(25.0),
-                        child: dbDate.isBefore(
-                                currentDate.subtract(Duration(days: 6)))
-                            ? null
-                            : ExpansionTile(
-                                backgroundColor: Colors.grey[900],
-                                leading: CircleAvatar(
-                                  backgroundColor: Colors.transparent,
-                                  //The left image thing
-                                  backgroundImage: AssetImage("pics/PB.png"),
-                                  radius: 25,
-                                ),
-                                title: Text(widget.event.eventName,
-                                    style:
-                                        TextStyle(color: Colors.purple[300])),
-                                subtitle: Text(
-                                    widget.event.pickedDate.substring(0, 11) +
-                                        "  at  " +
-                                        widget.event.hour.toString() +
-                                        " : " +
-                                        widget.event.minute.toString() +
-                                        " GMT+2",
-                                    style:
-                                        TextStyle(color: Colors.purple[300])),
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 20,
-                                      vertical: 10,
-                                    ),
-                                    child: Text(widget.event.eventDescription,
-                                        style: TextStyle(
-                                            color: Colors.purple[300])),
-                                  ),
-                                  SizedBox(height: 10),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                          horizontal: 14,
-                                          vertical: 10,
-                                        ),
-                                        child: ElevatedButton(
-                                          style: ButtonStyle(
-                                            shape: MaterialStateProperty.all(
-                                                RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            18.0),
-                                                    side: BorderSide(
-                                                        color: Colors
-                                                            .purpleAccent))),
-                                            backgroundColor:
-                                                MaterialStateProperty.all(
-                                                    Colors.grey[800]),
-                                          ),
-                                          onPressed: () async {
-                                            await rsvpEvent();
-                                          },
-                                          child: Padding(
-                                            padding: EdgeInsets.fromLTRB(
-                                                0, 10, 0, 10),
-                                            child: Text(
-                                              'RSVP For Event',
-                                              style: butt,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                          horizontal: 10,
-                                          vertical: 10,
-                                        ),
-                                        child: ElevatedButton(
-                                          style: ButtonStyle(
-                                            shape: MaterialStateProperty.all(
-                                                RoundedRectangleBorder(
-                                                    borderRadius:
-                                                    BorderRadius.circular(
-                                                        18.0),
-                                                    side: BorderSide(
-                                                        color: Colors
-                                                            .purpleAccent))),
-                                            backgroundColor:
-                                            MaterialStateProperty.all(
-                                                Colors.grey[800]),
-                                          ),
-                                          onPressed: () async {
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        RsvpViewClass(
-                                                          eventName: widget
-                                                              .event.eventName,
-                                                        )));
-                                          },
-                                          child: Padding(
-                                            padding: EdgeInsets.fromLTRB(
-                                                0, 10, 0, 10),
-                                            child: Text(
-                                              'View RSVPS',
-                                              style: butt,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
+                    title: Text(widget.event.eventName,
+                        style:
+                        TextStyle(color: Colors.purple[300])),
+                    subtitle: Text(
+                        widget.event.pickedDate.substring(0, 11) +
+                            "  at  " +
+                            widget.event.hour.toString() +
+                            " : " +
+                            widget.event.minute.toString() +
+                            " GMT+2",
+                        style:
+                        TextStyle(color: Colors.purple[300])),
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 20,
+                          vertical: 10,
+                        ),
+                        child: Text(widget.event.eventDescription,
+                            style: TextStyle(
+                                color: Colors.purple[300])),
                       ),
+                      SizedBox(height: 10),
+                      Row(
+                        mainAxisAlignment:
+                        MainAxisAlignment.spaceBetween,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 20,
+                              vertical: 10,
+                            ),
+                            child: ElevatedButton(
+                              style: ButtonStyle(
+                                shape: MaterialStateProperty.all(
+                                    RoundedRectangleBorder(
+                                        borderRadius:
+                                        BorderRadius.circular(
+                                            18.0),
+                                        side: BorderSide(
+                                            color: Colors
+                                                .purpleAccent))),
+                                backgroundColor:
+                                MaterialStateProperty.all(
+                                    Colors.grey[800]),
+                              ),
+                              onPressed: () async {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            EventCreation2(
+                                              eventName: widget
+                                                  .event.eventName,
+                                              eventDescription: widget
+                                                  .event
+                                                  .eventDescription,
+                                              date: widget
+                                                  .event.pickedDate
+                                                  .toString(),
+                                              hour:
+                                              widget.event.hour,
+                                              min: widget
+                                                  .event.minute,
+                                            )));
+                              },
+                              child: Padding(
+                                padding: EdgeInsets.fromLTRB(
+                                    0, 10, 0, 10),
+                                child: Text(
+                                  'Update Event',
+                                  style: butt,
+                                ),
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 20,
+                              vertical: 10,
+                            ),
+                            child: ElevatedButton(
+                              style: ButtonStyle(
+                                shape: MaterialStateProperty.all(
+                                    RoundedRectangleBorder(
+                                        borderRadius:
+                                        BorderRadius.circular(
+                                            18.0),
+                                        side: BorderSide(
+                                            color: Colors
+                                                .purpleAccent))),
+                                backgroundColor:
+                                MaterialStateProperty.all(
+                                    Colors.grey[800]),
+                              ),
+                              onPressed: () async {
+                                await deleteEvent();
+                              },
+                              child: Padding(
+                                padding: EdgeInsets.fromLTRB(
+                                    0, 10, 0, 10),
+                                child: Text(
+                                  'Delete Event',
+                                  style: butt,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment:
+                        CrossAxisAlignment.center,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 14,
+                              vertical: 10,
+                            ),
+                            child: ElevatedButton(
+                              style: ButtonStyle(
+                                shape: MaterialStateProperty.all(
+                                    RoundedRectangleBorder(
+                                        borderRadius:
+                                        BorderRadius.circular(
+                                            18.0),
+                                        side: BorderSide(
+                                            color: Colors
+                                                .purpleAccent))),
+                                backgroundColor:
+                                MaterialStateProperty.all(
+                                    Colors.grey[800]),
+                              ),
+                              onPressed: () async {
+                                if (rsvp) {
+                                  await rsvpDelete();
+                                }else{
+                                  await rsvpEvent();
+                                }
+                                setState(() {
+                                  rsvp = !rsvp;
+                                });
+                              },
+                              child: Padding(
+                                padding: EdgeInsets.fromLTRB(
+                                    0, 10, 0, 10),
+                                child: Text(
+                                  'RSVP For Event',
+                                  style: butt,
+                                ),
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 10,
+                              vertical: 10,
+                            ),
+                            child: ElevatedButton(
+                              style: ButtonStyle(
+                                shape: MaterialStateProperty.all(
+                                    RoundedRectangleBorder(
+                                        borderRadius:
+                                        BorderRadius.circular(
+                                            18.0),
+                                        side: BorderSide(
+                                            color: Colors
+                                                .purpleAccent))),
+                                backgroundColor:
+                                MaterialStateProperty.all(
+                                    Colors.grey[800]),
+                              ),
+                              onPressed: () async {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            RsvpViewClass(
+                                              eventName: widget
+                                                  .event.eventName,
+                                            )));
+                              },
+                              child: Padding(
+                                padding: EdgeInsets.fromLTRB(
+                                    0, 10, 0, 10),
+                                child: Text(
+                                  'View RSVPS',
+                                  style: butt,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 10),
+                    ],
+                  ),
+                ),
+              ),
+            );
+          } else {
+            return Padding(
+              padding: EdgeInsets.only(top: 8.0),
+              child: Card(
+                color: Colors.grey[900],
+                margin: EdgeInsets.fromLTRB(20, 6, 20, 0),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(25.0),
+                  child: dbDate.isBefore(
+                      currentDate.subtract(Duration(days: 6)))
+                      ? null
+                      : ExpansionTile(
+                    backgroundColor: Colors.grey[900],
+                    leading: CircleAvatar(
+                      backgroundColor: Colors.transparent,
+                      //The left image thing
+                      backgroundImage: AssetImage("pics/PB.png"),
+                      radius: 25,
                     ),
-                  );
-                }
-              } else {
-                return Loading();
-              }
-            },
-          );
+                    title: Text(widget.event.eventName,
+                        style:
+                        TextStyle(color: Colors.purple[300])),
+                    subtitle: Text(
+                        widget.event.pickedDate.substring(0, 11) +
+                            "  at  " +
+                            widget.event.hour.toString() +
+                            " : " +
+                            widget.event.minute.toString() +
+                            " GMT+2",
+                        style:
+                        TextStyle(color: Colors.purple[300])),
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 20,
+                          vertical: 10,
+                        ),
+                        child: Text(widget.event.eventDescription,
+                            style: TextStyle(
+                                color: Colors.purple[300])),
+                      ),
+                      SizedBox(height: 10),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment:
+                        CrossAxisAlignment.center,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 14,
+                              vertical: 10,
+                            ),
+                            child: ElevatedButton(
+                              style: ButtonStyle(
+                                shape: MaterialStateProperty.all(
+                                    RoundedRectangleBorder(
+                                        borderRadius:
+                                        BorderRadius.circular(
+                                            18.0),
+                                        side: BorderSide(
+                                            color: Colors
+                                                .purpleAccent))),
+                                backgroundColor:
+                                MaterialStateProperty.all(
+                                    Colors.grey[800]),
+                              ),
+                              onPressed: () async {
+                                if (rsvp) {
+                                  await rsvpDelete();
+                                }else{
+                                  await rsvpEvent();
+                                }
+                                setState(() {
+                                  rsvp = !rsvp;
+                                });
+                              },
+                              child: Padding(
+                                padding: EdgeInsets.fromLTRB(
+                                    0, 10, 0, 10),
+                                child: Text(
+                                  'RSVP For Event',
+                                  style: butt,
+                                ),
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 10,
+                              vertical: 10,
+                            ),
+                            child: ElevatedButton(
+                              style: ButtonStyle(
+                                shape: MaterialStateProperty.all(
+                                    RoundedRectangleBorder(
+                                        borderRadius:
+                                        BorderRadius.circular(
+                                            18.0),
+                                        side: BorderSide(
+                                            color: Colors
+                                                .purpleAccent))),
+                                backgroundColor:
+                                MaterialStateProperty.all(
+                                    Colors.grey[800]),
+                              ),
+                              onPressed: () async {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            RsvpViewClass(
+                                              eventName: widget
+                                                  .event.eventName,
+                                            )));
+                              },
+                              child: Padding(
+                                padding: EdgeInsets.fromLTRB(
+                                    0, 10, 0, 10),
+                                child: Text(
+                                  'View RSVPS',
+                                  style: butt,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            );
+          }
+        } else {
+          return Loading();
+        }
+      },
+    );
   }
 
   rsvpEvent() async {
@@ -420,6 +439,11 @@ class _EventTileState extends State<EventTile> {
         msg: "You have Successfully RSVPED for the " +
             widget.event.eventName +
             " event");
+  }
+
+  // Firestore.instance.collection("Guild_RSVP_Events").document("RSVPS").collection(getEventName)
+  rsvpDelete() async {
+    await DatabaseService(uid: userUID).deleteUserRSVP(widget.event.eventName);
   }
 
   //

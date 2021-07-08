@@ -110,14 +110,18 @@ class DatabaseService {
     });
   }
 
+  Future deleteUserRSVP(String eventName) async {
+    final CollectionReference rsvpRef = Firestore.instance.collection("Guild_RSVP_Events").document("RSVPS").collection(eventName);
+    await rsvpRef.document(uid).delete();
+
+  }
+
   Future deleteRSVP() async {
     await Firestore.instance.collection("Guild_RSVP_Events").document("RSVPS").collection(uid).getDocuments().then((snapshot) {
       for (DocumentSnapshot ds in snapshot.documents){
         ds.reference.delete();
       }
     });
-
-
   }
 
 }
