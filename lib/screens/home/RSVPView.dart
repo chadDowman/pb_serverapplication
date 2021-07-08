@@ -63,7 +63,7 @@ class _RsvpViewClassState extends State<RsvpViewClass> {
                                 borderRadius: BorderRadius.all(
                                   Radius.circular(18.0),
                                 ),
-                                color: Colors.transparent,
+                                color: Colors.grey[900],
                                 boxShadow: [
                                   BoxShadow(
                                     color: Colors.purpleAccent,
