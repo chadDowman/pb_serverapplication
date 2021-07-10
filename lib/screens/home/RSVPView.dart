@@ -52,6 +52,9 @@ class _RsvpViewClassState extends State<RsvpViewClass> {
                 children: snapshot.data.documents.map((document){
                   return Center(
                     child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment:
+                      CrossAxisAlignment.center,
                       children: [
                         Padding(
                           padding:  const EdgeInsets.symmetric(

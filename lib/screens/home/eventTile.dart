@@ -202,13 +202,12 @@ class _EventTileState extends State<EventTile> {
                         ],
                       ),
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment:
-                        CrossAxisAlignment.center,
+                        mainAxisAlignment:
+                        MainAxisAlignment.spaceBetween,
                         children: [
                           Padding(
                             padding: const EdgeInsets.symmetric(
-                              horizontal: 14,
+                              horizontal: 20,
                               vertical: 10,
                             ),
                             child: ElevatedButton(
