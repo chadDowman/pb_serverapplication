@@ -145,31 +145,36 @@ class _EventCreation2State extends State<EventCreation2> {
                                     ),
                                   ),
                                   SizedBox(height: 10),
-                                  TextFormField(
-                                    keyboardType: TextInputType.multiline,
-                                    maxLines: null,
-                                    initialValue: getEventDescription,
-                                    style: TextStyle(color: Colors.white),
-                                    decoration: InputDecoration(
-                                      contentPadding:
-                                          const EdgeInsets.symmetric(
-                                              vertical: 20),
-                                      border: InputBorder.none,
-                                      hintText: 'Description',
-                                      prefixIcon: Icon(
-                                        Icons.event,
-                                        color: Colors.white,
+                                  Container(
+                                    constraints: BoxConstraints(maxHeight: 50),
+                                    child: SingleChildScrollView(
+                                      child: TextFormField(
+                                        keyboardType: TextInputType.multiline,
+                                        maxLines: null,
+                                        initialValue: getEventDescription,
+                                        style: TextStyle(color: Colors.white),
+                                        decoration: InputDecoration(
+                                          contentPadding:
+                                              const EdgeInsets.symmetric(
+                                                  vertical: 20),
+                                          border: InputBorder.none,
+                                          hintText: 'Description',
+                                          prefixIcon: Icon(
+                                            Icons.event,
+                                            color: Colors.white,
+                                          ),
+                                          hintStyle: kbod,
+                                        ),
+                                        validator: (val) => val.isEmpty
+                                            ? "Enter A Event Description!"
+                                            : null,
+                                        onChanged: (val) {
+                                          setState(() {
+                                            getEventDescription = val;
+                                          });
+                                        },
                                       ),
-                                      hintStyle: kbod,
                                     ),
-                                    validator: (val) => val.isEmpty
-                                        ? "Enter A Event Description!"
-                                        : null,
-                                    onChanged: (val) {
-                                      setState(() {
-                                        getEventDescription = val;
-                                      });
-                                    },
                                   ),
                                   SizedBox(height: 0),
                                   ListTile(

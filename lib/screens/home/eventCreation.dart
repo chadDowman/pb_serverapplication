@@ -111,29 +111,34 @@ class _EventCreationState extends State<EventCreation> {
                               ),
                             ),
                             SizedBox(height: 10),
-                            TextFormField(
-                              keyboardType: TextInputType.multiline,
-                              maxLines: null,
-                              style: TextStyle(color: Colors.white),
-                              decoration: InputDecoration(
-                                contentPadding:
-                                    const EdgeInsets.symmetric(vertical: 20),
-                                border: InputBorder.none,
-                                hintText: 'Description',
-                                prefixIcon: Icon(
-                                  Icons.event,
-                                  color: Colors.white,
+                            Container(
+                              constraints: BoxConstraints(maxHeight: 50),
+                              child: SingleChildScrollView(
+                                child: TextFormField(
+                                  keyboardType: TextInputType.multiline,
+                                  maxLines: null,
+                                  style: TextStyle(color: Colors.white),
+                                  decoration: InputDecoration(
+                                    contentPadding:
+                                        const EdgeInsets.symmetric(vertical: 20),
+                                    border: InputBorder.none,
+                                    hintText: 'Description',
+                                    prefixIcon: Icon(
+                                      Icons.event,
+                                      color: Colors.white,
+                                    ),
+                                    hintStyle: kbod,
+                                  ),
+                                  validator: (val) => val.length < 10
+                                      ? "Enter A Event Description!"
+                                      : null,
+                                  onChanged: (val) {
+                                    setState(() {
+                                      eventDescription = val;
+                                    });
+                                  },
                                 ),
-                                hintStyle: kbod,
                               ),
-                              validator: (val) => val.length < 10
-                                  ? "Enter A Event Description!"
-                                  : null,
-                              onChanged: (val) {
-                                setState(() {
-                                  eventDescription = val;
-                                });
-                              },
                             ),
                             SizedBox(height: 0),
                             ListTile(
