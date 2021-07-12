@@ -221,7 +221,7 @@ class _AdminCreationState extends State<AdminCreation> {
                                                 email = email.trim();
                                                 username = username.trim();
                                                 dynamic result =
-                                                    await _auth.registerUser(
+                                                    await _auth.registerAdmin(
                                                         email,
                                                         password,
                                                         username,
