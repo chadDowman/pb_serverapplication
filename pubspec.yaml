@@ -36,6 +36,7 @@ dependencies:
   flutter_snake_navigationbar: ^0.5.0
   firebase_messaging: ^5.0.2
   dcdg: ^2.0.1
+  flutter_local_notifications: ^1.4.4+2
 
 
 
