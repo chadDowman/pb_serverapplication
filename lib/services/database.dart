@@ -1,10 +1,7 @@
-import 'dart:collection';
+
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:pb_blueprotocal/models/event.dart';
-import 'package:pb_blueprotocal/models/rsvp.dart';
 import 'package:pb_blueprotocal/models/user.dart';
 
 class DatabaseService {

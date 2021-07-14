@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pb_blueprotocal/screens/authenticate/login.dart';
 import 'package:pb_blueprotocal/services/auth.dart';
 import 'package:pb_blueprotocal/shared/constants.dart';
@@ -204,7 +205,7 @@ class _RegisterState extends State<Register> {
                                               color: Colors.blue,
                                               borderRadius:
                                                   BorderRadius.circular(16)),
-                                          child: FlatButton(
+                                          child: ElevatedButton(
                                             onPressed: () async {
                                               if (_formKey.currentState
                                                   .validate()) {
@@ -227,6 +228,7 @@ class _RegisterState extends State<Register> {
                                                   });
                                                 } else {
                                                   loading = false;
+                                                  Fluttertoast.showToast(msg:"User Registered Successfully");
                                                   Navigator.push(
                                                       context,
                                                       MaterialPageRoute(

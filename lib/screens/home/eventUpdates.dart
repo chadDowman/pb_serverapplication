@@ -1,4 +1,3 @@
-import 'dart:collection';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -264,14 +263,22 @@ class _EventCreation2State extends State<EventCreation2> {
       }
     }).catchError((e) => print("error fetching data: $e"));
 
-    print(
-        "---------------------------------------UPDATE EVENT DETAILS----------------------------------------------");
-    if (getEventName.isNotEmpty) {
-      await DatabaseService(uid: getEventName).postEventData(uid, getEventName,
-          getEventDescription, pickedDate.toString(), time.hour, time.minute);
-    } else {
-      Fluttertoast.showToast(msg: "Please Input An Event Name");
+    try{
+      print("---------------------------------------UPDATE EVENT DETAILS----------------------------------------------");
+
+      if (getEventName.isNotEmpty) {
+        await DatabaseService(uid: getEventName).postEventData(uid, getEventName,getEventDescription, pickedDate.toString(), time.hour, time.minute);
+        Fluttertoast.showToast(msg: "Event Successfully Updated");
+      } else {
+        Fluttertoast.showToast(msg: "Please Input An Event Name");
+      }
+    }catch (e){
+      print("---------------------------------------ERROR UPDATING EVENTS---------------------------------------------");
+      print(e);
+      print("---------------------------------------ERROR UPDATING EVENTS---------------------------------------------");
     }
+
+
   }
 
   _pickDate() async {

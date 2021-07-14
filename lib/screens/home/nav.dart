@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:pb_blueprotocal/models/event.dart';
 import 'package:pb_blueprotocal/models/user.dart';
 import 'package:pb_blueprotocal/screens/authenticate/login.dart';
 import 'package:pb_blueprotocal/screens/home/AdminCreate.dart';
 import 'package:pb_blueprotocal/screens/home/eventCreation.dart';
 import 'package:pb_blueprotocal/screens/home/home.dart';
 import 'package:pb_blueprotocal/screens/home/profile.dart';
-import 'package:pb_blueprotocal/services/auth.dart';
 import 'package:pb_blueprotocal/services/database.dart';
 import 'package:pb_blueprotocal/shared/loading.dart';
 import 'package:provider/provider.dart';

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:pb_blueprotocal/screens/authenticate/login.dart';
 import 'package:pb_blueprotocal/services/auth.dart';
 import 'package:pb_blueprotocal/shared/constants.dart';
 import 'package:flutter/widgets.dart';
@@ -109,7 +108,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                                           color: Colors.blue,
                                           borderRadius:
                                               BorderRadius.circular(16)),
-                                      child: FlatButton(
+                                      child: ElevatedButton(
                                         onPressed: () async {
                                           if (_formKey.currentState
                                               .validate()) {

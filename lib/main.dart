@@ -4,11 +4,7 @@ import 'package:pb_blueprotocal/models/user.dart';
 import 'package:pb_blueprotocal/screens/authenticate/login.dart';
 import 'package:pb_blueprotocal/services/auth.dart';
 import 'package:provider/provider.dart';
-import 'dart:io';
-
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dcdg/dcdg.dart';
 
 void main() => runApp(MyApp());
 
@@ -36,7 +32,6 @@ class MassageHandler extends StatefulWidget {
 }
 
 class _MassageHandlerState extends State<MassageHandler> {
-  final Firestore _firestore = Firestore.instance;
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
   final List<Message> messages = [];
 

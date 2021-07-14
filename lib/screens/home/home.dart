@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pb_blueprotocal/models/event.dart';
 import 'package:pb_blueprotocal/screens/home/eventList.dart';
-import 'package:pb_blueprotocal/screens/home/profile.dart';
-import 'package:pb_blueprotocal/services/auth.dart';
 import 'package:pb_blueprotocal/services/database.dart';
 import 'package:provider/provider.dart';
 

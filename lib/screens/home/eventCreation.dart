@@ -1,14 +1,11 @@
-import 'dart:collection';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pb_blueprotocal/models/event.dart';
 import 'package:pb_blueprotocal/models/user.dart';
-import 'package:pb_blueprotocal/screens/home/eventTile.dart';
 import 'package:pb_blueprotocal/services/database.dart';
 import 'package:pb_blueprotocal/shared/constants.dart';
-import 'package:pb_blueprotocal/shared/loading.dart';
 import 'package:provider/provider.dart';
 
 class EventCreation extends StatefulWidget {
@@ -315,10 +312,11 @@ class _EventCreationState extends State<EventCreation> {
       print(time);
       print(time.hour);
       print(time.minute);
-      await DatabaseService(uid: eventName).postEventData(uid, eventName,
-          eventDescription, pickedDate.toString(), time.hour, time.minute);
+      if(uid != null){
+        await DatabaseService(uid: eventName).postEventData(uid, eventName,eventDescription, pickedDate.toString(), time.hour, time.minute);
+        Fluttertoast.showToast(msg: "User Event Successfully Posted");
+      }
 
-      Fluttertoast.showToast(msg: "User Event Successfully Updated");
       print(
           "---------------------------------------Event Details Updated/added Successfully----------------------------------------------");
     } catch (e) {
@@ -356,51 +354,28 @@ class _EventCreationState extends State<EventCreation> {
   }
 
   updateEventDetails() async {
-    await Firestore.instance
-        .collection('Guild_Events')
-        .where(FieldPath.documentId, isEqualTo: eventName)
-        .getDocuments()
-        .then((event) {
-      if (event.documents.isNotEmpty) {
-        Map<String, dynamic> documentData =
-            event.documents.single.data; //if it is a single document
-        print(documentData["eventDescription"]);
-        print(documentData["eventName"]);
-        print(documentData["pickedDate"]);
-        print(documentData["hour"]);
-        print(documentData["minute"]);
-        databaseName = documentData["eventName"];
-        databaseDate = documentData["pickedDate"];
-        databaseHour = documentData["hour"];
-        databaseMinute = documentData["minute"];
-        databaseDescription = documentData["eventDescription"];
-      }
-    }).catchError((e) => print("error fetching data: $e"));
+    try {
+      print(
+          "---------------------------------------Attempting to add/change Event Details----------------------------------------------");
+      print(pickedDate);
 
-    print(
-        "---------------------------------------UPDATE EVENT DETAILS----------------------------------------------");
-    if (eventName.isNotEmpty) {
-      if (eventName != databaseName) {
-        Fluttertoast.showToast(msg: "Event Does Not Exist");
-      } else {
-        if (eventDescription.isNotEmpty) {
-          await DatabaseService(uid: eventName).postEventData(uid, eventName,
-              eventDescription, databaseDate, databaseHour, databaseMinute);
-          Fluttertoast.showToast(msg: "Record Description Updated");
-        } else {
-          await DatabaseService(uid: eventName).postEventData(
-              uid,
-              eventName,
-              databaseDescription,
-              pickedDate.toString(),
-              time.hour,
-              time.minute);
-
-          Fluttertoast.showToast(msg: "Record Description Updated");
-        }
+      print(time);
+      print(time.hour);
+      print(time.minute);
+      if(uid != null){
+        await DatabaseService(uid: eventName).postEventData(uid, eventName, eventDescription, pickedDate.toString(), time.hour, time.minute);
       }
-    } else {
-      Fluttertoast.showToast(msg: "Please Input Event Name");
+
+
+      Fluttertoast.showToast(msg: "User Event Successfully Updated");
+      print(
+          "---------------------------------------Event Details Updated/added Successfully----------------------------------------------");
+    } catch (e) {
+      print(
+          "---------------------------------------An Error Has Occurred Well Adding/Changing Event Details----------------------------------------------");
+      print(e.toString());
+      print(
+          "---------------------------------------End of Error Report For Event Related Things----------------------------------------------");
     }
   }
 }

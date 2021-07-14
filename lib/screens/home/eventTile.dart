@@ -8,7 +8,6 @@ import 'package:pb_blueprotocal/screens/home/RSVPView.dart';
 import 'package:pb_blueprotocal/screens/home/eventUpdates.dart';
 import 'package:pb_blueprotocal/services/database.dart';
 import 'package:pb_blueprotocal/shared/constants.dart';
-import 'package:pb_blueprotocal/shared/custom.dart' as custom;
 import 'package:pb_blueprotocal/shared/loading.dart';
 import 'package:provider/provider.dart';
 

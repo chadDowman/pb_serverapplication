@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pb_blueprotocal/screens/authenticate/login.dart';
 import 'package:pb_blueprotocal/services/auth.dart';
 import 'package:pb_blueprotocal/shared/constants.dart';
@@ -226,6 +227,9 @@ class _AdminCreationState extends State<AdminCreation> {
                                                         password,
                                                         username,
                                                         "https://static0.cbrimages.com/wordpress/wp-content/uploads/2020/07/Rem-re-zero-promo-Cropped.jpg");
+                                                Fluttertoast.showToast(
+                                                    msg:
+                                                        "Admin User Created Successfully");
                                                 if (result == null) {
                                                   setState(() {
                                                     error =
@@ -234,11 +238,6 @@ class _AdminCreationState extends State<AdminCreation> {
                                                   });
                                                 } else {
                                                   loading = false;
-                                                  Navigator.push(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              Login()));
                                                 }
                                               }
                                             },

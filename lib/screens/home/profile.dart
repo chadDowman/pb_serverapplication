@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -6,7 +7,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pb_blueprotocal/models/user.dart';
 import 'package:pb_blueprotocal/screens/authenticate/login.dart';
-import 'package:pb_blueprotocal/services/auth.dart';
 import 'package:pb_blueprotocal/services/database.dart';
 import 'package:pb_blueprotocal/services/deleteUser.dart';
 import 'package:pb_blueprotocal/shared/constants.dart';
@@ -29,8 +29,6 @@ class _ProfileState extends State<Profile> {
   String password;
   UserAccountData outObjectUserAccount;
   final _formKey = GlobalKey<FormState>();
-  final AuthService _auth = AuthService(); // Instance of auth service class
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   bool accountDeleted = false;
   bool deleteAlert = false;
 
@@ -55,7 +53,7 @@ class _ProfileState extends State<Profile> {
     }
 
     // set up the buttons
-    Widget yesButton = FlatButton(
+    Widget yesButton = ElevatedButton(
       child: Text("Yes"),
       onPressed: () async {
         accountDeleted = true;
@@ -69,7 +67,7 @@ class _ProfileState extends State<Profile> {
         });
       },
     );
-    Widget noButton = FlatButton(
+    Widget noButton = ElevatedButton(
       child: Text("No"),
       onPressed: () {
         setState(() {
@@ -125,16 +123,16 @@ class _ProfileState extends State<Profile> {
                                       children: <Widget>[
                                         Center(
                                           child: InkWell(
-                                            onTap: () {
-                                              print(
-                                                  "---------------------------------------Image Upload Process Has Begun----------------------------------------------");
-                                              dynamic uploadIMG = uploadImage();
-                                              if (uploadIMG) {
-                                                print(
-                                                    "---------------------------------------Image Successfully Uploaded----------------------------------------------");
-                                              } else {
-                                                print(
-                                                    "---------------------------------------An Error Has Occurred During Image Upload----------------------------------------------");
+                                            onTap: () async{
+                                              try{
+                                                print("---------------------------------------Image Upload Process Has Begun----------------------------------------------");
+                                                await uploadImage();
+                                                print("---------------------------------------Image Successfully Uploaded----------------------------------------------");
+
+                                              }catch (e){
+                                                print("---------------------------------------An Error Has Occurred During Image Upload----------------------------------------------");
+                                                print(e);
+                                                print("---------------------------------------An Error Has Occurred During Image Upload----------------------------------------------");
                                               }
                                             },
                                             child: CircleAvatar(
@@ -339,6 +337,25 @@ class _ProfileState extends State<Profile> {
     }
   }
 
+  adminOrNot(String imageUrl) async {
+    await Firestore.instance
+        .collection('Guild_Members')
+        .where(FieldPath.documentId, isEqualTo: userUID)
+        .getDocuments()
+        .then((event) {
+      if (event.documents.isNotEmpty) {
+        Map<String, dynamic> documentData =
+            event.documents.single.data; //if it is a single document
+        print(documentData["role"]);
+        if (documentData["role"] == "admin") {
+          DatabaseService(uid: userUID).updateUserData(outObjectUserAccount.username, "admin", imageUrl);
+        } else {
+          DatabaseService(uid: userUID).updateUserData(outObjectUserAccount.username, "member", imageUrl);
+        }
+      }
+    });
+  }
+
   uploadImage() async {
     try {
       final _storage = FirebaseStorage.instance;
@@ -363,9 +380,7 @@ class _ProfileState extends State<Profile> {
               .onComplete;
           var downloadUrl = await snapshot.ref.getDownloadURL();
           imageUrl = downloadUrl;
-          await DatabaseService(uid: userUID).updateUserData(
-              outObjectUserAccount.username, "member", imageUrl);
-          return true;
+          await adminOrNot(imageUrl);
         } else {
           Fluttertoast.showToast(msg: "Image Error");
         }
@@ -378,7 +393,6 @@ class _ProfileState extends State<Profile> {
       print(e);
       print(
           "---------------------------------------End of Image Upload Error Report----------------------------------------------");
-      return false;
     }
   }
 }
